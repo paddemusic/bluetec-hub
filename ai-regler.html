@@ -73,8 +73,27 @@
   .pick.pick--zip .pick__tag{color:#7cc0ee}
   .pick.pick--zip .pick__title{color:#fff}
   .pick.pick--zip .pick__file{color:rgba(255,255,255,.5)}
-  .pick__sub{font-size:12px;color:var(--muted);line-height:1.45;margin-top:5px}
-  .pick--dev2 .pick__sub{color:#b05f00}
+  .pick__sub{font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:6px}
+  .pick--rec{border-color:var(--blue);background:var(--blue-08)}
+  .pick--rec .pick__tag{color:var(--blue)}
+  .pick--rec .pick__title{color:var(--navy)}
+
+  /* Tool choice (within the builder section) */
+  .tool-choice{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+  .tc-card{display:flex;flex-direction:column;gap:10px;text-decoration:none;border:1.5px solid var(--hairline);border-radius:16px;padding:22px 20px;background:var(--white);transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),transform var(--motion-fast) var(--ease-standard)}
+  .tc-card:hover{border-color:var(--blue);background:var(--blue-08);transform:translateY(-2px)}
+  .tc-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:2px}
+  .tc-who{font-size:17px;font-weight:800;color:var(--navy);line-height:1.2;letter-spacing:-.02em}
+  .tc-what{font-size:13px;color:#46464e;line-height:1.6;flex:1}
+  .tc-cta{font-size:12.5px;font-weight:700;color:var(--blue)}
+  .tc-card--safe{border-color:var(--navy);background:var(--navy)}
+  .tc-card--safe:hover{background:#0d1e38;border-color:#0d1e38;transform:translateY(-2px)}
+  .tc-card--safe .tc-num{color:#7cc0ee}
+  .tc-card--safe .tc-who{color:#fff}
+  .tc-card--safe .tc-what{color:rgba(255,255,255,.75)}
+  .tc-card--safe .tc-cta{color:#7cc0ee}
+
+  /* Inline callout */
   .callout{border:1.5px solid var(--blue);background:var(--ltblue);border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:13.5px;color:var(--navy);line-height:1.55}
   .callout strong{font-weight:700}
   .tool-explain{background:var(--paper);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#3a3a40;line-height:1.6}
@@ -169,9 +188,8 @@
     <nav id="nav">
       <a href="#intro" class="active">Oversikt</a>
       <div class="nav-div"></div>
-      <a href="#prompt">Jeg skriver tekst</a>
-      <a href="#claudemd">Jeg koder (Claude i terminal)</a>
-      <a href="#cursor">Jeg koder (Cursor-editor)</a>
+      <a href="#prompt">Jeg skal skrive tekst</a>
+      <a href="#bygg">Jeg skal bygge noe</a>
       <div class="nav-div"></div>
       <a href="#startpakke">Gi meg alt (ZIP)</a>
       <a href="#oppdater">Oppdatere innholdet</a>
@@ -189,35 +207,27 @@
   <!-- ──────────── HERO ──────────── -->
   <section id="intro">
     <div class="eyebrow">Merkevarehub · AI-instruksjoner</div>
-    <h1>Hva skal du lage?</h1>
-    <p class="lead">Velg hva du skal gjøre nedenfor, og du får riktig fil. Filen forklarer seg selv — åpne den og følg instruksjonene inni.</p>
+    <h1>Hva skal du gjøre?</h1>
+    <p class="lead">Velg ett av alternativene under. Du trenger ikke vite noe om filer eller koding.</p>
 
-    <div class="picker">
+    <div class="picker" style="grid-template-columns:1fr 1fr 1fr;margin-top:28px">
 
       <a class="pick" href="#prompt">
-        <div class="pick__tag">Alle ansatte</div>
-        <div class="pick__title">Jeg skriver tekst, tilbud eller e-post</div>
-        <div class="pick__file">brand-prompt.txt</div>
+        <div class="pick__tag">Skrive tekst</div>
+        <div class="pick__title">Jeg skal skrive noe</div>
+        <div class="pick__sub">Tilbud, e-post, markedsføring, presentasjonstekster — du bruker AI som skrivehjelp</div>
       </a>
 
-      <a class="pick" href="#claudemd">
-        <div class="pick__tag">Utviklere · Claude Code</div>
-        <div class="pick__title">Jeg koder og bruker terminalen</div>
-        <div class="pick__sub">Du starter Claude ved å skrive "claude" i Terminal</div>
-        <div class="pick__file">CLAUDE.md</div>
-      </a>
-
-      <a class="pick pick--dev2" href="#cursor">
-        <div class="pick__tag">Kun for Cursor-brukere</div>
-        <div class="pick__title">Jeg bruker Cursor-editoren</div>
-        <div class="pick__sub">Vet du ikke hva Cursor er? Da er ikke dette filen for deg — bruk ZIP.</div>
-        <div class="pick__file">.cursorrules</div>
+      <a class="pick" href="#bygg">
+        <div class="pick__tag">Bygge noe</div>
+        <div class="pick__title">Jeg skal lage en nettside, portal eller app</div>
+        <div class="pick__sub">Du bruker et AI-verktøy til å skrive kode eller designe</div>
       </a>
 
       <a class="pick pick--zip" href="#startpakke">
-        <div class="pick__tag">Alle filer</div>
-        <div class="pick__title">Gi meg alle instruksjonene</div>
-        <div class="pick__file">BlueTec-AI-startpakke.zip</div>
+        <div class="pick__tag">Anbefalt hvis du er usikker</div>
+        <div class="pick__title">Jeg vet ikke hva jeg trenger</div>
+        <div class="pick__sub">Last ned alt i én pakke. Åpne og følg guiden — den forklarer hvert steg.</div>
       </a>
 
     </div>
@@ -303,23 +313,57 @@
 
   <hr class="rule" style="margin-top:64px">
 
+  <!-- ──────────── BYGG ──────────── -->
+  <section id="bygg">
+    <div class="eyebrow">For deg som lager noe med kode</div>
+    <h2>Jeg skal bygge en nettside, portal eller app</h2>
+    <p class="sec-intro">Hvilket program bruker du til å lage det? Velg det som ligner mest på det du gjør — eller ta "Usikker?" og start der.</p>
+
+    <div class="tool-choice">
+
+      <a class="tc-card" href="#claudemd">
+        <div class="tc-num">Alternativ A</div>
+        <div class="tc-who">Jeg skriver kommandoer i et svart vindu</div>
+        <div class="tc-what">Du åpner Terminal (Mac) eller Kommandoprompt (PC) og starter AI-en derfra. Du skriver tekst-kommandoer, ikke klikker i et vanlig program.</div>
+        <div class="tc-cta">Vis meg filen for dette →</div>
+      </a>
+
+      <a class="tc-card" href="#cursor">
+        <div class="tc-num">Alternativ B</div>
+        <div class="tc-who">Jeg bruker et program som heter Cursor</div>
+        <div class="tc-what">Cursor er et kodeverktøy du laster ned og installerer — det ligner på andre kodeeditorer (VS Code, Sublime Text) og har innebygd AI-chat på siden.</div>
+        <div class="tc-cta">Vis meg filen for dette →</div>
+      </a>
+
+      <a class="tc-card tc-card--safe" href="#startpakke">
+        <div class="tc-num">Usikker?</div>
+        <div class="tc-who">Last ned alt — start her</div>
+        <div class="tc-what">Inneholder begge filene + fonter + logoer + en guide som forteller deg nøyaktig hva du gjør med dem. Alltid riktig valg når du er usikker.</div>
+        <div class="tc-cta">Last ned startpakken →</div>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
   <!-- ──────────── CLAUDE.MD ──────────── -->
   <section id="claudemd">
-    <div class="eyebrow">For deg som koder med Claude Code</div>
-    <h2>Du starter Claude ved å skrive "claude" i Terminal</h2>
+    <div class="eyebrow">Alternativ A — for deg som bruker terminalen</div>
+    <h2>Du skriver kommandoer i et svart vindu</h2>
     <div class="tool-explain">
-      <div class="te-label">Hva er Claude Code?</div>
-      Claude Code er Anthropics eget AI-verktøy for utvikling. Det er ikke en app du klikker på — det er et kommandolinjeverktøy du starter ved å skrive <code>claude</code> i Terminal eller kommandovinduet. <strong>Har du ikke gjort det? Da er ikke dette filen for deg — bruk heller ZIP-pakken.</strong>
+      <div class="te-label">Slik vet du at dette er riktig for deg</div>
+      Du åpner Terminal (Mac) eller Kommandoprompt (PC) og skriver <code>claude</code> etterfulgt av Enter. Gjenkjenner du ikke det? Gå tilbake og velg "Usikker?" i stedet.
     </div>
 
     <div class="file-card reveal">
       <div class="file-card__top">
         <div class="file-card__meta">
-          <span class="badge badge--dev">Claude Code · Kommandolinje</span>
+          <span class="badge badge--dev">For deg som bruker terminalen</span>
           <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">CLAUDE.md</span>
         </div>
-        <h2>BlueTec-regler for Claude Code</h2>
-        <p class="sub">Legg filen i prosjektmappen. Neste gang du starter <code>claude</code> der, laster den filen automatisk — og kjenner da til alle BlueTec sine farger, animasjonsregler og designkonvensjoner.</p>
+        <h2>BlueTec-regler for terminal-verktøyet</h2>
+        <p class="sub">Last ned filen og legg den i prosjektmappen din. Neste gang du starter AI-verktøyet derfra, leser det filen automatisk og vet alt om BlueTec sine farger, animasjoner og designregler.</p>
 
         <div class="contains">
           <div class="contains-item">
@@ -394,24 +438,21 @@
 
   <!-- ──────────── CURSOR ──────────── -->
   <section id="cursor">
-    <div class="eyebrow">Kun for deg som allerede bruker Cursor</div>
-    <h2>Du jobber i Cursor-editoren</h2>
-    <div class="callout">
-      <strong>Vet du ikke hva Cursor er?</strong> Da er dette ikke filen for deg, og det er ingen grunn til å laste den ned. Cursor er en kodeeditor du laster ned og installerer — den ligner VS Code, men har innebygd AI. Bruker du ikke Cursor allerede, <a href="#startpakke" style="color:var(--blue);font-weight:600">last ned startpakken</a> i stedet — den inneholder begge filene.
-    </div>
+    <div class="eyebrow">Alternativ B — for deg som bruker Cursor-programmet</div>
+    <h2>Du bruker Cursor-editoren</h2>
     <div class="tool-explain">
-      <div class="te-label">Hva er Cursor?</div>
-      Cursor (cursor.com) er en kodeeditor — tenk VS Code, men med innebygd AI som kjenner hele prosjektet ditt. Den leses av en fil kalt <code>.cursorrules</code> som du legger i prosjektmappen. Denne filen er den filen.
+      <div class="te-label">Slik vet du at dette er riktig for deg</div>
+      Du har lastet ned og installert et program som heter Cursor (fra cursor.com). Når du åpner et prosjekt ser du en AI-chat på høyre side av skjermen. Gjenkjenner du ikke det? Gå tilbake og velg "Usikker?" i stedet.
     </div>
 
     <div class="file-card reveal">
       <div class="file-card__top">
         <div class="file-card__meta">
-          <span class="badge badge--cursor">Cursor · Kodeeditor</span>
-          <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">cursorrules.txt → gi nytt navn til .cursorrules</span>
+          <span class="badge badge--cursor">For deg som bruker Cursor</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">Last ned → gi nytt navn til .cursorrules</span>
         </div>
-        <h2>BlueTec-regler for Cursor-editoren</h2>
-        <p class="sub">Gi filen nytt navn til <code>.cursorrules</code> og legg den i prosjektmappen. Cursor plukker den opp automatisk — og kjenner da til alle BlueTec sine farger, animasjonsregler og designkonvensjoner.</p>
+        <h2>BlueTec-regler for Cursor-programmet</h2>
+        <p class="sub">Last ned filen, gi den nytt navn til <code>.cursorrules</code> (med punktum foran), og legg den i prosjektmappen. Cursor finner den automatisk og vet da alt om BlueTec sine farger, animasjoner og designregler.</p>
 
         <div class="contains">
           <div class="contains-item">
