@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<style data-omelette-print-defaults>
+@media print {
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  figure, table, pre, blockquote, img, svg, tr, [class~="card" i] { break-inside: avoid; }
+  img, svg { max-width: 100%; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BlueTec — Pristilbud 2.0</title>
+<link rel="stylesheet" href="branding-hub-assets/fonts/fonts.css">
+<style>
+  :root{
+    --blue:#0077C8; --navy:#0A1628; --ink:#15151A; --muted:#7c7c76;
+    --hairline:#E6E6E1; --paper:#F4F4F2; --white:#FFFFFF; --ltblue:#EAF4FB;
+    --ff:'BlueTec Geometric', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--ff);color:var(--ink);background:#9a9a96;-webkit-font-smoothing:antialiased}
+  .doc{display:flex;flex-direction:column;align-items:center;gap:30px;padding:40px 20px 80px}
+
+  .page{position:relative;width:794px;height:1123px;background:#fff;overflow:hidden;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.55)}
+  .pad{position:absolute;inset:0;padding:60px 64px 96px}
+
+  .small-caps{text-transform:uppercase;letter-spacing:.14em}
+
+  /* shared header / footer on body pages */
+  .dh{display:flex;justify-content:space-between;align-items:flex-start}
+  .dh img{height:26px;width:auto}
+  .dh .meta{text-align:right;font-size:11px;color:var(--muted);line-height:1.6}
+  .divider{height:2px;background:var(--blue);margin:18px 0 30px}
+  .foot{position:absolute;left:64px;right:64px;bottom:42px;padding-top:11px;border-top:1px solid var(--hairline);
+    display:flex;justify-content:space-between;align-items:center;font-size:9.5px;color:var(--muted);letter-spacing:.02em}
+  .foot .pg{font-weight:700;color:var(--navy)}
+
+  h2.sec{font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1.05;margin-bottom:6px}
+  .kick{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+  p.body{font-size:13.5px;line-height:1.72;color:var(--ink);margin-bottom:14px}
+  .lbl{font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+  .ph{color:#9a9a93;font-style:normal;background:#f1f4f7;border-radius:3px;padding:0 5px}
+
+  /* ===== COVER ===== */
+  .cover .img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cover .scrim{position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,22,40,.94) 0%,rgba(10,22,40,.72) 40%,rgba(10,22,40,.12) 80%)}
+  .cover .c-logo{position:absolute;top:56px;left:64px;height:30px}
+  .cover .c-mid{position:absolute;left:64px;top:330px;right:120px}
+  .cover .c-kick{font-size:13px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#7cc0ee;margin-bottom:14px}
+  .cover h1{font-size:62px;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1}
+  .cover .c-rule{width:64px;height:4px;background:var(--blue);margin:22px 0 18px}
+  .cover .c-for{font-size:16px;color:rgba(255,255,255,.9);font-weight:500}
+  .cover .c-meta{position:absolute;left:64px;bottom:120px;display:flex;gap:46px}
+  .cover .c-meta .lbl{color:#7cc0ee}
+  .cover .c-meta .v{font-size:15px;color:#fff;font-weight:600;margin-top:5px}
+  .cover .c-web{position:absolute;left:64px;bottom:60px;font-size:12px;color:rgba(255,255,255,.75);font-weight:600;letter-spacing:.04em}
+  .cover .c-tag{position:absolute;right:64px;bottom:60px;font-size:10px;color:rgba(255,255,255,.6);font-weight:600}
+
+  /* ===== lists ===== */
+  ul.inc{list-style:none;display:flex;flex-direction:column;gap:11px;margin:4px 0 0}
+  ul.inc li{font-size:13px;line-height:1.5;color:var(--ink);padding-left:22px;position:relative}
+  ul.inc li::before{content:"";position:absolute;left:0;top:6px;width:8px;height:8px;background:var(--blue)}
+  ul.inc li b{color:var(--navy)}
+
+  .assume{background:var(--paper);border-left:3px solid var(--blue);border-radius:8px;padding:16px 18px;margin-top:20px}
+  .assume .lbl{display:block;margin-bottom:7px}
+  .assume p{font-size:11.5px;line-height:1.6;color:#54544f}
+
+  /* spec grid */
+  .specs{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px;margin-top:8px}
+  .specs .s{display:flex;justify-content:space-between;border-bottom:1px solid var(--hairline);padding:9px 0;font-size:12.5px}
+  .specs .s .k{color:var(--muted)}
+  .specs .s .v{color:var(--navy);font-weight:600;text-align:right}
+
+  /* ===== price table ===== */
+  table.li{width:100%;border-collapse:collapse;margin-top:6px}
+  table.li th{text-align:left;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    background:var(--blue);color:#fff;padding:11px 14px}
+  table.li th.r,table.li td.r{text-align:right}
+  table.li td{padding:11px 14px;border-bottom:1px solid var(--hairline);font-size:13px;color:var(--ink)}
+  table.li tr:last-child td{border-bottom:0}
+  table.li td.desc b{color:var(--navy)}
+  table.li td .mut{display:block;font-size:10.5px;color:var(--muted);margin-top:2px}
+
+  .totals{margin-top:18px;margin-left:auto;width:340px}
+  .totals .t{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:var(--ink)}
+  .totals .t.grand{margin-top:6px;border-top:2px solid var(--navy);padding-top:13px;font-size:18px;font-weight:800;color:var(--navy)}
+  .totals .t .mva{color:var(--muted)}
+
+  /* options */
+  .opt{display:flex;align-items:center;gap:14px;border:1px solid var(--hairline);border-radius:10px;padding:14px 16px;margin-top:10px}
+  .opt .box{flex:0 0 18px;height:18px;border:2px solid var(--blue);border-radius:4px}
+  .opt .ot{flex:1}
+  .opt .ot .n{font-size:13px;font-weight:700;color:var(--navy)}
+  .opt .ot .d{font-size:11px;color:var(--muted);line-height:1.45;margin-top:2px}
+  .opt .pr{font-size:14px;font-weight:700;color:var(--navy);white-space:nowrap}
+  .opt.reco{background:var(--ltblue);border-color:#bfe0f5}
+  .opt.reco .pr{color:var(--blue)}
+  .reco-tag{display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    background:var(--blue);color:#fff;border-radius:4px;padding:2px 7px;margin-bottom:7px}
+
+  .validity{font-size:11px;color:var(--muted);margin-top:22px;line-height:1.6}
+
+  /* ===== production ===== */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px}
+  .stat{background:var(--navy);border-radius:12px;padding:20px 18px;color:#fff}
+  .stat .v{font-size:26px;font-weight:800;letter-spacing:-.01em;line-height:1}
+  .stat .v small{font-size:13px;font-weight:600;color:#7cc0ee}
+  .stat .k{font-size:10.5px;color:rgba(255,255,255,.7);margin-top:8px;line-height:1.35}
+  .chart{margin-top:30px;border:1px solid var(--hairline);border-radius:12px;padding:24px 24px 16px}
+  .chart .ct{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:18px}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:190px}
+  .bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;height:100%;justify-content:flex-end}
+  .bar .b{width:100%;background:var(--blue);border-radius:4px 4px 0 0;min-height:2px}
+  .bar .m{font-size:9px;color:var(--muted)}
+  .chart .cap{font-size:10px;color:var(--muted);margin-top:14px;text-align:right}
+
+  /* ===== references ===== */
+  .refgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:6px}
+  .ref{display:flex;flex-direction:column;gap:10px}
+  .ref img{width:100%;height:150px;object-fit:cover;border-radius:14px}
+  .ref .n{font-size:13px;font-weight:700;color:var(--navy)}
+  .ref .d{font-size:11px;color:var(--muted);margin-top:-6px}
+  .closing{margin-top:40px;background:var(--navy);border-radius:14px;padding:34px 36px;color:#fff}
+  .closing h3{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+  .closing p{font-size:13.5px;color:rgba(255,255,255,.85);max-width:560px;line-height:1.6}
+  .closing .contact{display:flex;gap:40px;margin-top:22px}
+  .closing .contact .lbl{color:#7cc0ee}
+  .closing .contact .v{font-size:14px;color:#fff;font-weight:600;margin-top:5px}
+
+  @media print{
+    body{background:#fff}
+    .doc{gap:0;padding:0}
+    .page{box-shadow:none;page-break-after:always;width:210mm;height:297mm}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- ============ PAGE 1 · COVER ============ -->
+  <section class="page cover">
+    <img class="img" src="assets/photos/sol-enebolig-aerial.jpg" alt="">
+    <div class="scrim"></div>
+    <img class="c-logo" src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-mono-white.svg" alt="BlueTec">
+    <div class="c-mid">
+      <div class="c-kick">Pristilbud</div>
+      <h1>Solcelle&shy;anlegg</h1>
+      <div class="c-rule"></div>
+      <div class="c-for">Utarbeidet for <span class="ph" style="background:rgba(255,255,255,.14);color:#fff">Kundenavn AS</span></div>
+    </div>
+    <div class="c-meta">
+      <div><div class="lbl">Tilbud nr.</div><div class="v">2026&#8209;0142</div></div>
+      <div><div class="lbl">Dato</div><div class="v">15.06.2026</div></div>
+      <div><div class="lbl">Gyldig til</div><div class="v">15.07.2026</div></div>
+    </div>
+    <div class="c-web">bluetec.no</div>
+    <div class="c-tag small-caps">Teknologi · Energi &amp; Miljø</div>
+  </section>
+
+  <!-- ============ PAGE 2 · SCOPE ============ -->
+  <section class="page">
+    <div class="pad">
+      <div class="dh">
+        <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="BlueTec">
+        <div class="meta">Pristilbud 2026&#8209;0142<br>Kundenavn AS · 15.06.2026</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="kick">Løsningsforslag</div>
+      <h2 class="sec">Vi har gleden av å tilby</h2>
+      <p class="body" style="margin-top:12px">Et komplett solcelleanlegg på <span class="ph">adresse / sted</span>. Løsningen tar utgangspunkt i tilsendt informasjon, kartdata, satellittbilder og erfaringstall fra tilsvarende prosjekter. Endelig plassering av inverter, føringsveier og vektberegning fastsettes i detaljprosjekteringen.</p>
+
+      <div class="lbl" style="margin-top:24px;margin-bottom:12px">Dette inngår i leveransen</div>
+      <ul class="inc">
+        <li><b>Solcellepaneler</b> i glass/glass med EPD — montert og tilkoblet</li>
+        <li><b>Vekselrettere</b> (3-fas, IT/TN-nett) med WiFi-grensesnitt</li>
+        <li><b>Ballastert festesystem</b> for flatt tak, uten penetrering av taktekke</li>
+        <li><b>Stillas og sikringsutstyr</b> for trygg og forskriftsmessig montering</li>
+        <li>Ferdig montert anlegg med grensesnitt på AC-tilkobling inverter</li>
+        <li><b>PVSol-rapport</b> med simulert produksjon og CO₂-besparelse</li>
+      </ul>
+
+      <div class="assume">
+        <span class="lbl">Forutsetninger og grensesnitt</span>
+        <p>Grensesnitt på leveransen er inverter/vekselretter. Elektroarbeid fra sikringsskap til inverter er ikke medtatt, og kan utføres av lokal elektroentreprenør. Pristilbudet er et overslag inntil endelig informasjon foreligger gjennom bilder, befaring eller avklaringsmøte. Anlegget kan enkelt skaleres etter budsjett og forutsetninger.</p>
+      </div>
+
+      <div class="lbl" style="margin-top:26px;margin-bottom:6px">Anlegget kort</div>
+      <div class="specs">
+        <div class="s"><span class="k">Installert effekt</span><span class="v">75,5 kWp</span></div>
+        <div class="s"><span class="k">Antall paneler</span><span class="v">168 stk · 450 Wp</span></div>
+        <div class="s"><span class="k">Vekselrettere</span><span class="v">4 stk · Growatt 3-fas</span></div>
+        <div class="s"><span class="k">Festesystem</span><span class="v">Ballastert, flatt tak</span></div>
+      </div>
+
+      <div class="foot"><span>BlueTec AS · Stoltenbergs gate 48 · 3112 Tønsberg · 33 33 11 00 · post@bluetec.no · bluetec.no</span><span class="pg">2 / 5</span></div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 3 · PRICE & OPTIONS ============ -->
+  <section class="page">
+    <div class="pad">
+      <div class="dh">
+        <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="BlueTec">
+        <div class="meta">Pristilbud 2026&#8209;0142<br>Kundenavn AS · 15.06.2026</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="kick">Pris</div>
+      <h2 class="sec">Tilbud og opsjoner</h2>
+
+      <table class="li" style="margin-top:22px">
+        <thead><tr><th>Beskrivelse</th><th class="r">Antall</th><th class="r">Pris eks. mva</th></tr></thead>
+        <tbody>
+          <tr><td class="desc"><b>Solcellepaneler 450 Wp</b><span class="mut">Glass/glass med EPD, inkl. montering</span></td><td class="r">168 stk</td><td class="r">672 000</td></tr>
+          <tr><td class="desc"><b>Vekselrettere Growatt</b><span class="mut">3-fas IT/TN, WiFi-grensesnitt</span></td><td class="r">4 stk</td><td class="r">96 000</td></tr>
+          <tr><td class="desc"><b>Ballastert festesystem</b><span class="mut">Flatt tak, uten penetrering</span></td><td class="r">1</td><td class="r">84 000</td></tr>
+          <tr><td class="desc"><b>Montasje, stillas og idriftsettelse</b></td><td class="r">1</td><td class="r">138 000</td></tr>
+        </tbody>
+      </table>
+
+      <div class="totals">
+        <div class="t"><span>Sum eks. mva</span><span>990 000</span></div>
+        <div class="t mva"><span>Mva 25 %</span><span>247 500</span></div>
+        <div class="t grand"><span>Sum ink. mva</span><span>1 237 500</span></div>
+      </div>
+
+      <div class="lbl" style="margin-top:34px;margin-bottom:4px">Opsjoner og tillegg</div>
+      <div class="opt">
+        <div class="box"></div>
+        <div class="ot"><div class="n">AC-tilkobling</div><div class="d">Tilkobling av vekselrettere til nærmeste strømtavle. Forutsetter ledig kapasitet og anlegg iht. gjeldende krav.</div></div>
+        <div class="pr">45 000</div>
+      </div>
+      <div class="opt reco">
+        <div class="box"></div>
+        <div class="ot"><span class="reco-tag">Anbefalt</span><div class="n">Batterilagring 125 kW / 258 kWh</div><div class="d">Økt egenforbruk, kappet effekttopp og mulighet for inntekt i fleksibilitetsmarkedet. Skalerbart for fremtidig utvidelse.</div></div>
+        <div class="pr">fra 850 000</div>
+      </div>
+
+      <p class="validity">Alle priser er oppgitt i NOK eks. mva der annet ikke er angitt. Tilbudet er gyldig i 30 dager fra tilbudsdato. Endelig pris bekreftes etter befaring og detaljprosjektering.</p>
+
+      <div class="foot"><span>BlueTec AS · Stoltenbergs gate 48 · 3112 Tønsberg · 33 33 11 00 · post@bluetec.no · bluetec.no</span><span class="pg">3 / 5</span></div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 4 · PRODUCTION ============ -->
+  <section class="page">
+    <div class="pad">
+      <div class="dh">
+        <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="BlueTec">
+        <div class="meta">Pristilbud 2026&#8209;0142<br>Kundenavn AS · 15.06.2026</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="kick">Simulert i PVSol</div>
+      <h2 class="sec">Forventet produksjon</h2>
+
+      <div class="stats" style="margin-top:22px">
+        <div class="stat"><div class="v">75,5<small> kWp</small></div><div class="k">Installert effekt</div></div>
+        <div class="stat"><div class="v">63 877<small></small></div><div class="k">kWh produsert første år</div></div>
+        <div class="stat"><div class="v">24 269<small></small></div><div class="k">kg CO₂ spart per år</div></div>
+        <div class="stat"><div class="v">86,5<small> %</small></div><div class="k">Ytelsesgrad (PR)</div></div>
+      </div>
+
+      <div class="chart">
+        <div class="ct">Månedlig produksjon · kWh</div>
+        <div class="bars">
+          <div class="bar"><div class="b" style="height:2%"></div><div class="m">Jan</div></div>
+          <div class="bar"><div class="b" style="height:7%"></div><div class="m">Feb</div></div>
+          <div class="bar"><div class="b" style="height:31%"></div><div class="m">Mar</div></div>
+          <div class="bar"><div class="b" style="height:70%"></div><div class="m">Apr</div></div>
+          <div class="bar"><div class="b" style="height:93%"></div><div class="m">Mai</div></div>
+          <div class="bar"><div class="b" style="height:100%"></div><div class="m">Jun</div></div>
+          <div class="bar"><div class="b" style="height:96%"></div><div class="m">Jul</div></div>
+          <div class="bar"><div class="b" style="height:73%"></div><div class="m">Aug</div></div>
+          <div class="bar"><div class="b" style="height:48%"></div><div class="m">Sep</div></div>
+          <div class="bar"><div class="b" style="height:23%"></div><div class="m">Okt</div></div>
+          <div class="bar"><div class="b" style="height:6%"></div><div class="m">Nov</div></div>
+          <div class="bar"><div class="b" style="height:2%"></div><div class="m">Des</div></div>
+        </div>
+        <div class="cap">Detaljert PVSol-rapport med simuleringsgrunnlag følger som vedlegg.</div>
+      </div>
+
+      <p class="body" style="margin-top:28px">Produksjonen er størst i sommerhalvåret og dekker en betydelig del av byggets forbruk. Kombinert med batterilagring kan en større andel av egenprodusert strøm utnyttes lokalt, og effekttopper reduseres.</p>
+
+      <div class="foot"><span>BlueTec AS · Stoltenbergs gate 48 · 3112 Tønsberg · 33 33 11 00 · post@bluetec.no · bluetec.no</span><span class="pg">4 / 5</span></div>
+    </div>
+  </section>
+
+  <!-- ============ PAGE 5 · REFERENCES ============ -->
+  <section class="page">
+    <div class="pad">
+      <div class="dh">
+        <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="BlueTec">
+        <div class="meta">Pristilbud 2026&#8209;0142<br>Kundenavn AS · 15.06.2026</div>
+      </div>
+      <div class="divider"></div>
+
+      <div class="kick">Referanser</div>
+      <h2 class="sec">Noen av anleggene vi har levert</h2>
+
+      <div class="refgrid" style="margin-top:24px">
+        <div class="ref"><img src="assets/photos/sol-enebolig-aerial.jpg" alt=""><div class="n">Enebolig</div><div class="d">Tønsberg · 8,1 kWp</div></div>
+        <div class="ref"><img src="assets/photos/sol-landbruk-aerial.jpg" alt=""><div class="n">Landbruk</div><div class="d">Sande · 92 kWp</div></div>
+        <div class="ref"><img src="assets/photos/sol-enebolig.jpg" alt=""><div class="n">Montasje</div><div class="d">Eget sertifisert montørteam</div></div>
+      </div>
+
+      <div class="closing">
+        <h3>Klar til å gå videre?</h3>
+        <p>Vi avtaler gjerne en befaring for å bekrefte løsning og endelig pris. Ta kontakt med din rådgiver, så finner vi neste ledige tidspunkt.</p>
+        <div class="contact">
+          <div><div class="lbl">Din rådgiver</div><div class="v"><span class="ph" style="background:rgba(255,255,255,.14);color:#fff">Navn Navnesen</span></div></div>
+          <div><div class="lbl">Telefon</div><div class="v">33 33 11 00</div></div>
+          <div><div class="lbl">E-post</div><div class="v">post@bluetec.no</div></div>
+        </div>
+      </div>
+
+      <div class="foot"><span>BlueTec AS · Stoltenbergs gate 48 · 3112 Tønsberg · 33 33 11 00 · post@bluetec.no · bluetec.no</span><span class="pg">5 / 5</span></div>
+    </div>
+  </section>
+
+</div>
+<script>
+(async () => {
+  if (!document.title || !document.title.trim()) document.title = "pristilbud-2.0";
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    print-color-adjust: exact; -webkit-print-color-adjust: exact;\n    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        !settleRoot.querySelector('.sc-placeholder');
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  // Reveal content gated on scroll or visibility before printing. Lazy <img>,
+  // IntersectionObserver fade-ins, and collapsed <details> don't render while
+  // off-screen, so a long page would print with them blank or closed. Open
+  // every <details>, force native-lazy images eager, and scroll the document
+  // through its full height to trip lazy-load + IO; then wait (bounded) for the
+  // newly-triggered images. Inert for deck-stage (slides aren't scroll-gated).
+  try {
+    for (const d of document.querySelectorAll('details')) d.open = true;
+    for (const img of document.querySelectorAll('img[loading="lazy"]'))
+      img.loading = 'eager';
+    const scroller = document.scrollingElement || document.documentElement;
+    const full = Math.max(scroller.scrollHeight, document.body.scrollHeight);
+    const step = window.innerHeight || 800;
+    for (let y = 0; y <= full; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+    window.scrollTo(0, 0);
+    await Promise.race([
+      Promise.all(
+        [...document.images].map((img) =>
+          img.complete
+            ? null
+            : new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+        )
+      ),
+      new Promise((r) => setTimeout(r, 4000)),
+    ]);
+  } catch (e) {}
+  try { await document.fonts.ready; } catch (e) {}
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  // Re-append deck-stage's @page last so no author @page can add a margin and
+  // spill each full-bleed slide onto two sheets. Backstop for old copies.
+  if (ds) {
+    let pg = document.getElementById('deck-stage-print-page');
+    if (!pg) {
+      pg = document.createElement('style');
+      pg.textContent = '@page{size:' + (+ds.getAttribute('width') || 1920) +
+        'px ' + (+ds.getAttribute('height') || 1080) + 'px;margin:0}';
+    }
+    document.body.appendChild(pg);
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+  } catch (e) {}
+  // Size the PDF page to the rendered design unless the file opted into
+  // standard paper via @page{size:letter|A4|…}. Decks own their own @page.
+  var __m = null;
+  try { __m = (() => {
+  var docEl = document.documentElement;
+  var doc = { width: docEl.scrollWidth, height: docEl.scrollHeight };
+
+  var ds = document.querySelector('deck-stage');
+  if (ds) {
+    var dw = Number(ds.getAttribute('width')) || 1920;
+    var dh = Number(ds.getAttribute('height')) || 1080;
+    var n = typeof ds.length === 'number' ? ds.length : ds.children.length;
+    var idx = typeof ds.index === 'number' ? ds.index : 0;
+    var frames = [];
+    for (var i = 0; i < n; i++) frames.push({ left: 0, top: 0, width: dw, height: dh });
+    return { kind: 'deck', doc: doc, frames: frames,
+      authored: frames.map(function(){return{width:true,height:true}}),
+      deck: { width: dw, height: dh, slideCount: n, index: idx },
+      signals: { paperPage: false, pxPage: false } };
+  }
+
+  var paperPage = false, pxPage = false;
+  var eachRule = function (fn) {
+    for (var s = 0; s < document.styleSheets.length; s++) {
+      var rs; try { rs = document.styleSheets[s].cssRules; } catch (e) { continue; }
+      for (var r = 0; r < rs.length; r++) {
+        fn(rs[r]);
+        if (rs[r].cssRules) for (var n = 0; n < rs[r].cssRules.length; n++) fn(rs[r].cssRules[n]);
+      }
+    }
+  };
+  eachRule(function (r) {
+    if (r.type !== 6) return;
+    var m = /\bsize\s*:\s*([^;}]+)/i.exec(r.cssText || '');
+    if (!m) return;
+    if (/\b(letter|a[3-5]|legal|ledger)\b/i.test(m[1])) paperPage = true;
+    if (/\d+(?:\.\d+)?px\b/i.test(m[1])) pxPage = true;
+  });
+  var signals = { paperPage: paperPage, pxPage: pxPage };
+
+  if (paperPage) {
+    return { kind: 'paper-doc', doc: doc, signals: signals,
+      frames: [{ left: 0, top: 0, width: doc.width, height: doc.height }],
+      authored: [{ width: false, height: false }] };
+  }
+
+  var pxVal = function (v) {
+    var m = /^(\d+(?:\.\d+)?)px$/.exec(v || ''); return m ? +m[1] : 0;
+  };
+  var authoredPx = function (el, prop) {
+    if (pxVal(el.style[prop])) return true;
+    var attr = el.getAttribute(prop);
+    if (attr && /^\d+$/.test(attr)) return true;
+    var hit = false;
+    eachRule(function (r) {
+      if (hit || r.type !== 1 || !r.style) return;
+      try { if (el.matches(r.selectorText) && pxVal(r.style[prop])) hit = true; } catch (e) {}
+    });
+    return hit;
+  };
+
+  var el = document.body;
+  for (;;) {
+    var kids = [];
+    for (var c = 0; c < el.children.length; c++) {
+      var t = el.children[c].tagName;
+      if (t !== 'SCRIPT' && t !== 'STYLE' && t !== 'TEMPLATE') kids.push(el.children[c]);
+    }
+    if (kids.length !== 1 || !(kids[0] instanceof HTMLElement)) break;
+    el.setAttribute('data-om-frame-wrap', '');
+    el = kids[0];
+    if (authoredPx(el, 'width')) break;
+  }
+
+  var sx = window.scrollX || 0, sy = window.scrollY || 0;
+  var rectOf = function (e) {
+    var r = e.getBoundingClientRect();
+    var oy; try { oy = getComputedStyle(e).overflowY; } catch (err) {}
+    var h = oy === 'visible' ? Math.max(r.height, e.scrollHeight || 0) : r.height;
+    return { left: r.left + sx, top: r.top + sy, width: r.width, height: h };
+  };
+
+  // Multi-frame: ≥2 visible non-fixed children, each with authored px width
+  // AND height, all within ±2px of each other. Off unless the page opts in
+  // via data-om-multi-frame on the stop element — guards against card grids
+  // and pricing tables that match the geometry but aren't separate canvases.
+  if (el.hasAttribute('data-om-multi-frame')) {
+    var cands = [];
+    for (var k = 0; k < el.children.length; k++) {
+      var ch = el.children[k];
+      var cs; try { cs = getComputedStyle(ch); } catch (e) { continue; }
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.position === 'fixed') continue;
+      var rc = rectOf(ch);
+      if (rc.width < 2 || rc.height < 2) continue;
+      if (!authoredPx(ch, 'width') || !authoredPx(ch, 'height')) continue;
+      cands.push(rc);
+    }
+    if (cands.length >= 2) {
+      var w0 = cands[0].width, h0 = cands[0].height, ok = true;
+      for (var q = 1; q < cands.length; q++)
+        if (Math.abs(cands[q].width - w0) > 2 || Math.abs(cands[q].height - h0) > 2) ok = false;
+      if (ok) return { kind: 'multi-frame', doc: doc, signals: signals,
+        frames: cands, authored: cands.map(function(){return{width:true,height:true}}) };
+    }
+  }
+
+  return { kind: 'single-canvas', doc: doc, signals: signals,
+    frames: [rectOf(el)],
+    authored: [{ width: authoredPx(el, 'width'), height: authoredPx(el, 'height') }] };
+})(); } catch (e) {}
+  var frame = null;
+  if (__m && __m.kind === 'single-canvas') {
+    var f = __m.frames && __m.frames[0];
+    if (f && f.width >= 200 && f.height >= 200) {
+      frame = f;
+      var fst = document.createElement('style');
+      fst.textContent = '@media print{@page{size:' + f.width + 'px ' + f.height +
+        'px;margin:0}html,body,[data-om-frame-wrap]{padding:0!important;' +
+        'margin:0!important;background:none!important}}';
+      document.body.appendChild(fst);
+    }
+  }
+  // Relax break-inside on oversized elements. An element taller than a
+  // printable page can't honor break-inside: avoid — browsers either overflow
+  // it or push it whole to the next page, leaving a blank gap, then break it
+  // anyway at an arbitrary point. After the final layout (content revealed,
+  // animations jumped), find elements taller than a page that still compute
+  // break-inside: avoid and reset them to auto, so the browser breaks them at
+  // their children's boundaries instead (children keep their own avoid). PAGE_PX
+  // is a conservative portrait estimate at 96 CSS px/in — Letter/A4 usable
+  // height minus our 0.5in margins — so only clearly-oversized elements are
+  // touched and under-page elements still stay whole. Skipped for decks (slides
+  // are sized to the page) and for fixed-size canvases (frame set, or an author
+  // px-based @page) — runs as before for flowing docs on letter/A4.
+  try {
+    if (!ds && !frame && !(__m && __m.signals && __m.signals.pxPage)) {
+      const PAGE_PX = 1024;
+      // Our print defaults add a real @page margin only when the source has
+      // no @page of its own; computed style can't tell us (it reports screen
+      // media), so read the injected rule directly.
+      const defaults = document.querySelector('style[data-omelette-print-defaults]');
+      const pageInset = /@page\s*\{[^}]*margin/.test(defaults ? defaults.textContent || '' : '');
+      const SEL = 'section,article,figure,table,pre,blockquote,[class~="card" i],[class~="page" i],[class~="sheet" i]';
+      for (const el of document.body.querySelectorAll(SEL)) {
+        if (el instanceof HTMLElement && el.offsetHeight > PAGE_PX) {
+          el.setAttribute('data-om-oversized', '');
+          // Fake-paged docs simulate sheets with over-tall break-after:page
+          // boxes; honoring the break spills half-blank pages and ends a
+          // colored box mid-sheet. Flow them, and (only when we own the page
+          // inset) drop the redundant padding/background via the rule below.
+          const cs = getComputedStyle(el);
+          if (cs.breakAfter === 'page' || cs.pageBreakAfter === 'always') {
+            el.setAttribute('data-om-fakepage', '');
+          }
+        }
+      }
+      const ost = document.createElement('style');
+      ost.textContent = '@media print{' +
+        '[data-om-oversized]{break-inside:auto !important;page-break-inside:auto !important}' +
+        '[data-om-fakepage]{break-after:auto !important;page-break-after:auto !important}' +
+        (pageInset ? '[data-om-fakepage]{padding:0 !important;background:none !important}' : '') +
+        '}';
+      document.head.appendChild(ost);
+    }
+  } catch (e) {}
+  // macOS Preview renders Skia-PDF Luminosity soft-masks as opaque grey boxes;
+  // swap the CSS that triggers them for Preview-safe forms.
+  try {
+    for (const el of document.body.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+
+      if (cs.boxShadow !== 'none' && cs.filter === 'none') {
+        const outs = [], kept = [];
+        for (const s of cs.boxShadow.split(/,(?![^(]*[)])/)) {
+          const t = s.trim();
+          const m = t.match(/^(rgba?[(][^)]+[)]) (-?[0-9.]+px) (-?[0-9.]+px) ([0-9.]+px) -?[0-9.]+px$/);
+          if (m && parseFloat(m[4]) > 0) outs.push('drop-shadow(' + m[2] + ' ' + m[3] + ' ' + m[4] + ' ' + m[1] + ')');
+          else kept.push(t);
+        }
+        if (outs.length) {
+          el.style.setProperty('filter', outs.join(' '), 'important');
+          el.style.setProperty('box-shadow', kept.join(', ') || 'none', 'important');
+        }
+      }
+
+      const mask = cs.maskImage && cs.maskImage !== 'none' ? cs.maskImage : cs.webkitMaskImage;
+      if (mask && mask !== 'none' && cs.filter === 'none') el.style.setProperty('filter', 'opacity(1)', 'important');
+    }
+  } catch (e) {}
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>

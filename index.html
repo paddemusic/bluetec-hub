@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlueTec Brand Hub</title>
+<link rel="icon" type="image/png" sizes="32x32" href="branding-hub-assets/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="branding-hub-assets/favicon/favicon-16.png">
+<link rel="apple-touch-icon" href="branding-hub-assets/favicon/favicon-180.png">
+<link rel="stylesheet" href="branding-hub-assets/fonts/fonts.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bt-blue:#0077C8;
+  --bt-navy:#0A1628;
+  --bt-white:#FFFFFF;
+  --bt-ink:#15151A;
+  --bt-muted:#86867F;
+  --bt-hairline:#E6E6E1;
+  --bt-paper:#F4F4F2;
+  --motion-fast:120ms;
+  --motion-base:200ms;
+  --motion-slow:320ms;
+  --ease-standard:cubic-bezier(.4,0,.2,1);
+  --ease-entrance:cubic-bezier(0,0,.2,1);
+  --radius:14px;
+  --nav-w:260px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'BlueTec Geometric',Arial,sans-serif;font-size:16px;line-height:1.6;color:var(--bt-ink);background:var(--bt-white)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
+
+/* ── Layout ──────────────────────────────────── */
+.hub{display:grid;grid-template-columns:var(--nav-w) 1fr;min-height:100vh}
+
+/* ── Left nav ────────────────────────────────── */
+.sidenav{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bt-navy);padding:40px 0;display:flex;flex-direction:column}
+.sidenav__logo{padding:0 28px 36px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:28px}
+.sidenav__logo svg{display:block}
+.sidenav__wordmark{font-size:18px;font-weight:800;color:var(--bt-white);letter-spacing:-.03em;margin-top:10px}
+.sidenav__wordmark span{color:var(--bt-blue)}
+.sidenav__label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:0 28px;margin-bottom:8px}
+.sidenav__link{display:block;padding:9px 28px;font-size:14px;font-weight:500;color:rgba(255,255,255,.6);text-decoration:none;border-left:3px solid transparent;transition:color var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.sidenav__link:hover{color:var(--bt-white);background:rgba(255,255,255,.05)}
+.sidenav__link.active{color:var(--bt-white);border-left-color:var(--bt-blue);font-weight:600;background:rgba(0,119,200,.12)}
+.sidenav__link:focus-visible{outline:2px solid var(--bt-blue);outline-offset:-2px}
+.sidenav__footer{margin-top:auto;padding:20px 28px 0;font-size:11px;color:rgba(255,255,255,.25);border-top:1px solid rgba(255,255,255,.08)}
+.sidenav__divider{margin:20px 28px 16px;border:none;border-top:1px solid rgba(255,255,255,.08)}
+.sidenav__sublabel{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:0 28px;margin-bottom:8px}
+.nav-page{display:block;padding:9px 28px;font-size:14px;font-weight:500;color:rgba(255,255,255,.5);text-decoration:none;border-left:3px solid transparent;transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.nav-page:hover{color:var(--bt-white);background:rgba(255,255,255,.05)}
+.nav-page:focus-visible{outline:2px solid var(--bt-blue);outline-offset:-2px}
+.nav-page__arrow{font-size:11px;opacity:.6;margin-left:4px}
+
+/* ── Main content ────────────────────────────── */
+.main{background:var(--bt-paper)}
+.section{padding:80px 64px;border-bottom:1px solid var(--bt-hairline)}
+.section:last-child{border-bottom:none}
+.section--hero{background:var(--bt-navy);padding:80px 64px 100px}
+
+/* ── Typography helpers ───────────────────────── */
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--bt-blue);margin-bottom:12px}
+.eyebrow--light{color:rgba(255,255,255,.5)}
+h1{font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--bt-white)}
+h2{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.2;color:var(--bt-ink);margin-bottom:8px}
+h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);margin-bottom:6px}
+.lead{font-size:20px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.5;margin-top:16px;max-width:560px}
+.section-desc{font-size:17px;color:var(--bt-muted);margin-bottom:40px;max-width:600px}
+
+/* ── Hero section ────────────────────────────── */
+.hero-lockup{display:flex;align-items:center;gap:20px;margin-bottom:32px}
+.hero-lockup svg{flex-shrink:0}
+.hero-wordmark{font-size:48px;font-weight:800;letter-spacing:-.03em;color:var(--bt-white);line-height:1}
+.hero-wordmark span{color:var(--bt-blue)}
+.quick-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:48px}
+.quick-link{display:inline-block;padding:10px 20px;font-size:14px;font-weight:600;color:var(--bt-white);border:1.5px solid rgba(255,255,255,.25);border-radius:8px;text-decoration:none;transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.quick-link:hover{border-color:var(--bt-blue);background:rgba(0,119,200,.15)}
+.quick-link:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+
+/* ── Cards ───────────────────────────────────── */
+.card{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);overflow:hidden}
+.card__body{padding:20px}
+.card__label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:4px}
+
+/* ── Logo section ────────────────────────────── */
+.logo-controls{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+.logo-controls label{font-size:13px;font-weight:600;color:var(--bt-ink)}
+.surface-toggle{display:flex;gap:6px}
+.surf-btn{padding:6px 14px;font-size:12px;font-weight:600;font-family:inherit;border-radius:6px;border:1.5px solid var(--bt-hairline);background:var(--bt-white);color:var(--bt-ink);cursor:pointer;transition:all var(--motion-fast) var(--ease-standard)}
+.surf-btn.active,.surf-btn:hover{border-color:var(--bt-blue);color:var(--bt-blue)}
+.surf-btn.active{background:rgba(0,119,200,.08)}
+.surf-btn:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+
+.logo-group{margin-bottom:48px}
+.logo-group__title{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--bt-hairline)}
+.logo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.logo-card{border-radius:var(--radius);border:1px solid var(--bt-hairline);overflow:hidden;transition:box-shadow var(--motion-base) var(--ease-standard)}
+.logo-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.logo-preview{display:flex;align-items:center;justify-content:center;padding:32px 24px;min-height:130px;transition:background var(--motion-base) var(--ease-standard)}
+.logo-preview img,.logo-preview svg{max-width:100%;max-height:80px;object-fit:contain}
+.logo-card__meta{background:var(--bt-white);padding:12px 14px;border-top:1px solid var(--bt-hairline)}
+.logo-card__name{font-size:12px;font-weight:600;color:var(--bt-ink);margin-bottom:8px}
+.logo-card__actions{display:flex;gap:6px;flex-wrap:wrap}
+.btn-sm{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;font-size:11px;font-weight:600;font-family:inherit;border-radius:6px;border:1.5px solid var(--bt-hairline);background:transparent;color:var(--bt-ink);cursor:pointer;text-decoration:none;transition:all var(--motion-fast) var(--ease-standard)}
+.btn-sm:hover{border-color:var(--bt-blue);color:var(--bt-blue);background:rgba(0,119,200,.06)}
+.btn-sm:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+.btn-sm--primary{background:var(--bt-blue);color:var(--bt-white);border-color:var(--bt-blue)}
+.btn-sm--primary:hover{background:#0068b0;border-color:#0068b0;color:var(--bt-white)}
+.download-all-row{display:flex;gap:12px;margin-top:24px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;font-size:14px;font-weight:700;font-family:inherit;border-radius:10px;border:none;cursor:pointer;text-decoration:none;transition:all var(--motion-base) var(--ease-standard)}
+.btn--primary{background:var(--bt-blue);color:var(--bt-white)}
+.btn--primary:hover{background:#0068b0}
+.btn--secondary{background:transparent;color:var(--bt-ink);border:1.5px solid var(--bt-hairline)}
+.btn--secondary:hover{border-color:var(--bt-blue);color:var(--bt-blue)}
+.btn:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+.clear-space-note{font-size:13px;color:var(--bt-muted);margin-top:12px;padding:12px 16px;background:var(--bt-paper);border-radius:8px;border-left:3px solid var(--bt-blue)}
+
+/* ── Colours section ─────────────────────────── */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:48px}
+.swatch-card{border-radius:var(--radius);overflow:hidden;border:1px solid var(--bt-hairline);cursor:pointer;transition:box-shadow var(--motion-base) var(--ease-standard)}
+.swatch-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.swatch-card:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+.swatch-color{height:100px}
+.swatch-color--outline{border-bottom:1px solid var(--bt-hairline)}
+.swatch-info{padding:14px;background:var(--bt-white)}
+.swatch-name{font-size:13px;font-weight:700;color:var(--bt-ink);margin-bottom:4px}
+.swatch-values{display:flex;flex-direction:column;gap:3px}
+.swatch-val{font-size:11px;color:var(--bt-muted);display:flex;justify-content:space-between}
+.swatch-val span{font-weight:600;color:var(--bt-ink)}
+.swatch-copy-hint{font-size:10px;color:var(--bt-blue);margin-top:6px;font-weight:600}
+
+.contrast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:16px}
+.contrast-card{border-radius:var(--radius);padding:24px;border:1px solid var(--bt-hairline)}
+.contrast-card__label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;opacity:.7}
+.contrast-card__headline{font-size:20px;font-weight:700;line-height:1.3;margin-bottom:4px}
+.contrast-card__body{font-size:14px;line-height:1.5}
+.contrast-card--wrong{position:relative}
+.wrong-badge{position:absolute;top:12px;right:12px;background:#D93025;color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase}
+
+/* ── Typography section ──────────────────────── */
+.type-scale{margin-bottom:48px}
+.type-row{display:grid;grid-template-columns:160px 1fr;align-items:baseline;gap:24px;padding:16px 0;border-bottom:1px solid var(--bt-hairline)}
+.type-meta{font-size:11px;color:var(--bt-muted);line-height:1.6}
+.type-meta strong{display:block;font-weight:600;color:var(--bt-ink);font-size:12px;margin-bottom:2px}
+.weight-ramp{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px}
+.weight-card{padding:20px 24px;background:var(--bt-white);border-radius:10px;border:1px solid var(--bt-hairline);flex:1;min-width:140px}
+.weight-card__sample{font-size:28px;line-height:1.2;margin-bottom:8px}
+.weight-card__label{font-size:11px;font-weight:600;color:var(--bt-muted);letter-spacing:.1em;text-transform:uppercase}
+.font-download-box{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.font-download-info h3{margin-bottom:4px}
+.font-download-info p{font-size:14px;color:var(--bt-muted)}
+
+/* ── Email signature ─────────────────────────── */
+.sig-builder{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.sig-form{display:flex;flex-direction:column;gap:0}
+.sig-form__section{margin-bottom:24px}
+.sig-form__section-title{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bt-hairline)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--bt-ink);margin-bottom:5px}
+.field input[type=text],.field input[type=email],.field input[type=url],.field input[type=tel]{width:100%;padding:9px 12px;font-size:14px;font-family:inherit;border:1.5px solid var(--bt-hairline);border-radius:8px;background:var(--bt-white);color:var(--bt-ink);transition:border-color var(--motion-fast) var(--ease-standard)}
+.field input:focus{outline:none;border-color:var(--bt-blue)}
+.optional-checks{display:grid;gap:8px}
+.check-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--bt-hairline);cursor:pointer;transition:border-color var(--motion-fast) var(--ease-standard)}
+.check-row:hover{border-color:var(--bt-blue)}
+.check-row input[type=checkbox]{accent-color:var(--bt-blue);width:16px;height:16px;flex-shrink:0;cursor:pointer}
+.check-row label{font-size:13px;font-weight:500;color:var(--bt-ink);cursor:pointer;flex:1}
+.custom-fields{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.custom-field-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center}
+.custom-field-row input{padding:8px 10px;font-size:13px;font-family:inherit;border:1.5px solid var(--bt-hairline);border-radius:7px;background:var(--bt-white);color:var(--bt-ink)}
+.custom-field-row input:focus{outline:none;border-color:var(--bt-blue)}
+.btn-remove{padding:6px 8px;border:1.5px solid var(--bt-hairline);border-radius:6px;background:transparent;cursor:pointer;color:var(--bt-muted);font-size:13px;transition:all var(--motion-fast) var(--ease-standard)}
+.btn-remove:hover{border-color:#D93025;color:#D93025}
+.btn-add-custom{width:100%;padding:8px;font-size:13px;font-weight:600;font-family:inherit;border:1.5px dashed var(--bt-hairline);border-radius:8px;background:transparent;color:var(--bt-muted);cursor:pointer;transition:all var(--motion-fast) var(--ease-standard);margin-top:6px}
+.btn-add-custom:hover{border-color:var(--bt-blue);color:var(--bt-blue)}
+
+.sig-preview-panel{position:sticky;top:24px}
+.sig-preview-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:12px}
+.sig-preview-box{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:32px;min-height:120px}
+.sig-actions{display:flex;gap:10px;margin-top:16px}
+
+/* ── Swatches section ────────────────────────── */
+.swatch-dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.swatch-dl-card{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:24px}
+.swatch-dl-card__icon{width:40px;height:40px;border-radius:8px;background:var(--bt-paper);margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.swatch-dl-card h3{margin-bottom:4px}
+.swatch-dl-card__ext{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bt-blue);background:rgba(0,119,200,.08);padding:2px 8px;border-radius:4px;margin-bottom:10px}
+.swatch-dl-card__install{font-size:13px;color:var(--bt-muted);line-height:1.6;margin-bottom:16px}
+.swatch-dl-card__install strong{color:var(--bt-ink)}
+
+/* ── Brand rules section ─────────────────────── */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
+.rules-col__title{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.do-badge{background:#1a7f37;color:#fff;font-size:10px;padding:2px 8px;border-radius:4px}
+.dont-badge{background:#D93025;color:#fff;font-size:10px;padding:2px 8px;border-radius:4px}
+.rule-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.rule-list li{font-size:14px;color:var(--bt-ink);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.rule-list li::before{content:'';flex-shrink:0;width:18px;height:18px;border-radius:50%;margin-top:2px}
+.rules-col--do .rule-list li::before{background:#1a7f37 url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23fff' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/10px no-repeat}
+.rules-col--dont .rule-list li::before{background:#D93025 url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l6 6M7 1L1 7' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/8px no-repeat}
+
+/* ── Multi-select tray ───────────────────────── */
+.logo-card{position:relative}
+.logo-card__checkbox{position:absolute;top:10px;left:10px;width:20px;height:20px;accent-color:var(--bt-blue);cursor:pointer;z-index:2;opacity:0;transition:opacity var(--motion-fast) var(--ease-standard)}
+.logo-card:hover .logo-card__checkbox,.logo-card__checkbox:checked{opacity:1}
+.logo-card.selected{outline:2px solid var(--bt-blue)}
+.selection-tray{position:fixed;bottom:28px;right:28px;background:var(--bt-navy);color:var(--bt-white);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 8px 32px rgba(0,0,0,.28);z-index:500;transform:translateY(120px);opacity:0;transition:transform var(--motion-slow) var(--ease-entrance),opacity var(--motion-slow) var(--ease-entrance);pointer-events:none}
+.selection-tray.visible{transform:translateY(0);opacity:1;pointer-events:auto}
+.tray-count{font-size:14px;font-weight:600;white-space:nowrap}
+.tray-count span{color:var(--bt-blue)}
+.tray-actions{display:flex;gap:8px}
+.tray-btn{padding:8px 16px;font-size:13px;font-weight:700;font-family:inherit;border-radius:8px;cursor:pointer;border:none;transition:background var(--motion-fast) var(--ease-standard)}
+.tray-btn--dl{background:var(--bt-blue);color:#fff}
+.tray-btn--dl:hover{background:#0068b0}
+.tray-btn--dl:disabled{opacity:.5;cursor:not-allowed}
+.tray-btn--clear{background:rgba(255,255,255,.1);color:#fff}
+.tray-btn--clear:hover{background:rgba(255,255,255,.2)}
+.tray-btn:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+
+/* ── Toast ───────────────────────────────────── */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bt-ink);color:var(--bt-white);font-size:13px;font-weight:600;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity var(--motion-base) var(--ease-standard),transform var(--motion-base) var(--ease-standard);z-index:999;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:900px){
+  .hub{grid-template-columns:1fr}
+  .sidenav{display:none}
+  .section{padding:48px 24px}
+  .sig-builder{grid-template-columns:1fr}
+  .rules-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="toast" class="toast" aria-live="polite"></div>
+
+<div class="selection-tray" id="sel-tray" aria-live="polite">
+  <div class="tray-count">Valgt: <span id="sel-count">0</span> filer</div>
+  <div class="tray-actions">
+    <button class="tray-btn tray-btn--dl" id="tray-dl-btn" onclick="downloadSelected()" disabled>Last ned som ZIP</button>
+    <button class="tray-btn tray-btn--clear" onclick="clearSelection()">Fjern valg</button>
+  </div>
+</div>
+
+<div class="hub">
+
+<!-- ── Left nav ──────────────────────────────── -->
+<nav class="sidenav" aria-label="Brand hub navigation">
+  <div class="sidenav__logo">
+    <svg width="44" height="44" viewBox="108.2 331.1 188.2 188.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="#0077C8" fill-rule="nonzero" d="M 202.34375 474.585938 C 176.980469 474.585938 156.097656 455.449219 153.3125 430.835938 L 174.6875 430.835938 C 177.289062 443.730469 188.679688 453.441406 202.34375 453.441406 C 216.003906 453.441406 227.398438 443.730469 230 430.835938 L 251.371094 430.835938 C 248.585938 455.449219 227.703125 474.585938 202.34375 474.585938 M 202.34375 331.132812 C 192.511719 331.132812 183.035156 332.648438 174.125 335.445312 L 174.125 384.742188 C 182.125 379.15625 191.847656 375.871094 202.34375 375.871094 C 227.707031 375.871094 248.589844 395.003906 251.371094 419.625 L 230 419.625 C 227.398438 406.722656 216.003906 397.011719 202.34375 397.011719 C 188.679688 397.011719 177.285156 406.722656 174.6875 419.625 L 152.988281 419.625 L 152.988281 345.117188 C 126.144531 361.691406 108.25 391.363281 108.25 425.226562 C 108.25 477.191406 150.375 519.320312 202.34375 519.320312 C 254.308594 519.320312 296.433594 477.191406 296.433594 425.226562 C 296.433594 373.261719 254.308594 331.132812 202.34375 331.132812"/>
+    </svg>
+    <div class="sidenav__wordmark">Blue<span>Tec</span></div>
+  </div>
+  <div class="sidenav__label">Brand Hub</div>
+  <a class="sidenav__link active" href="#overview">Overview</a>
+  <a class="sidenav__link" href="#logos">Logos &amp; lockups</a>
+  <a class="sidenav__link" href="#colours">Colours</a>
+  <a class="sidenav__link" href="#typography">Typography</a>
+  <a class="sidenav__link" href="#signature">Email signature</a>
+  <a class="sidenav__link" href="#swatches">Swatches &amp; downloads</a>
+  <a class="sidenav__link" href="#rules">Brand rules</a>
+  <hr class="sidenav__divider">
+  <div class="sidenav__sublabel">Retningslinjer</div>
+  <a class="nav-page" href="web-motion-guidelines.html">Web &amp; Motion<span class="nav-page__arrow">&#8599;</span></a>
+  <a class="nav-page" href="maler.html">Maler<span class="nav-page__arrow">&#8599;</span></a>
+  <a class="nav-page" href="ai-regler.html">AI-instruksjoner<span class="nav-page__arrow">&#8599;</span></a>
+  <div class="sidenav__footer">BlueTec AS &copy; 2026<br>Intern bruksressurs</div>
+</nav>
+
+<!-- ── Main ──────────────────────────────────── -->
+<main class="main">
+
+  <!-- 1. Overview / hero -->
+  <section class="section section--hero" id="overview">
+    <div class="eyebrow eyebrow--light">Intern merkevareressurs</div>
+    <div class="hero-lockup">
+      <svg width="72" height="72" viewBox="108.2 331.1 188.2 188.2" xmlns="http://www.w3.org/2000/svg" aria-label="BlueTec">
+        <path fill="#0077C8" fill-rule="nonzero" d="M 202.34375 474.585938 C 176.980469 474.585938 156.097656 455.449219 153.3125 430.835938 L 174.6875 430.835938 C 177.289062 443.730469 188.679688 453.441406 202.34375 453.441406 C 216.003906 453.441406 227.398438 443.730469 230 430.835938 L 251.371094 430.835938 C 248.585938 455.449219 227.703125 474.585938 202.34375 474.585938 M 202.34375 331.132812 C 192.511719 331.132812 183.035156 332.648438 174.125 335.445312 L 174.125 384.742188 C 182.125 379.15625 191.847656 375.871094 202.34375 375.871094 C 227.707031 375.871094 248.589844 395.003906 251.371094 419.625 L 230 419.625 C 227.398438 406.722656 216.003906 397.011719 202.34375 397.011719 C 188.679688 397.011719 177.285156 406.722656 174.6875 419.625 L 152.988281 419.625 L 152.988281 345.117188 C 126.144531 361.691406 108.25 391.363281 108.25 425.226562 C 108.25 477.191406 150.375 519.320312 202.34375 519.320312 C 254.308594 519.320312 296.433594 477.191406 296.433594 425.226562 C 296.433594 373.261719 254.308594 331.132812 202.34375 331.132812"/>
+      </svg>
+      <h1>Brand Hub</h1>
+    </div>
+    <p class="lead">Alt du trenger for korrekt merkevarebruk: logoer, farger, typografi, e-postsignatur og profileringsverktoy. Last ned, kopier og bruk riktig versjon.</p>
+    <div class="quick-links">
+      <a class="quick-link" href="#logos">Logoer</a>
+      <a class="quick-link" href="#colours">Farger</a>
+      <a class="quick-link" href="#typography">Typografi</a>
+      <a class="quick-link" href="#signature">E-postsignatur</a>
+      <a class="quick-link" href="#swatches">Fargeprofiler</a>
+      <a class="quick-link" href="#rules">Regler</a>
+    </div>
+  </section>
+
+  <!-- 2. Logos & lockups -->
+  <section class="section" id="logos">
+    <div class="eyebrow">Identitet</div>
+    <h2>Logoer &amp; lockups</h2>
+    <p class="section-desc">Emblem, ordmerke og kombinerte lockups. Velg bakgrunn for a se riktig variant, og last ned i oensket format.</p>
+
+    <div class="logo-controls">
+      <label>Bakgrunn:</label>
+      <div class="surface-toggle" role="group" aria-label="Preview surface">
+        <button class="surf-btn active" data-surface="light" onclick="setSurface('light',this)">Lys</button>
+        <button class="surf-btn" data-surface="dark" onclick="setSurface('dark',this)">Mørk</button>
+        <button class="surf-btn" data-surface="blue" onclick="setSurface('blue',this)">Blå</button>
+      </div>
+    </div>
+
+    <!-- Emblem -->
+    <div class="logo-group">
+      <div class="logo-group__title">Emblem</div>
+      <div class="logo-grid" id="emblem-grid">
+        <!-- blue -->
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/emblem/png/bluetec-emblem-blue-256.png" alt="BlueTec emblem blå" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Emblem — Blå</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/emblem/svg/bluetec-emblem-blue.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-blue-1024.png" download>PNG 1024</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-blue-512.png" download>PNG 512</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-blue-256.png" download>PNG 256</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-blue-128.png" download>PNG 128</a>
+              <button class="btn-sm" onclick="copySVG('branding-hub-assets/logo/emblem/svg/bluetec-emblem-blue.svg')">Kopier SVG</button>
+            </div>
+          </div>
+        </div>
+        <!-- navy -->
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2" data-surface-fixed="light">
+            <img src="branding-hub-assets/logo/emblem/png/bluetec-emblem-navy-256.png" alt="BlueTec emblem navy" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Emblem — Navy</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/emblem/svg/bluetec-emblem-navy.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-navy-1024.png" download>PNG 1024</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-navy-512.png" download>PNG 512</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-navy-256.png" download>PNG 256</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-navy-128.png" download>PNG 128</a>
+              <button class="btn-sm" onclick="copySVG('branding-hub-assets/logo/emblem/svg/bluetec-emblem-navy.svg')">Kopier SVG</button>
+            </div>
+          </div>
+        </div>
+        <!-- white -->
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628" data-surface-fixed="dark">
+            <img src="branding-hub-assets/logo/emblem/png/bluetec-emblem-white-256.png" alt="BlueTec emblem hvit" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Emblem — Hvit</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/emblem/svg/bluetec-emblem-white.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-white-1024.png" download>PNG 1024</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-white-512.png" download>PNG 512</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-white-256.png" download>PNG 256</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-white-128.png" download>PNG 128</a>
+              <button class="btn-sm" onclick="copySVG('branding-hub-assets/logo/emblem/svg/bluetec-emblem-white.svg')">Kopier SVG</button>
+            </div>
+          </div>
+        </div>
+        <!-- black -->
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2" data-surface-fixed="light">
+            <img src="branding-hub-assets/logo/emblem/png/bluetec-emblem-black-256.png" alt="BlueTec emblem sort" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Emblem — Sort</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/emblem/svg/bluetec-emblem-black.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-black-1024.png" download>PNG 1024</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-black-512.png" download>PNG 512</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-black-256.png" download>PNG 256</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/emblem/png/bluetec-emblem-black-128.png" download>PNG 128</a>
+              <button class="btn-sm" onclick="copySVG('branding-hub-assets/logo/emblem/svg/bluetec-emblem-black.svg')">Kopier SVG</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wordmark -->
+    <div class="logo-group">
+      <div class="logo-group__title">Ordmerke</div>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-blue.png" alt="BlueTec ordmerke blå" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Ordmerke — Blå</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/wordmark/svg/bluetec-wordmark-blue.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-blue.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2" data-surface-fixed="light">
+            <img src="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-navy.png" alt="BlueTec ordmerke navy" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Ordmerke — Navy</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/wordmark/svg/bluetec-wordmark-navy.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-navy.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628" data-surface-fixed="dark">
+            <img src="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-white.png" alt="BlueTec ordmerke hvit" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Ordmerke — Hvit</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/wordmark/svg/bluetec-wordmark-white.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-white.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2" data-surface-fixed="light">
+            <img src="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-black.png" alt="BlueTec ordmerke sort" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Ordmerke — Sort</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/wordmark/svg/bluetec-wordmark-black.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/wordmark/png/bluetec-wordmark-black.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal lockup -->
+    <div class="logo-group">
+      <div class="logo-group__title">Horizontal lockup</div>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-on-light.png" alt="Horizontal lockup lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-on-light.png" download>PNG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/jpg/bluetec-lockup-horizontal-on-white.jpg" download>JPG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-on-dark.png" alt="Horizontal lockup mørk" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-dark.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-on-dark.png" download>PNG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/jpg/bluetec-lockup-horizontal-on-navy.jpg" download>JPG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-light.png" alt="Horizontal lockup med tagline lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal + tagline — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-on-light.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-light.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-dark.png" alt="Horizontal lockup med tagline mork" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal + tagline — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-on-dark.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-dark.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-mono-navy.png" alt="Horizontal lockup mono navy" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal — Mono Navy</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-mono-navy.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-mono-navy.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-mono-white.png" alt="Horizontal lockup mono hvit" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal — Mono Hvit</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-mono-white.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-mono-white.png" download>PNG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/jpg/bluetec-lockup-horizontal-on-blue.jpg" download>JPG blå</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stacked lockup -->
+    <div class="logo-group">
+      <div class="logo-group__title">Stacked lockup</div>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-on-light.png" alt="Stacked lockup lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-on-light.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-on-light.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-on-dark.png" alt="Stacked lockup mørk" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-on-dark.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-on-dark.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-light.png" alt="Stacked lockup med tagline lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked + tagline — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-on-light.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-light.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-dark.png" alt="Stacked lockup med tagline mork" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked + tagline — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-on-dark.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-dark.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-mono-navy.png" alt="Stacked mono navy" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked — Mono Navy</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-mono-navy.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-mono-navy.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-mono-white.png" alt="Stacked mono hvit" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked — Mono Hvit</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-mono-white.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-mono-white.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clear-space-note">Minimum frysone rundt alle lockups = emblemets høyde på alle fire sider. Minste digitale bredde: 120 px. Minste trykkbredde: 30 mm.</div>
+
+    <div class="download-all-row" style="margin-top:32px">
+      <a class="btn btn--primary" href="branding-hub-assets/Bluetec.zip" download>Last ned alle logoer (ZIP)</a>
+    </div>
+  </section>
+
+  <!-- 3. Colours -->
+  <section class="section" id="colours">
+    <div class="eyebrow">Fargesystem</div>
+    <h2>Farger</h2>
+    <p class="section-desc">Klikk på en farge for a kopiere HEX-koden. Hold deg innenfor denne paletten.</p>
+
+    <div class="swatch-grid">
+      <!-- Brand Blue -->
+      <div class="swatch-card" role="button" tabindex="0" aria-label="Kopier #0077C8" onclick="copyColor('#0077C8','Brand Blue #0077C8')" onkeydown="if(event.key==='Enter')copyColor('#0077C8','Brand Blue #0077C8')">
+        <div class="swatch-color" style="background:#0077C8"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Brand Blue</div>
+          <div class="swatch-values">
+            <div class="swatch-val">HEX <span>#0077C8</span></div>
+            <div class="swatch-val">RGB <span>0 119 200</span></div>
+            <div class="swatch-val">CMYK <span>100 31 0 0</span></div>
+            <div class="swatch-val">Pantone <span>3005 C</span></div>
+          </div>
+          <div class="swatch-copy-hint">Klikk for a kopiere HEX</div>
+        </div>
+      </div>
+      <!-- Dark Navy -->
+      <div class="swatch-card" role="button" tabindex="0" aria-label="Kopier #0A1628" onclick="copyColor('#0A1628','Dark Navy #0A1628')" onkeydown="if(event.key==='Enter')copyColor('#0A1628','Dark Navy #0A1628')">
+        <div class="swatch-color" style="background:#0A1628"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Dark Navy</div>
+          <div class="swatch-values">
+            <div class="swatch-val">HEX <span>#0A1628</span></div>
+            <div class="swatch-val">RGB <span>10 22 40</span></div>
+          </div>
+          <div class="swatch-copy-hint">Klikk for a kopiere HEX</div>
+        </div>
+      </div>
+      <!-- White -->
+      <div class="swatch-card" role="button" tabindex="0" aria-label="Kopier #FFFFFF" onclick="copyColor('#FFFFFF','White #FFFFFF')" onkeydown="if(event.key==='Enter')copyColor('#FFFFFF','White #FFFFFF')">
+        <div class="swatch-color swatch-color--outline" style="background:#FFFFFF"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">White</div>
+          <div class="swatch-values">
+            <div class="swatch-val">HEX <span>#FFFFFF</span></div>
+            <div class="swatch-val">RGB <span>255 255 255</span></div>
+          </div>
+          <div class="swatch-copy-hint">Klikk for a kopiere HEX</div>
+        </div>
+      </div>
+      <!-- Ink -->
+      <div class="swatch-card" role="button" tabindex="0" aria-label="Kopier #15151A" onclick="copyColor('#15151A','Ink #15151A')" onkeydown="if(event.key==='Enter')copyColor('#15151A','Ink #15151A')">
+        <div class="swatch-color" style="background:#15151A"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ink</div>
+          <div class="swatch-values">
+            <div class="swatch-val">HEX <span>#15151A</span></div>
+            <div class="swatch-val">RGB <span>21 21 26</span></div>
+          </div>
+          <div class="swatch-copy-hint">Klikk for a kopiere HEX</div>
+        </div>
+      </div>
+      <!-- Muted -->
+      <div class="swatch-card" role="button" tabindex="0" aria-label="Kopier #86867F" onclick="copyColor('#86867F','Muted #86867F')" onkeydown="if(event.key==='Enter')copyColor('#86867F','Muted #86867F')">
+        <div class="swatch-color" style="background:#86867F"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Muted</div>
+          <div class="swatch-values">
+            <div class="swatch-val">HEX <span>#86867F</span></div>
+            <div class="swatch-val">RGB <span>134 134 127</span></div>
+          </div>
+          <div class="swatch-copy-hint">Klikk for a kopiere HEX</div>
+        </div>
+      </div>
+      <!-- Hairline -->
+      <div class="swatch-card" role="button" tabindex="0" aria-label="Kopier #E6E6E1" onclick="copyColor('#E6E6E1','Hairline #E6E6E1')" onkeydown="if(event.key==='Enter')copyColor('#E6E6E1','Hairline #E6E6E1')">
+        <div class="swatch-color swatch-color--outline" style="background:#E6E6E1"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Hairline</div>
+          <div class="swatch-values">
+            <div class="swatch-val">HEX <span>#E6E6E1</span></div>
+            <div class="swatch-val">RGB <span>230 230 225</span></div>
+          </div>
+          <div class="swatch-copy-hint">Klikk for a kopiere HEX</div>
+        </div>
+      </div>
+      <!-- Paper -->
+      <div class="swatch-card" role="button" tabindex="0" aria-label="Kopier #F4F4F2" onclick="copyColor('#F4F4F2','Paper #F4F4F2')" onkeydown="if(event.key==='Enter')copyColor('#F4F4F2','Paper #F4F4F2')">
+        <div class="swatch-color swatch-color--outline" style="background:#F4F4F2"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Paper</div>
+          <div class="swatch-values">
+            <div class="swatch-val">HEX <span>#F4F4F2</span></div>
+            <div class="swatch-val">RGB <span>244 244 242</span></div>
+          </div>
+          <div class="swatch-copy-hint">Klikk for a kopiere HEX</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom:16px">Kontrast-eksempler</h3>
+    <div class="contrast-grid">
+      <div class="contrast-card" style="background:#FFFFFF">
+        <div class="contrast-card__label" style="color:#86867F">Lys bakgrunn</div>
+        <div class="contrast-card__headline" style="color:#15151A;font-weight:700">BlueTec leverer energi som varer.</div>
+        <div class="contrast-card__body" style="color:#15151A">Hvit bakgrunn med Ink tekst. Kontrast 16:1.</div>
+      </div>
+      <div class="contrast-card" style="background:#0A1628">
+        <div class="contrast-card__label" style="color:rgba(255,255,255,.45)">Mørk bakgrunn</div>
+        <div class="contrast-card__headline" style="color:#FFFFFF;font-weight:700">BlueTec leverer energi som varer.</div>
+        <div class="contrast-card__body" style="color:rgba(255,255,255,.8)">Navy bakgrunn med hvit tekst. Kontrast 17:1.</div>
+      </div>
+      <div class="contrast-card" style="background:#0077C8">
+        <div class="contrast-card__label" style="color:rgba(255,255,255,.55)">Blå bakgrunn</div>
+        <div class="contrast-card__headline" style="color:#FFFFFF;font-weight:700">BlueTec leverer energi som varer.</div>
+        <div class="contrast-card__body" style="color:rgba(255,255,255,.9)">Brand Blue bakgrunn med hvit tekst. Kontrast 4.6:1.</div>
+      </div>
+      <div class="contrast-card contrast-card--wrong" style="background:#F4F4F2">
+        <span class="wrong-badge">Feil</span>
+        <div class="contrast-card__label" style="color:#86867F">Feil bruk</div>
+        <div class="contrast-card__headline" style="color:#86867F;font-weight:700">BlueTec leverer energi.</div>
+        <div class="contrast-card__body" style="color:#86867F">Muted tekst på lys bakgrunn. Kontrast 2.5:1 — under WCAG AA.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Typography -->
+  <section class="section" id="typography">
+    <div class="eyebrow">Typografi</div>
+    <h2>BlueTec Geometric</h2>
+    <p class="section-desc">9 vekter fra Thin til Black. Vekt er hierarki. Headlines 700-800. Brotekst 400. Aldri headline i lys vekt.</p>
+
+    <h3 style="margin-bottom:16px">Vektramp</h3>
+    <div class="weight-ramp">
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:100">Aa</div><div class="weight-card__label">100 Thin</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:200">Aa</div><div class="weight-card__label">200 ExtraLight</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:300">Aa</div><div class="weight-card__label">300 Light</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:400">Aa</div><div class="weight-card__label">400 Regular</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:500">Aa</div><div class="weight-card__label">500 Medium</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:600">Aa</div><div class="weight-card__label">600 SemiBold</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:700">Aa</div><div class="weight-card__label">700 Bold</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:800">Aa</div><div class="weight-card__label">800 ExtraBold</div></div>
+      <div class="weight-card"><div class="weight-card__sample" style="font-weight:900">Aa</div><div class="weight-card__label">900 Black</div></div>
+    </div>
+
+    <h3 style="margin-bottom:16px">Typeskala</h3>
+    <div class="type-scale">
+      <div class="type-row">
+        <div class="type-meta"><strong>Display / H1</strong>800 ExtraBold<br>48-64px / -0.03em</div>
+        <div style="font-size:54px;font-weight:800;letter-spacing:-.03em;line-height:1.05">Fremtiden er fornybar.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>H2</strong>700 Bold<br>32-36px / -0.02em</div>
+        <div style="font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.2">Komplett energisystem</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>H3</strong>600 SemiBold<br>17-20px / -0.01em</div>
+        <div style="font-size:19px;font-weight:600;letter-spacing:-.01em">Sanntidsovervaking og garantert ytelse</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Lead</strong>400 Regular<br>19-22px / 0</div>
+        <div style="font-size:20px;font-weight:400;color:var(--bt-muted);line-height:1.5">BlueTec har levert over 1 000 komplette energisystemer siden 2016 og folger hvert anlegg i hele levetiden.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Body</strong>400 Regular<br>16px / 0 / lh 1.6</div>
+        <div style="font-size:16px;font-weight:400;line-height:1.6">Solcelleanlegg, ladeinfrastruktur og energilagring levert som ett helhetlig system. Vi tar ansvar fra rådgivning til 30 år med drift.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Label / eyebrow</strong>600 SemiBold<br>11-12px / 0.18em / CAPS</div>
+        <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--bt-blue)">Seksjonstittel</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><strong>Caption</strong>400 Regular<br>12-13px / var(--bt-muted)</div>
+        <div style="font-size:13px;font-weight:400;color:var(--bt-muted)">Installert kapasitet: 231 kWp. Foto: BlueTec AS 2025.</div>
+      </div>
+    </div>
+
+    <div class="font-download-box">
+      <div class="font-download-info">
+        <h3>Last ned BlueTec Geometric</h3>
+        <p>TTF + WOFF — 9 vekter. Bruk TTF i Office, WOFF pa nett.</p>
+      </div>
+      <div style="display:flex;gap:10px">
+        <a class="btn btn--primary" href="branding-hub-assets/Bluetec.zip" download>Last ned fonter (ZIP)</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Email signature -->
+  <section class="section" id="signature">
+    <div class="eyebrow">Kommunikasjon</div>
+    <h2>E-postsignatur</h2>
+    <p class="section-desc">Fyll inn feltene og kopier signaturen rett inn i Outlook eller Gmail. Bruk Arial — e-postklienter kan ikke laste inn egendefinerte fonter.</p>
+
+    <div class="sig-builder">
+      <div class="sig-form">
+        <div class="sig-form__section">
+          <div class="sig-form__section-title">Pakreves</div>
+          <div class="field">
+            <label for="sig-name">Fullt navn</label>
+            <input type="text" id="sig-name" placeholder="Ola Nordmann" oninput="updateSig()">
+          </div>
+          <div class="field">
+            <label for="sig-role">Stilling / tittel</label>
+            <input type="text" id="sig-role" placeholder="Prosjektleder" oninput="updateSig()">
+          </div>
+          <div class="field">
+            <label for="sig-email">E-post</label>
+            <input type="email" id="sig-email" placeholder="ola@bluetec.no" oninput="updateSig()">
+          </div>
+        </div>
+
+        <div class="sig-form__section">
+          <div class="sig-form__section-title">Valgfritt</div>
+          <div class="optional-checks">
+            <div class="check-row">
+              <input type="checkbox" id="chk-phone" onchange="toggleOptional('phone',this.checked)">
+              <label for="chk-phone">Telefon / mobil</label>
+            </div>
+            <div id="opt-phone" style="display:none;padding-left:26px">
+              <div class="field" style="margin-bottom:0">
+                <input type="tel" id="sig-phone" placeholder="+47 900 00 000" oninput="updateSig()">
+              </div>
+            </div>
+            <div class="check-row">
+              <input type="checkbox" id="chk-dept" onchange="toggleOptional('dept',this.checked)">
+              <label for="chk-dept">Avdeling / team</label>
+            </div>
+            <div id="opt-dept" style="display:none;padding-left:26px">
+              <div class="field" style="margin-bottom:0">
+                <input type="text" id="sig-dept" placeholder="Salg og marked" oninput="updateSig()">
+              </div>
+            </div>
+            <div class="check-row">
+              <input type="checkbox" id="chk-location" onchange="toggleOptional('location',this.checked)">
+              <label for="chk-location">Kontorlokasjon</label>
+            </div>
+            <div id="opt-location" style="display:none;padding-left:26px">
+              <div class="field" style="margin-bottom:0">
+                <input type="text" id="sig-location" placeholder="Tønsberg" oninput="updateSig()">
+              </div>
+            </div>
+            <div class="check-row">
+              <input type="checkbox" id="chk-linkedin" onchange="toggleOptional('linkedin',this.checked)">
+              <label for="chk-linkedin">LinkedIn</label>
+            </div>
+            <div id="opt-linkedin" style="display:none;padding-left:26px">
+              <div class="field" style="margin-bottom:0">
+                <input type="url" id="sig-linkedin" placeholder="https://linkedin.com/in/ola-nordmann" oninput="updateSig()">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sig-form__section">
+          <div class="sig-form__section-title">Egendefinerte felt</div>
+          <div id="custom-fields" class="custom-fields"></div>
+          <button class="btn-add-custom" onclick="addCustomField()">+ Legg til felt</button>
+        </div>
+      </div>
+
+      <div class="sig-preview-panel">
+        <div class="sig-preview-label">Forhåndsvisning</div>
+        <div class="sig-preview-box" id="sig-preview"></div>
+        <div class="sig-actions">
+          <button class="btn btn--primary" onclick="copySigHTML()">Kopier signatur (HTML)</button>
+          <button class="btn btn--secondary" onclick="downloadSig()">Last ned .htm</button>
+        </div>
+        <p style="font-size:12px;color:var(--bt-muted);margin-top:12px">Lim inn direkte i Outlook: Fil > Alternativer > E-post > Signaturer. I Gmail: Innstillinger > Signatur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Swatches & downloads -->
+  <section class="section" id="swatches">
+    <div class="eyebrow">Verktoy</div>
+    <h2>Fargeprofiler &amp; nedlastinger</h2>
+    <p class="section-desc">Importer fargepaletten direkte i designverktøy og Office.</p>
+
+    <div class="swatch-dl-grid">
+      <div class="swatch-dl-card">
+        <div class="swatch-dl-card__icon">Ai</div>
+        <h3>Adobe Swatches</h3>
+        <div class="swatch-dl-card__ext">.ase</div>
+        <div class="swatch-dl-card__install">
+          <strong>Photoshop:</strong> Window &gt; Swatches &gt; panelmeny &gt; Import Swatches<br>
+          <strong>Illustrator:</strong> Swatches &gt; meny &gt; Open Swatch Library &gt; Other Library<br>
+          <strong>InDesign:</strong> Swatches &gt; meny &gt; Load Swatches
+        </div>
+        <a class="btn btn--primary" href="branding-hub-assets/swatches/BlueTec.ase" download>Last ned .ase</a>
+      </div>
+
+      <div class="swatch-dl-card">
+        <div class="swatch-dl-card__icon">Gp</div>
+        <h3>GIMP / Inkscape</h3>
+        <div class="swatch-dl-card__ext">.gpl</div>
+        <div class="swatch-dl-card__install">
+          <strong>GIMP:</strong> Kopier til palettes-mappen (Edit &gt; Preferences &gt; Folders &gt; Palettes), deretter refresh.<br>
+          <strong>Inkscape:</strong> Kopier til Inkscape palettes-mappen; vises i palettvelgeren.
+        </div>
+        <a class="btn btn--primary" href="branding-hub-assets/swatches/BlueTec.gpl" download>Last ned .gpl</a>
+      </div>
+
+      <div class="swatch-dl-card">
+        <div class="swatch-dl-card__icon">Of</div>
+        <h3>Office-tema</h3>
+        <div class="swatch-dl-card__ext">.thmx</div>
+        <div class="swatch-dl-card__install">
+          Setter både farger og BlueTec Geometric som temafont i Word, PowerPoint og Outlook.<br>
+          <strong>PowerPoint / Word:</strong> Design &gt; Temaer &gt; Bla etter temaer &gt; BlueTec-Office-Theme.thmx
+        </div>
+        <a class="btn btn--primary" href="branding-hub-assets/swatches/BlueTec-Office-Theme.thmx" download>Last ned .thmx</a>
+      </div>
+
+      <div class="swatch-dl-card">
+        <div class="swatch-dl-card__icon">{}</div>
+        <h3>Design tokens</h3>
+        <div class="swatch-dl-card__ext">.json + .css</div>
+        <div class="swatch-dl-card__install">
+          Maskinlesbare fargeverdier for kode og design-systemer.<br>
+          <strong>colors.json:</strong> HEX, RGB, CMYK, Pantone per token.<br>
+          <strong>colors.css:</strong> CSS custom properties, klar til bruk.
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn btn--primary" href="branding-hub-assets/tokens/colors.json" download>JSON</a>
+          <a class="btn btn--secondary" href="branding-hub-assets/tokens/colors.css" download>CSS</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Brand rules -->
+  <section class="section" id="rules">
+    <div class="eyebrow">Retningslinjer</div>
+    <h2>Merkevareregler</h2>
+    <p class="section-desc">Ikke-omsettelige regler for korrekt bruk av BlueTec-identiteten.</p>
+
+    <div class="rules-grid">
+      <div class="rules-col rules-col--do">
+        <div class="rules-col__title"><span class="do-badge">Gjør</span></div>
+        <ul class="rule-list">
+          <li>Bruk <strong>#0077C8</strong> som eneste merk-bla. Pantone 3005 C er kilden.</li>
+          <li>Hold emblemets transparens — de hvite flatene er negativrom, ikke fylt hvit.</li>
+          <li>Vend logoen til hvit på mørk og blå bakgrunn.</li>
+          <li>Hold frisone rundt alle lockups = emblemets høyde på alle fire sider.</li>
+          <li>Bruk BlueTec Geometric til alt. 700-800 til titler, 400 til brødtekst.</li>
+          <li>Sett all kundevendt kopi på norsk (bokmål).</li>
+          <li>Bruk SVG som masterformat til nett og print; PNG til lysbildefremvisninger og bilder.</li>
+        </ul>
+      </div>
+      <div class="rules-col rules-col--dont">
+        <div class="rules-col__title"><span class="dont-badge">Ikke gjør</span></div>
+        <ul class="rule-list">
+          <li>Ikke bruk det utdaterte <strong>#0075C9</strong> — det er pensjonert.</li>
+          <li>Ikke plasser emblemer på grå eller ugjennomsiktig bakgrunn.</li>
+          <li>Ikke strekk, roter, farg om eller tilføy effekter pa merket.</li>
+          <li>Ikke del opp ordmerket i to toner eller tint det utenfor paletten.</li>
+          <li>Ikke sett overskrifter i lys vekt (Thin, ExtraLight, Light).</li>
+          <li>Ikke bruk farger utenfor den låste paletten — ikke neonfarger.</li>
+          <li>Ikke publiser % besparelser eller tilbakebetalingsår uten verifiserte tall.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background:var(--bt-navy);border-radius:var(--radius);padding:28px 32px;margin-top:8px">
+      <div class="eyebrow eyebrow--light" style="margin-bottom:8px">Kontrastpar (ikke omsettelig)</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:14px;color:rgba(255,255,255,.8)">Hvit / papir bakgrunn &rarr; nesten-svart tekst <code style="background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px;font-size:12px">#15151A</code></div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8)">Navy bakgrunn &rarr; hvit tekst <code style="background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px;font-size:12px">#FFFFFF</code></div>
+        <div style="font-size:14px;color:rgba(255,255,255,.8)">Blå bakgrunn &rarr; hvit tekst <code style="background:rgba(255,255,255,.1);padding:2px 6px;border-radius:4px;font-size:12px">#FFFFFF</code></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+// ── Toast ─────────────────────────────────────────
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+// ── Copy color ────────────────────────────────────
+function copyColor(hex,label){
+  navigator.clipboard.writeText(hex).then(()=>showToast('Kopiert: '+label));
+}
+
+// ── Copy SVG markup ───────────────────────────────
+function copySVG(path){
+  fetch(path).then(r=>r.text()).then(svg=>{
+    navigator.clipboard.writeText(svg).then(()=>showToast('SVG-kode kopiert'));
+  }).catch(()=>showToast('Kunne ikke kopiere — åpne fra server'));
+}
+
+// ── Surface toggle ────────────────────────────────
+const surfaceMap={light:'#F4F4F2',dark:'#0A1628',blue:'#0077C8'};
+function setSurface(key,btn){
+  document.querySelectorAll('.surf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const bg=surfaceMap[key];
+  document.querySelectorAll('.logo-surface').forEach(el=>{
+    const fixed=el.getAttribute('data-surface-fixed');
+    if(!fixed) el.style.background=bg;
+  });
+}
+
+// ── Signature builder ─────────────────────────────
+let customFieldCount=0;
+
+function toggleOptional(key,show){
+  document.getElementById('opt-'+key).style.display=show?'block':'none';
+  updateSig();
+}
+
+function addCustomField(){
+  customFieldCount++;
+  const id='cf'+customFieldCount;
+  const div=document.createElement('div');
+  div.className='custom-field-row';
+  div.id='row-'+id;
+  div.innerHTML=`<input type="text" id="lbl-${id}" placeholder="Label" oninput="updateSig()"><input type="text" id="val-${id}" placeholder="Verdi" oninput="updateSig()"><button class="btn-remove" onclick="removeCustomField('${id}')" aria-label="Fjern felt">&times;</button>`;
+  document.getElementById('custom-fields').appendChild(div);
+  updateSig();
+}
+
+function removeCustomField(id){
+  const row=document.getElementById('row-'+id);
+  if(row)row.remove();
+  updateSig();
+}
+
+function getVal(id){return(document.getElementById(id)||{}).value||'';}
+function chk(id){return document.getElementById(id)&&document.getElementById(id).checked;}
+
+function buildSigHTML(){
+  const name=getVal('sig-name')||'Fullt navn';
+  const role=getVal('sig-role')||'Stilling';
+  const email=getVal('sig-email')||'navn@bluetec.no';
+  const phone=chk('chk-phone')?getVal('sig-phone'):'';
+  const dept =chk('chk-dept') ?getVal('sig-dept') :'';
+  const loc  =chk('chk-location')?getVal('sig-location'):'';
+  const li   =chk('chk-linkedin') ?getVal('sig-linkedin') :'';
+
+  const B64='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAALK0lEQVR4AeydSXrcOAyFVT5VZ9X2qZJd7F1yKqtXya2q+QvF0lAaOIMq059hTSQA4j2AlGrwS/esPz/+vHajvJv99+7738+FXM2xlfm1H3+kj2xfnzVMz0EAC/QI8LW7Xj4n8tPs/+y6DiCn0k1+pudfh/bXy8/bFnKMRHkiUpyTAEvALdgjwF3GH0sOS4rPobrgU0ajuVSfjwAEuizgR7GfE+Jk1eF8BDiCQ/u6TBtSHSCDtj8H9hsBDgIUdRkyfP97vU0R71G6MnVuBMgU2JlaiIBQEZDZRd2DRoCS8YcECCRAStpe2LKHjQA2EiW3kACpgASNACWBX9qCBHaNsLxW6Lg8AbiN44FNBewvFONjM0IEeZ5w3Dppi7IEAHTu4eWBTdKBPIEyeZ5AjAoOphwByHqYXnBwpzRFjIhVIefzE8CW/Jb1PpC+Di9SFagGeQnAAFrJ9wF+3pZqQAznZ5Me5SMAjjOApO5+QWXEkFgmGvpSTR4C4DCOL62147AIEEtiGtZ7t1d6AuAoDu+abRe9I0BMMywO0xIAB3HUe3Stg2MEWBzyvIA3rzh22W+WjgCA31b6+9FOc1WeF6TR1aUhQAM/ERzOaqQSODffbhhPAOb8lvnbEc53JQkJ4ggA+G3OzwfxsWbe+Rz1RpNwAjTwj+Ep0YIEBIsDW1uXwwjA410Mb2lt58tGACzAJMBqGAHk8W6AudYlWwTAJIAE/gSIKDfZBt8USwSoBLLn/NePAIAfYMTZm9YwNgLei0I/AjTwYwHK3x+MPKYCdwKQ/fndbxZSRAASOOpxIwDgeyh1tK3RrDdGRS7Xj24qXSfnu6f4cZ4K3AhwTvAF0Mv1zQD91v3+52KErcivb+/dVH7/I+elHW0vpp+Q5IycALMff16PXD8mANl/pKWu670BzoL5ZkDuBwnx0RIEUgiRPkLUqPWBBAfGjwngoOTARonLFnQyV0BPbfXXN4j0bqqIVIbU+vPoYyrYfel4nwD1Z78FPg/oW6BQGaQq1F8RDhJ4nwAHnbfiU+Q8CzjmbTKziMEVI+cgwm4V2CZAzdnPfEzwVzBROYUvVAS5k1BxYdfoTiJvE2Cn066x3BfJeCS3nRD9VCQqU0jfvH02q8A6AWrO/ryBitdONaiRBBsJvU6Ajcbx0fkiGoQEb5qjXbG9WgUeCdCyfyV2AaeYplirBHTN2OXhlvCRANfLvxkd+FqqayPBCraPBGhv8ExLUiFBLc8LHqaBOQFa+U8LvtUma4I6SLBY380JsFIi7Biecuvxunn0+CFBHc8JZuuAOQGeufwDNh9gEbkOn7/nfXR8R89UqIJINOIrCmq5PSQWN/dGAuQa9M2QyoaBWsABWwg+y4AHvyiRCKRIHZNa1gOM7zbwkQDPVv4BfgT9NlzPDYFKTYTMU4HnCGefDdzPDF/NWu1t1ku2p/EiNRH0p4I71lIBCFqaUOlqoWTHZv3eCCACNvbauFxjKtBeEN4wFwKkzBaXAORoAzAAlEP3VCc2sDU9F7KvXQUYh/HbEsDsnvgXQG4DKjIKbGEzxphUgRgNSfoKAc68AAQIAEkSDg8l2LyVUY9ey6b98kTB42EdIAQ48xQAEAWjNjMl643ZKa8D7WnAOPvSxbPYqFH6JfuVTN/Ncrt5P/DckWlArwoY7KkAQynwdL2O5prZP0bg4QWW8VK5vVBLECC0r26/GrLfRiCGiLrTwOt5CRATdAtcuu05q6hZ/J+TADVlvyWRmU/trtdW1gFeXVI2fukMC1Iq/LK64iqS2kJQrwIQMFbQIULf+pgmX9sWMh7F23A9AgiAzJ0hIr3r+xsyFvpojeTEi0CtkD2ZXSqAJgOfLJzlhxNrEQLE6mj9TxyBRoATg5fCdQigdguSYgBNR1wEIECchrjekC9E4qzm6x0yFvrk82hfc69JgL7j49Qhov12qrWg8kw/ZCz0URyPJgHC7z4I9hoI5z0XHovIMWsSoAt+L4Ly8/PVmMvbvVcv7Z4MfQ1hV6n7xZfucv3PvXlVLTXnznkg4ipSUPbPHQg8Mti/mK56gYx5ph8XdDPshL+h2Z/QhVBVECC0r24/mQb0yGtHH0tE3VdjzV2ABNIOp/Q27u1UsoIu7fPcXnz2600BBntbAfQyKWYaAArNr2GJzf4K3thiCUAotSQuAwyLzUK2/JcvAH5s9seSPw6xIemFAGY1GKcrsnfsrRBAAEikG87dsYVN5w4rDbWz/4a5EEDxSdQQmhSZACAAMyjM+Acb2Io1obv4u3svBKCM3k+p7MQtBq3LAANA9jj1lvUGNmL1SvYHTX2xpu/9b+MQAsjZYU6QXYW/KaoAbjMwvrc3LRF43eIS/H8H8Gsq+tl/x3okwG1OmPpZeJ8q8J7MZhoi9GaB+Ta8aJXKsRqyf4L1SADtdQABpgrELgjRM5UpEY6rQm+69jfQLwPwqadHxmiM1PI7EiD1QENHmCtAEAFherDCnI7YYx4sIbliIdkfGpl0/YjDTdtIADnRy0b1b9qpYG8oAI3stUl1DfBzkdvHx0UVnBNgcdFHb9K2BIqAJVWqqIyxMCZFF7ZMzwkg2VBDFeg6Akbgtjw/y3nWNIylFn8n5R+X5gTgTC1VAF8IHAFk/4yC77HfInIbd5LNCraPBEhiKaESAkggE6osogqf8b2IMUcji+yn1yMBapoG8BAhkGeaDmoEfyX7Ce0jATi70ZhLaiLTQboHRbkGAlEhbC79ifWuE6DGKsDAIQEfv2a/NiHr8Q0fa/ONhF4p/7i5TgCu0IltfcLn8K8dmVaLb4AvWa/7Ak9APLYJUGsVsIMk01J/k7fV7boFeMn6T9cuxduRyBvZjy/bBOAqndnWLBpEmAN/uqyfwrlPgNqrwHQkUyIA0PRain10Mu2MGV8E+CjXSeCd7Ef3PgFowYsjbM8iEIH52E4PgBbqO6ADOLrQiW7F7/PxHsYB+Og7JgCtYBLbswmAIQAo8tkBKKRYCudHGf+n0JkAn+LjiJkbAYRJdbxGMB2k/z5l+3V4nQFiTEWAluv+euvrIZgd+uVGANQ4MoqmTZQj4IGVOwFYEHooVg7B1zUPRo7ZT5DcCUBrUfwMUwGjeUbpO8HIeWx+BEDt2e4K8PmrSAA2/gQgmLyPjm2TbBHwVkzp9+7Uzf5voHv3th5wj1WJloDvWfqtW2EVgN4YxDD7TfQiAAZgEehBOAEwKIbbopBY6Ij3om/pZhwB0CYLj0YCYlFW+uGDK5E24wmAA40ERKGsSMyjbaYhAG6IQ60SEIu80g8fXUtkIx0BcKiRgCjkFCn73IUlspKWADgFCViZst/EOwI7HQT8nQYhl9ITAC+4O2gkIBJphFiSWGm0zbTkIQAmGgmIQrwAPrGM17SqIR8BMIfjDID9Jv4R4JE7MfTv6dwjLwFwgwHw+ftGBKLhKrLST7jY2zKcnwDWMkRoJLDR2N4SI+b7AuDjRDkCYG0kQc9hk1kE+uH+nhjNTuc9KEsAxsIAYThM57hJZ4D/GB7rFsr6bvJTngDWuBDhMgzenvt623vWaw1djwB2xBCBaoDYc8+/FeCphApZPw2vPgHwBhIgkADh3HNKNcDb8NZBAOsNJEAgAWLPn39bHfA2pHURwHoFCZBzPz8A9A+zxpFvGlUu9Ta0y22dBJh6ORLhzQTzY3qp0n2At6C/d5UCb2NXPwGspwTykQy9vay4xYfekBPQ83y9bMbBnYcA0yCMZJCgs15AynzfcW9c6WeAV7CaNz4F/Z6TAMuhUhkQgGDdgPBCCqRAhBi96WbF7K7+2uuypa/oEaKhV2y8pSrtq14UPPk/AAAA//8mmAp+AAAABklEQVQDAJXnyltd/QtlAAAAAElFTkSuQmCC';
+
+  // ── identity row ─────────────────────────────────────────────
+  const identityRow=`
+    <tr>
+      <td width="74" style="width:74px;vertical-align:middle;padding-right:18px">
+        <img src="${B64}" width="56" height="56" alt="BlueTec" style="display:block;border:0">
+      </td>
+      <td style="vertical-align:middle">
+        <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:bold;color:#15151A;letter-spacing:.2px;line-height:1.3">${name}</div>
+        <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#86867F;margin-top:3px;line-height:1.4">${role}</div>
+      </td>
+    </tr>`;
+
+  // ── contact grid — 3-column table so dots align vertically ───
+  const CS='font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#5a5a55;line-height:1.9;white-space:nowrap;padding:0';
+  const DS='font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#86867F;line-height:1.9;white-space:nowrap;padding:0 6px';
+  const LK='color:#0077C8;text-decoration:none';
+  function gridRow(left,right){return`<tr><td style="${CS}">${left}</td><td style="${DS}">${left&&right?'·':''}</td><td style="${CS}">${right||''}</td></tr>`;}
+
+  let rows=gridRow(`<a href="mailto:${email}" style="${LK}">${email}</a>`,phone||'');
+  if(dept||loc) rows+=gridRow(dept||'',loc||'');
+  rows+=gridRow(`<a href="https://www.bluetec.no" style="${LK}">www.bluetec.no</a>`,li?`<a href="${li}" style="${LK}">LinkedIn</a>`:'');
+
+  // custom fields — each on own line, spans all columns
+  document.querySelectorAll('[id^="row-cf"]').forEach(row=>{
+    const n=row.id.replace('row-cf','');
+    const lbl=getVal('lbl-cf'+n);
+    const val=getVal('val-cf'+n);
+    if(lbl||val) rows+=`<tr><td colspan="3" style="${CS}">${lbl}${lbl&&val?': ':''}${val}</td></tr>`;
+  });
+
+  const contactLines=`<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse">${rows}</table>`;
+
+  // ── contact row (second row — empty logo cell keeps column widths) ──
+  const contactRow=`
+    <tr>
+      <td width="74" style="width:74px;padding-top:10px"></td>
+      <td style="border-top:2px solid #0077C8;padding-top:10px">${contactLines}</td>
+    </tr>`;
+
+  return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse">${identityRow}${contactRow}</table>`;
+}
+
+
+function updateSig(){
+  document.getElementById('sig-preview').innerHTML=buildSigHTML();
+}
+
+async function copySigHTML(){
+  const sigHtml=buildSigHTML();
+  try{
+    const blob=new Blob([sigHtml],{type:'text/html'});
+    await navigator.clipboard.write([new ClipboardItem({'text/html':blob})]);
+    showToast('Signatur klar — lim direkte inn i Outlook eller Gmail');
+  }catch(e){
+    navigator.clipboard.writeText(sigHtml).then(()=>showToast('HTML-kode kopiert'));
+  }
+}
+
+function downloadSig(){
+  const html=`<!DOCTYPE html><html lang="no"><head><meta charset="UTF-8"><title>BlueTec signatur</title></head><body style="margin:0;padding:32px;font-family:Arial,sans-serif;background:#f4f4f2">${buildSigHTML()}</body></html>`;
+  const a=document.createElement('a');
+  a.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+  a.download='bluetec-signatur.htm';
+  a.click();
+}
+
+// ── Scroll-spy ────────────────────────────────────
+const sections=['overview','logos','colours','typography','signature','swatches','rules'];
+const navLinks={};
+sections.forEach(id=>{navLinks[id]=document.querySelector(`.sidenav__link[href="#${id}"]`)});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      Object.values(navLinks).forEach(l=>{if(l)l.classList.remove('active')});
+      const link=navLinks[e.target.id];
+      if(link)link.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+
+sections.forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el)});
+
+// ── Init ──────────────────────────────────────────
+updateSig();
+
+// ── Multi-select tray ─────────────────────────────
+const selectedFiles=new Map(); // path -> filename
+
+function initMultiSelect(){
+  document.querySelectorAll('.logo-card').forEach(card=>{
+    // Find all download links in this card
+    const links=Array.from(card.querySelectorAll('a[download]'));
+    if(!links.length) return;
+    // Use the primary (first) download link as the representative file
+    const primaryLink=links[0];
+    const path=primaryLink.getAttribute('href');
+    const nameEl=card.querySelector('.logo-card__name');
+    const label=nameEl?nameEl.textContent.trim():'Logo';
+
+    const cb=document.createElement('input');
+    cb.type='checkbox';
+    cb.className='logo-card__checkbox';
+    cb.setAttribute('aria-label','Velg '+label);
+    cb.addEventListener('change',()=>{
+      if(cb.checked){
+        // Add all download links from this card
+        links.forEach(l=>{
+          const p=l.getAttribute('href');
+          const fname=p.split('/').pop();
+          selectedFiles.set(p,fname);
+        });
+        card.classList.add('selected');
+      } else {
+        links.forEach(l=>selectedFiles.delete(l.getAttribute('href')));
+        card.classList.remove('selected');
+      }
+      updateTray();
+    });
+    card.prepend(cb);
+  });
+}
+
+function updateTray(){
+  const count=selectedFiles.size;
+  document.getElementById('sel-count').textContent=count;
+  document.getElementById('tray-dl-btn').disabled=count===0;
+  const tray=document.getElementById('sel-tray');
+  if(count>0) tray.classList.add('visible');
+  else tray.classList.remove('visible');
+}
+
+function clearSelection(){
+  selectedFiles.clear();
+  document.querySelectorAll('.logo-card.selected').forEach(c=>{
+    c.classList.remove('selected');
+    const cb=c.querySelector('.logo-card__checkbox');
+    if(cb) cb.checked=false;
+  });
+  updateTray();
+}
+
+async function downloadSelected(){
+  const btn=document.getElementById('tray-dl-btn');
+  btn.textContent='Pakker...';
+  btn.disabled=true;
+
+  try{
+    // Try using fflate if available
+    if(typeof fflate!=='undefined'){
+      const files={};
+      const entries=Array.from(selectedFiles.entries());
+      await Promise.all(entries.map(async([path,fname])=>{
+        const r=await fetch(path);
+        const buf=await r.arrayBuffer();
+        files[fname]=new Uint8Array(buf);
+      }));
+      const zipped=fflate.zipSync(files,{level:1});
+      const blob=new Blob([zipped],{type:'application/zip'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download='bluetec-logoer.zip';
+      a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+    } else {
+      // Fallback: sequential downloads
+      for(const[path] of selectedFiles){
+        const a=document.createElement('a');
+        a.href=path;
+        a.download=path.split('/').pop();
+        a.click();
+        await new Promise(r=>setTimeout(r,300));
+      }
+    }
+    showToast('Nedlasting startet ('+selectedFiles.size+' filer)');
+  } catch(e){
+    showToast('Nedlasting feilet — prøv enkeltfiler');
+  }
+
+  btn.textContent='Last ned som ZIP';
+  btn.disabled=false;
+}
+
+// load fflate async (non-blocking)
+const fflateScript=document.createElement('script');
+fflateScript.src='https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js';
+document.head.appendChild(fflateScript);
+
+initMultiSelect();
+</script>
+</body>
+</html>

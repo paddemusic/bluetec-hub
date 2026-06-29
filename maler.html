@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueTec — Maler</title>
+<style>
+  /* ============ FONT ============ */
+  @font-face{font-family:'BlueTec Geometric';font-weight:300;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Light.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Light.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:400;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Regular.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Regular.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:500;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Medium.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Medium.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:600;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-SemiBold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-SemiBold.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:700;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Bold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Bold.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:800;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-ExtraBold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-ExtraBold.ttf') format('truetype')}
+
+  /* ============ TOKENS ============ */
+  :root{
+    --blue:#0077C8; --navy:#0A1628; --white:#FFFFFF;
+    --ink:#15151A; --muted:#86867F; --hairline:#E6E6E1; --paper:#F4F4F2;
+    --ltblue:#EAF4FB;
+    --blue-12:rgba(0,119,200,.12); --blue-08:rgba(0,119,200,.08);
+    --motion-fast:120ms; --motion-base:200ms; --motion-slow:320ms;
+    --ease-standard:cubic-bezier(.4,0,.2,1);
+    --ease-entrance:cubic-bezier(0,0,.2,1);
+    --maxw:840px; --sb:264px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--white); color:var(--ink);
+    font-family:'BlueTec Geometric',system-ui,sans-serif;
+    font-weight:400; line-height:1.6; -webkit-font-smoothing:antialiased;
+    display:grid; grid-template-columns:var(--sb) 1fr;
+  }
+
+  /* ============ PROGRESS ============ */
+  .progress{position:fixed;top:0;left:var(--sb);right:0;height:2px;background:transparent;z-index:50}
+  .progress__bar{height:100%;width:0;background:var(--blue);transition:width 80ms linear}
+
+  /* ============ SIDEBAR ============ */
+  .sidebar{position:sticky;top:0;align-self:start;height:100vh;border-right:1px solid var(--hairline);
+    padding:34px 26px;display:flex;flex-direction:column;gap:28px;background:var(--white)}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand img{height:26px}
+  .sb-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:10px}
+  nav{display:flex;flex-direction:column;gap:1px}
+  nav a{text-decoration:none;color:var(--muted);font-size:14.5px;font-weight:500;padding:8px 12px;border-radius:8px;
+    transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+  nav a:hover{color:var(--navy);background:var(--paper)}
+  nav a.active{color:var(--blue);background:var(--blue-08);font-weight:600}
+  nav a:focus-visible,.btn:focus-visible,.back-hub:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .nav-div{height:1px;background:var(--hairline);margin:12px 4px}
+  .back-hub{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-size:13.5px;font-weight:600;padding:8px 12px;border-radius:8px;
+    transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+  .back-hub:hover{color:var(--blue);background:var(--blue-08)}
+  .sb-foot{margin-top:auto;font-size:11.5px;color:var(--muted);line-height:1.7}
+
+  /* ============ MAIN ============ */
+  main{padding:0 64px 160px;max-width:calc(var(--maxw) + 128px)}
+  section{padding-top:92px;scroll-margin-top:24px}
+  section:first-of-type{padding-top:68px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:14px}
+  h1{font-size:54px;font-weight:800;letter-spacing:-.03em;line-height:1.04;margin:0 0 20px;color:var(--navy)}
+  h2{font-size:30px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px;color:var(--navy)}
+  h3{font-size:17px;font-weight:600;margin:0 0 6px;color:var(--navy)}
+  .lead{font-size:20px;line-height:1.5;color:var(--ink);font-weight:400;max-width:var(--maxw)}
+  p{max-width:var(--maxw);text-wrap:pretty}
+  .sec-intro{color:#3a3a40;margin:10px 0 30px;max-width:var(--maxw)}
+  .rule{height:1px;background:var(--hairline);border:0;margin:0}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity var(--motion-slow) var(--ease-entrance),transform var(--motion-slow) var(--ease-entrance)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* ============ STATUS BANNER ============ */
+  .banner{display:flex;gap:14px;align-items:flex-start;background:var(--ltblue);border:1px solid #cfe6f7;border-radius:14px;padding:18px 20px;margin-top:26px}
+  .banner .dot{flex:0 0 9px;height:9px;border-radius:50%;background:var(--blue);margin-top:7px}
+  .banner p{font-size:14px;color:#2c5a78;margin:0}
+  .banner b{color:var(--navy)}
+
+  /* ============ STEPS ============ */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .step{border:1px solid var(--hairline);border-radius:16px;padding:24px}
+  .step .n{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.1em;margin-bottom:12px}
+  .step h3{margin-bottom:4px}
+  .step p{font-size:13.5px;color:#46464e;margin:0}
+
+  /* ============ TEMPLATE CARD ============ */
+  .tpl{border:1px solid var(--hairline);border-radius:18px;overflow:hidden;margin-top:22px;background:var(--white)}
+  .tpl__top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;padding:26px 28px 22px}
+  .tpl__head h3{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.01em;margin:0 0 6px}
+  .tpl__head p{font-size:13.5px;color:#52525a;margin:0;max-width:520px}
+  .pill{flex:none;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--blue);border-radius:99px;padding:5px 11px}
+  .pill.alt{background:var(--navy)}
+  .tpl__preview{background:var(--paper);border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);
+    padding:30px;display:flex;gap:18px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .tpl__foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;padding:18px 28px}
+  .usage{font-size:12.5px;color:var(--muted);max-width:430px}
+  .dls{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:13px;font-weight:600;
+    border-radius:99px;padding:9px 16px;cursor:pointer;text-decoration:none;border:1px solid var(--hairline);
+    background:var(--white);color:var(--navy);transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),transform var(--motion-fast) var(--ease-standard)}
+  .btn:hover{border-color:var(--blue);color:var(--blue)}
+  .btn:active{transform:scale(.98)}
+  .btn--primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .btn--primary:hover{background:#0069b0;color:#fff}
+  .btn .ext{font-size:10px;opacity:.6;font-weight:700;letter-spacing:.04em}
+  .btn--pending{opacity:.55}
+  .btn--pending .ext::after{content:" · bygges"}
+
+  /* mini-frames (chosen direction) */
+  .frame{background:#fff;overflow:hidden;border-radius:6px;box-shadow:0 1px 0 rgba(0,0,0,.04),0 14px 30px -16px rgba(10,22,40,.45);position:relative;flex:none}
+  .small-caps{text-transform:uppercase;letter-spacing:.14em}
+  .pv-cap{font-size:11px;font-weight:600;color:#52525a;text-align:center;margin-top:10px}
+  .pv{display:flex;flex-direction:column;align-items:center}
+
+  /* A4 doc mini (≈ direction spec) */
+  .a4{width:300px;height:424px}
+  .a4 .body{position:absolute;inset:0;padding:30px 32px 46px}
+  .doc-h{font-weight:800;letter-spacing:-.01em;color:var(--navy)}
+  .meta{color:var(--muted);font-size:6.6px;line-height:1.7}
+  .ptext{font-size:6.7px;line-height:1.78;color:var(--ink)}
+  .label{font-size:5.4px;font-weight:700;color:var(--blue);letter-spacing:.16em;text-transform:uppercase}
+  .top{display:flex;justify-content:space-between;align-items:flex-start}
+  .top img{height:15px;width:auto}
+  .divider{height:1.5px;background:var(--blue);margin:9px 0 15px}
+  .foot{position:absolute;left:32px;right:32px;bottom:20px;padding-top:7px;border-top:1px solid var(--hairline);
+    font-size:5px;color:var(--muted);letter-spacing:.02em;text-align:center;line-height:1.6}
+  table.li{width:100%;border-collapse:collapse;font-size:6.2px;margin-top:5px}
+  table.li th{text-align:left;font-weight:700;padding:5px 6px;font-size:5px;letter-spacing:.08em;text-transform:uppercase;background:var(--blue);color:#fff}
+  table.li th.r,table.li td.r{text-align:right}
+  table.li td{padding:5px 6px;border-bottom:1px solid var(--hairline);color:var(--ink)}
+  .addon{margin-top:10px;padding:8px 9px;border-radius:6px;font-size:6px;line-height:1.6;background:var(--ltblue);border-left:2px solid var(--blue);color:#2c5a78}
+  .sigrow{display:flex;gap:24px;margin-top:26px}
+  .sigline{flex:1;border-top:1px solid var(--ink);padding-top:5px;font-size:5.6px;color:var(--muted)}
+  .cert{ text-align:center }
+  .cert .seal{width:46px;height:46px;border-radius:50%;border:2px solid var(--blue);margin:14px auto 0;display:flex;align-items:center;justify-content:center}
+  .cert .seal img{height:20px}
+
+  /* PPT slide mini (16:9) */
+  .slide{width:300px;height:169px}
+  .cover-navy{background:var(--navy)}
+  .cover-navy .pad{position:absolute;inset:0;padding:22px 24px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+  .cover-navy img.mk{height:21px;margin-bottom:13px}
+  .cover-navy .s-title{font-size:19px;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1.04}
+  .cover-navy .s-rule{width:27px;height:2px;background:var(--blue);margin:8px 0 7px}
+  .cover-navy .s-sub{font-size:6.2px;color:rgba(255,255,255,.82);font-weight:500;letter-spacing:.02em}
+  .cover-navy .tag{position:absolute;left:24px;bottom:15px;font-size:4.4px;color:rgba(255,255,255,.7);font-weight:600}
+  .c-band{position:absolute;top:0;left:0;right:0;height:25px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 20px}
+  .c-band img{height:8px}
+  .c-band .sec{font-size:4.4px;color:rgba(255,255,255,.72);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .c-title{position:absolute;top:40px;left:20px;right:20px;font-size:12px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+  .c-list{position:absolute;top:63px;left:20px;right:54px;list-style:none}
+  .c-list li{font-size:6.2px;line-height:1.55;color:var(--ink);padding-left:9px;position:relative;margin-bottom:4px}
+  .c-list li::before{content:"";position:absolute;left:0;top:3px;width:4px;height:4px;background:var(--blue)}
+  .c-foot{position:absolute;left:0;right:0;bottom:0;height:15px;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:4px;color:rgba(255,255,255,.72)}
+  /* full-bleed photo slide */
+  .o-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .o-scrim{position:absolute;inset:0;background:linear-gradient(95deg,rgba(10,22,40,.92) 0%,rgba(10,22,40,.55) 38%,rgba(10,22,40,0) 72%)}
+  .o-logo{position:absolute;top:15px;left:17px;height:10px}
+  .o-body{position:absolute;left:17px;bottom:16px;right:90px}
+  .o-title{font-size:14px;font-weight:800;color:#fff;line-height:1.04;letter-spacing:-.01em}
+  .o-rule{width:23px;height:2px;background:var(--blue);margin:6px 0 5px}
+  .o-sub{font-size:5.6px;color:rgba(255,255,255,.85);font-weight:500}
+
+  /* pristilbud strip (real cover photo) */
+  .cov{width:236px;height:334px;position:relative}
+  .cov .img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cov .scrim{position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,22,40,.94) 0%,rgba(10,22,40,.72) 40%,rgba(10,22,40,.12) 80%)}
+  .cov .c-logo{position:absolute;top:18px;left:20px;height:11px}
+  .cov .c-mid{position:absolute;left:20px;top:120px;right:40px}
+  .cov .c-kick{font-size:5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#7cc0ee;margin-bottom:6px}
+  .cov h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1}
+  .cov .c-rule{width:24px;height:2px;background:var(--blue);margin:9px 0 7px}
+  .cov .c-for{font-size:6px;color:rgba(255,255,255,.9);font-weight:500}
+  .cov .c-meta{position:absolute;left:20px;bottom:44px;display:flex;gap:16px}
+  .cov .c-meta .l{font-size:4.4px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7cc0ee}
+  .cov .c-meta .v{font-size:6px;color:#fff;font-weight:600;margin-top:2px}
+  .cov .c-web{position:absolute;left:20px;bottom:22px;font-size:4.8px;color:rgba(255,255,255,.75);font-weight:600;letter-spacing:.04em}
+
+  /* ============ SYSTEM RULES ============ */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .rule-c{border:1px solid var(--hairline);border-radius:14px;padding:20px 22px}
+  .rule-c .k{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+  .rule-c p{font-size:13.5px;color:#46464e;margin:0}
+  .swatches{display:flex;gap:8px;margin-top:14px}
+  .sw{flex:1;height:42px;border-radius:8px;display:flex;align-items:flex-end;padding:6px 8px;font-size:9px;font-weight:600;color:#fff}
+
+  /* ============ PROMPT ============ */
+  .prompt-wrap{margin-top:14px;border:1px solid var(--hairline);border-radius:16px;overflow:hidden}
+  .prompt-bar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--navy)}
+  .prompt-bar .t{display:flex;align-items:center;gap:10px;color:#fff;font-size:13px;font-weight:600}
+  .prompt-bar .t .fn{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#7cc0ee}
+  .copy{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:12.5px;font-weight:600;border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.06);color:#fff;border-radius:99px;padding:7px 15px;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard)}
+  .copy:hover{background:rgba(255,255,255,.16)}
+  .copy:focus-visible{outline:2px solid #7cc0ee;outline-offset:2px}
+  pre.prompt{margin:0;padding:24px 26px;background:#0d1b30;color:#d4dee9;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:12px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;max-height:560px;overflow:auto}
+  pre.prompt .h{color:#7cc0ee;font-weight:700}
+  pre.prompt .c{color:#6f8197}
+
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;
+    font-size:13.5px;font-weight:600;padding:12px 22px;border-radius:99px;opacity:0;pointer-events:none;
+    transition:opacity var(--motion-base),transform var(--motion-base);z-index:99}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:1080px){
+    body{grid-template-columns:1fr}
+    .sidebar{display:none}
+    main{padding:0 28px 120px}
+    .progress{left:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress__bar" id="bar"></div></div>
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar">
+  <a class="brand" href="index.html"><img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="BlueTec"></a>
+  <div>
+    <div class="sb-label">Maler</div>
+    <nav id="nav">
+      <a href="#intro" class="active">Oversikt</a>
+      <a href="#bruk">Slik bruker du malene</a>
+      <a href="#pristilbud">Pristilbud 2.0</a>
+      <a href="#dokumenter">Dokumentmaler</a>
+      <a href="#presentasjon">Presentasjonsmaler</a>
+      <a href="#system">Felles regler</a>
+      <div class="nav-div"></div>
+      <a href="#prompt" data-nav-skip>Bygge-prompt ↗</a>
+    </nav>
+  </div>
+  <div class="sb-foot">
+    <a class="back-hub" href="index.html"><span class="arr">‹</span> Tilbake til Merkevarehub</a>
+    <div style="margin-top:14px">BlueTec AS · Merkevarehub<br>Maler / Office-pakke</div>
+  </div>
+</aside>
+
+<!-- ============ MAIN ============ -->
+<main>
+
+  <!-- INTRO -->
+  <section id="intro">
+    <div class="eyebrow">Merkevarehub · Maler</div>
+    <h1>Én pakke maler.<br>Samme BlueTec, hver gang.</h1>
+    <p class="lead">Pristilbud 2.0, dokumentmaler og presentasjonsmaler — ferdig stylet, klare til å åpne og skrive i. Ingen røde plassholdere, ingen gule felt, ingen mørke sider på avveie. Bare riktig blå, riktig logo og riktig skrift.</p>
+    <div class="banner reveal">
+      <span class="dot"></span>
+      <p>Forhåndsvisningene her er <b>fasiten</b>. De ferdige Office-filene (<b>.dotx / .potx</b> + vanlige .docx/.pptx-kopier) produseres med <a href="#prompt" style="color:var(--blue);font-weight:600">bygge-prompten nederst</a> — kjør den i VS Code med Claude Code, så blir nedlastingsknappene aktive i hub-en.</p>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- BRUK -->
+  <section id="bruk">
+    <div class="eyebrow">For deg som skal skrive</div>
+    <h2>Slik bruker du malene</h2>
+    <p class="sec-intro">Du trenger ikke kunne noe om maler. Åpne fila, lagre som ditt eget dokument, og skriv over plassholderne.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="n">01</div><h3>Åpne</h3><p>Last ned malen og åpne den i Word eller PowerPoint (Microsoft 365). Logo, marger og bunntekst ligger allerede på plass.</p></div>
+      <div class="step reveal"><div class="n">02</div><h3>Lagre som</h3><p>Lagre med et nytt navn for kunden eller prosjektet. Originalmalen forblir ren til neste gang.</p></div>
+      <div class="step reveal"><div class="n">03</div><h3>Skriv over</h3><p>Klikk på de grå <b>[klikk og skriv]</b>-feltene og fyll inn. Velg «Overskrift» eller «Brødtekst» fra stilene — resten er låst.</p></div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- PRISTILBUD -->
+  <section id="pristilbud">
+    <div class="eyebrow">Prioritet #1</div>
+    <h2>Pristilbud 2.0</h2>
+    <p class="sec-intro">Den nye salgsmalen: fotoforside, tydelig løsningsbeskrivelse, ren pristabell med totaler, ett anbefalt tillegg (ikke pågående mersalg) og PVSol-produksjon. Erstatter det gamle tilbudet med røde «FJERN»-felt og gul utheving.</p>
+
+    <div class="tpl">
+      <div class="tpl__top">
+        <div class="tpl__head">
+          <h3>Pristilbud — solcelleanlegg</h3>
+          <p>5 sider: forside · løsning &amp; omfang · pris og opsjoner · forventet produksjon · referanser og kontakt. Blå tabellrad, lyseblå tilleggsboks, lik bunntekst på hver side.</p>
+        </div>
+        <span class="pill">Salg</span>
+      </div>
+      <div class="tpl__preview">
+        <!-- cover -->
+        <div class="pv">
+          <div class="frame cov">
+            <img class="img" src="assets/photos/sol-enebolig-aerial.jpg" alt="">
+            <div class="scrim"></div>
+            <img class="c-logo" src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-mono-white.svg" alt="">
+            <div class="c-mid">
+              <div class="c-kick">Pristilbud</div>
+              <h1>Solcelle&shy;anlegg</h1>
+              <div class="c-rule"></div>
+              <div class="c-for">Utarbeidet for Kundenavn AS</div>
+            </div>
+            <div class="c-meta">
+              <div><div class="l">Tilbud nr.</div><div class="v">2026‑0142</div></div>
+              <div><div class="l">Dato</div><div class="v">15.06.2026</div></div>
+              <div><div class="l">Gyldig til</div><div class="v">15.07.2026</div></div>
+            </div>
+            <div class="c-web">bluetec.no</div>
+          </div>
+          <div class="pv-cap">Side 1 — Forside</div>
+        </div>
+        <!-- price page -->
+        <div class="pv">
+          <div class="frame a4">
+            <div class="body">
+              <div class="top">
+                <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="">
+                <div style="text-align:right"><div class="doc-h" style="font-size:13px">Pris og opsjoner</div><div class="meta">Tilbud nr. 2026‑0142</div></div>
+              </div>
+              <div class="divider"></div>
+              <table class="li">
+                <thead><tr><th>Beskrivelse</th><th class="r">Antall</th><th class="r">Pris eks. mva</th></tr></thead>
+                <tbody>
+                  <tr><td>Solcellepaneler 450 Wp</td><td class="r">168 stk</td><td class="r">672 000</td></tr>
+                  <tr><td>Vekselrettere Growatt</td><td class="r">4 stk</td><td class="r">96 000</td></tr>
+                  <tr><td>Ballastert festesystem</td><td class="r">1</td><td class="r">84 000</td></tr>
+                  <tr><td>Montasje og idriftsettelse</td><td class="r">1</td><td class="r">138 000</td></tr>
+                  <tr><td style="font-weight:700">Sum eks. mva</td><td class="r"></td><td class="r" style="font-weight:700">990 000</td></tr>
+                </tbody>
+              </table>
+              <div class="addon"><strong>Anbefalt tillegg:</strong> batterilagring for økt egenforbruk og kappet effekttopp. Skalerbart for fremtidig utvidelse.</div>
+              <div class="foot">BlueTec AS · Org.nr. 000 000 000 · Stoltenbergs gate 48, 3112 Tønsberg · 33 33 11 00 · post@bluetec.no · bluetec.no</div>
+            </div>
+          </div>
+          <div class="pv-cap">Side 3 — Pris</div>
+        </div>
+      </div>
+      <div class="tpl__foot">
+        <div class="usage">Åpne, lagre som, og skriv over plassholderne. Bytt forsidefoto med et eget prosjektbilde (avrundet rektangel eller helbleed).</div>
+        <div class="dls">
+          <a class="btn btn--primary" href="maler/pristilbud-2.0.html" target="_blank" rel="noopener">Forhåndsvis <span class="ext">HTML</span></a>
+          <a class="btn" href="maler/pristilbud-2.0-print-7rak3t.html" target="_blank" rel="noopener">PDF</a>
+          <a class="btn" href="maler/Pristilbud.dotx" download>Word <span class="ext">.dotx</span></a>
+          <a class="btn" href="maler/Pristilbud.docx" download>Word <span class="ext">.docx</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- DOKUMENTER -->
+  <section id="dokumenter">
+    <div class="eyebrow">Word · M365</div>
+    <h2>Dokumentmaler</h2>
+    <p class="sec-intro">Hvit bunn, logo låst øverst venstre, blå skillelinje og <b>lik bunntekst som gjentas på hver side</b> — satt i Words egen topp/bunntekst, ikke limt inn i brødteksten. Ingen tvungen forside på dokumenter; det er presentasjoner som har fast forside.</p>
+
+    <div class="tpl">
+      <div class="tpl__top">
+        <div class="tpl__head"><h3>Fire dokumentmaler</h3><p>Brevmal · Samarbeidsavtale · Advarsel · Kursbevis. Samme system, samme bunntekst, samme skriftstiler.</p></div>
+        <span class="pill alt">Word</span>
+      </div>
+      <div class="tpl__preview">
+        <!-- Brevmal -->
+        <div class="pv">
+          <div class="frame a4">
+            <div class="body">
+              <div class="top"><img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt=""><div class="meta" style="text-align:right">Tønsberg<br>15. juni 2026</div></div>
+              <div class="divider"></div>
+              <div class="meta" style="margin-bottom:14px">Mottakers navn<br>Gateadresse 12<br>3110 Tønsberg</div>
+              <div class="doc-h" style="font-size:9.5px;margin-bottom:9px">Angående din henvendelse</div>
+              <p class="ptext" style="margin-bottom:7px">Hei [navn],</p>
+              <p class="ptext" style="margin-bottom:7px">Takk for din interesse for solcelleanlegg fra BlueTec. En av våre rådgivere tar kontakt for å avtale befaring.</p>
+              <p class="ptext">Med vennlig hilsen<br><strong>Fornavn Etternavn</strong><br>Rolle, BlueTec AS</p>
+              <div class="foot">BlueTec AS · Org.nr. 000 000 000 · Stoltenbergs gate 48, 3112 Tønsberg · post@bluetec.no · bluetec.no</div>
+            </div>
+          </div>
+          <div class="pv-cap">Brevmal</div>
+        </div>
+        <!-- Samarbeidsavtale -->
+        <div class="pv">
+          <div class="frame a4">
+            <div class="body">
+              <div class="top"><img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt=""><div class="meta" style="text-align:right">Avtale nr. 2026‑014</div></div>
+              <div class="divider"></div>
+              <div class="doc-h" style="font-size:11px;margin-bottom:10px">Samarbeidsavtale</div>
+              <div class="label" style="margin-bottom:4px">1 · Parter</div>
+              <p class="ptext" style="margin-bottom:9px">Denne avtalen inngås mellom BlueTec AS og [motpart]. Avtalen regulerer leveranse, ansvar og varighet.</p>
+              <div class="label" style="margin-bottom:4px">2 · Omfang</div>
+              <p class="ptext" style="margin-bottom:9px">Overskrifter i vekt 700–800, brødtekst i 400. Tydelig nummerert hierarki.</p>
+              <div class="sigrow"><div class="sigline">Sted og dato</div><div class="sigline">Signatur</div></div>
+              <div class="foot">BlueTec AS · Org.nr. 000 000 000 · Stoltenbergs gate 48, 3112 Tønsberg · post@bluetec.no · bluetec.no</div>
+            </div>
+          </div>
+          <div class="pv-cap">Samarbeidsavtale</div>
+        </div>
+        <!-- Kursbevis -->
+        <div class="pv">
+          <div class="frame a4">
+            <div class="body" style="text-align:center;display:flex;flex-direction:column;align-items:center">
+              <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-on-light.svg" alt="" style="height:34px;margin-top:18px">
+              <div class="label" style="margin-top:30px">Kursbevis</div>
+              <div class="doc-h" style="font-size:13px;margin-top:14px;line-height:1.2">Tildeles<br>[Deltakers navn]</div>
+              <p class="ptext" style="max-width:200px;margin-top:14px">for fullført kurs i montering og idriftsettelse av solcelleanlegg.</p>
+              <div class="sigrow" style="width:80%;margin-top:34px"><div class="sigline">Dato</div><div class="sigline">Kursansvarlig</div></div>
+              <div class="foot">BlueTec AS · Org.nr. 000 000 000 · Stoltenbergs gate 48, 3112 Tønsberg · post@bluetec.no · bluetec.no</div>
+            </div>
+          </div>
+          <div class="pv-cap">Kursbevis</div>
+        </div>
+      </div>
+      <div class="tpl__foot">
+        <div class="usage">«Konfidensielt»- eller advarselsmarkør settes i navy/blå — aldri rødt eller gult. Advarselsmalen bruker de samme stilene som brevet.</div>
+        <div class="dls">
+          <a class="btn" href="maler/Brevmal.dotx" download>Brevmal <span class="ext">.dotx</span></a>
+          <a class="btn" href="maler/Brevmal.docx" download>Brevmal <span class="ext">.docx</span></a>
+          <a class="btn" href="maler/Samarbeidsavtale.dotx" download>Avtale <span class="ext">.dotx</span></a>
+          <a class="btn" href="maler/Samarbeidsavtale.docx" download>Avtale <span class="ext">.docx</span></a>
+          <a class="btn" href="maler/Advarsel.dotx" download>Advarsel <span class="ext">.dotx</span></a>
+          <a class="btn" href="maler/Advarsel.docx" download>Advarsel <span class="ext">.docx</span></a>
+          <a class="btn" href="maler/Kursbevis.dotx" download>Kursbevis <span class="ext">.dotx</span></a>
+          <a class="btn" href="maler/Kursbevis.docx" download>Kursbevis <span class="ext">.docx</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- PRESENTASJON -->
+  <section id="presentasjon">
+    <div class="eyebrow">PowerPoint · M365</div>
+    <h2>Presentasjonsmaler</h2>
+    <p class="sec-intro">Én felles forside på tvers av alle presentasjoner, bygget som ekte slidemaster-layouter du velger fra båndet. Marine topp- og bunnbånd på innholdssider, full-bleed foto til forsider og seksjoner. Hvit logo på mørk bunn.</p>
+
+    <div class="tpl">
+      <div class="tpl__top">
+        <div class="tpl__head"><h3>Slidemaster med layoutene du trenger</h3><p>Forside · seksjonsskille · innhold · to spalter · full-bleed foto · data/graf · avslutning &amp; kontakt.</p></div>
+        <span class="pill alt">PowerPoint</span>
+      </div>
+      <div class="tpl__preview">
+        <!-- cover navy -->
+        <div class="pv">
+          <div class="frame slide cover-navy">
+            <div class="pad">
+              <img class="mk" src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-mono-white.svg" alt="">
+              <div class="s-title">Presentasjons-<br>tittel her</div>
+              <div class="s-rule"></div>
+              <div class="s-sub">Undertittel · Avdeling · 2026</div>
+            </div>
+            <div class="tag small-caps">Teknologi · Energi &amp; Miljø</div>
+          </div>
+          <div class="pv-cap">Forside (felles)</div>
+        </div>
+        <!-- content slide -->
+        <div class="pv">
+          <div class="frame slide">
+            <div class="c-band"><img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-mono-white.svg" alt=""><span class="sec">Solcelleanlegg</span></div>
+            <div class="c-title">Slik fungerer det</div>
+            <ul class="c-list">
+              <li>Befaring og kartlegging av tak og forbruk</li>
+              <li>Dimensjonering og pristilbud innen 48 timer</li>
+              <li>Montering av sertifiserte elektrikere</li>
+              <li>Idriftsettelse, dokumentasjon og oppfølging</li>
+            </ul>
+            <div class="c-foot"><span>bluetec.no</span><span>3</span></div>
+          </div>
+          <div class="pv-cap">Innholdsside</div>
+        </div>
+        <!-- full bleed -->
+        <div class="pv">
+          <div class="frame slide">
+            <img class="o-img" src="assets/photos/sol-enebolig-aerial.jpg" alt="">
+            <div class="o-scrim"></div>
+            <img class="o-logo" src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-mono-white.svg" alt="">
+            <div class="o-body">
+              <div class="o-title">Solenergi for<br>norske hjem</div>
+              <div class="o-rule"></div>
+              <div class="o-sub">Seksjon · Referanseprosjekt</div>
+            </div>
+          </div>
+          <div class="pv-cap">Full-bleed foto</div>
+        </div>
+      </div>
+      <div class="tpl__foot">
+        <div class="usage">Foto følger fotoreglene: avrundet rektangel som standard, sirkel kun for portretter, full-bleed til forsider. Skarpe kanter på bånd.</div>
+        <div class="dls">
+          <a class="btn" href="maler/BlueTec-presentasjon.potx" download>PowerPoint <span class="ext">.potx</span></a>
+          <a class="btn" href="maler/BlueTec-presentasjon.pptx" download>PowerPoint <span class="ext">.pptx</span></a>
+          <a class="btn btn--primary" href="maler/BlueTec-alle-maler.zip" download>Last ned alle <span class="ext">.zip</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- SYSTEM -->
+  <section id="system">
+    <div class="eyebrow">Gjelder alle maler</div>
+    <h2>Felles regler</h2>
+    <p class="sec-intro">Det som gjør at alt ser ut som BlueTec, uansett hvem som lager dokumentet.</p>
+    <div class="rules">
+      <div class="rule-c reveal">
+        <div class="k">Én blå</div>
+        <p>Brand-blå <b>#0077C8</b>. Navy <b>#0A1628</b> til mørke flater og bånd. Ingen rød, oransje eller gul — det var nødløsninger, ikke merkefarger.</p>
+        <div class="swatches">
+          <div class="sw" style="background:#0077C8">#0077C8</div>
+          <div class="sw" style="background:#0A1628">#0A1628</div>
+          <div class="sw" style="background:#15151A">#15151A</div>
+        </div>
+      </div>
+      <div class="rule-c reveal"><div class="k">Skrift</div><p>BlueTec Geometric overalt. Overskrifter 700–800, brødtekst 400. <b>Skriften bygges inn</b> i hver Office-fil, med Aptos/Calibri som dokumentert reserve hvis innbyggingen strippes.</p></div>
+      <div class="rule-c reveal"><div class="k">Logo &amp; bunntekst</div><p>Ekte, transparent logo — aldri grå boks. Logo låst i fast posisjon, bunntekst satt i Words/PowerPoints egen footer slik at den gjentas likt på hver side.</p></div>
+      <div class="rule-c reveal"><div class="k">M365-klar</div><p>Leveres som ekte <b>.dotx/.potx</b> (malformen) <em>og</em> vanlig <b>.docx/.pptx</b>-kopi. Åpner i Microsoft 365 / SharePoint uten Adobe-avhengigheter. Plassholdere er grå innholdskontroller, ikke rød instruksjonstekst.</p></div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- PROMPT -->
+  <section id="prompt">
+    <div class="eyebrow">For utvikleren</div>
+    <h2>Bygge-prompt for Claude Code</h2>
+    <p class="sec-intro">Kopier teksten under og lim den inn i Claude Code i VS Code, med repoet for Merkevarehub-en åpent. Den bygger de ferdige Office-filene og kobler dem til denne Maler-siden i hub-en.</p>
+
+    <div class="prompt-wrap">
+      <div class="prompt-bar">
+        <div class="t">📋 <span>Lim inn i Claude Code</span> <span class="fn">/Bluetec-brand-hub</span></div>
+        <button class="copy" id="copyBtn">Kopier prompt</button>
+      </div>
+      <pre class="prompt" id="promptText"><span class="c"># BlueTec Merkevarehub — bygg "Maler"-området (Office-pakke)</span>
+
+Du jobber i det eksisterende BlueTec Merkevarehub-repoet. Les disse først og følg dem:
+- <span class="h">BlueTec Brand Hub - Build Brief.md</span> — hub-ens hovedregler (arver alt).
+- <span class="h">templates-build-brief.md</span> — full spec for Maler-området.
+- <span class="h">Maler.html</span> — den ferdige guide-siden. Forhåndsvisningene her er FASIT.
+- <span class="h">pristilbud-2.0.html</span> — Pristilbud 2.0, alle 5 sider, eksakt layout.
+- <span class="h">templates-directions.html</span> og <span class="h">templates-ppt-photos.html</span> — valgt retning + fotoregler.
+- <span class="h">branding-hub-assets/</span> — ekte logo, fonter (fonts.css), fargetokens. Gjenbruk, aldri gjenskap.
+
+<span class="h">## Hva du skal lage</span>
+Ferdige, klare-til-bruk Office-filer som matcher forhåndsvisningene i Maler.html 1:1,
+og koble dem inn i hub-en. Sluttbrukere er ikke-tekniske: de åpner fila og begynner å skrive.
+
+<span class="h">### 1. Pristilbud 2.0 (prioritet)</span>
+- Word-mal i 5 deler som i pristilbud-2.0.html: forside (fotobakgrunn + navy forløp),
+  løsning &amp; omfang, pris/opsjoner (blå tabellrad + totaler + ÉN lyseblå "Anbefalt tillegg"-boks),
+  forventet produksjon (PVSol-tall + graf), referanser + kontakt.
+- Lever som <span class="h">Pristilbud.dotx</span> (mal) OG <span class="h">Pristilbud.docx</span> (vanlig kopi).
+
+<span class="h">### 2. Dokumentmaler (Word)</span>
+Brevmal, Samarbeidsavtale, Advarsel, Kursbevis. Hvit bunn, logo låst øverst venstre,
+blå skillelinje, lik bunntekst i Words EGEN footer (gjentas på hver side). Ingen tvungen forside.
+Hver som <span class="h">.dotx</span> + <span class="h">.docx</span>.
+
+<span class="h">### 3. Presentasjonsmal (PowerPoint)</span>
+Én <span class="h">.potx</span> + <span class="h">.pptx</span> med ekte slidemaster-layouter: forside (felles), seksjonsskille,
+innhold (tittel + punkter, navy topp/bunnbånd), to spalter, full-bleed foto, data/graf, avslutning/kontakt.
+
+<span class="h">## Harde krav (ikke forhandlebart)</span>
+- Kun blå <span class="h">#0077C8</span>, navy <span class="h">#0A1628</span>, ink <span class="h">#15151A</span>. INGEN rød/oransje/gul. Ingen mørke sider på avveie. Ingen grå logoboks.
+- Skrift: BlueTec Geometric (overskrift 700–800, brødtekst 400). EMBED fonten i hver fil.
+  Sett dokumentert reserve (Aptos/Calibri) så tekst aldri flyter til Times/Arial.
+- M365-kompatibelt: åpner i Word/PowerPoint på SharePoint uten Adobe-avhengigheter.
+- Plassholdere = grå innholdskontroller / [klikk og skriv]. ALDRI rød instruksjonstekst, aldri gule felt.
+- Bunntekst-standard: <span class="h">BlueTec AS · Org.nr. … · Stoltenbergs gate 48, 3112 Tønsberg · 33 33 11 00 · post@bluetec.no · bluetec.no</span>
+
+<span class="h">## Koble til hub-en</span>
+- Maler.html er allerede guide-siden. Aktiver nedlastingsknappene: pek hver knapp på riktig fil i
+  en <span class="h">maler/</span>-mappe, og fjern <span class="h">data-pending</span> / <span class="h">btn--pending</span> når fila finnes. Legg til "Last ned alle maler" (zip).
+- I hub-ens hovedmeny: legg til ÉN egen sidelenke <span class="h">Maler ↗</span> → Maler.html (som "Website &amp; Motion").
+  Den NAVIGERER — hold den utenfor scroll-spy, gi den aldri active-state.
+- Arve hub-ens motion-tokens (fast 120 / base 200 / slow 320, ease cubic-bezier(.4,0,.2,1)),
+  prefers-reduced-motion, og synlig fokus på alt.
+
+<span class="h">## Ferdig =</span>
+- Alle filer finnes som .dotx/.potx + .docx/.pptx, font embedded m/ reserve, logo + footer låst,
+  null rød/gul/mørk-side-arv. Forhåndsvisninger i Maler.html matcher filene.
+- En kort <span class="h">README-maler.md</span> i nedlastingssettet: hvilken fil man åpner, font-reserve-noten,
+  og hvordan man endrer firma-linjen i bunnteksten.</pre>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // scroll-spy
+  const links=[...document.querySelectorAll('#nav a:not([data-nav-skip])')];
+  const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const io=new IntersectionObserver((es)=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=map.get(e.target.id); if(a)a.classList.add('active');
+    }});
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+
+  // progress bar
+  const bar=document.getElementById('bar');
+  const onScroll=()=>{const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight);bar.style.width=(p*100)+'%';};
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  // reveal
+  const ro=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},{rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  // toast helper
+  const toast=document.getElementById('toast');let tt;
+  function showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('show'),2600);}
+
+  // copy prompt
+  document.getElementById('copyBtn').addEventListener('click',async()=>{
+    const txt=document.getElementById('promptText').innerText;
+    try{await navigator.clipboard.writeText(txt);showToast('Bygge-prompt kopiert ✓');}
+    catch(e){
+      const r=document.createRange();r.selectNodeContents(document.getElementById('promptText'));
+      const s=getSelection();s.removeAllRanges();s.addRange(r);
+      try{document.execCommand('copy');showToast('Bygge-prompt kopiert ✓');}catch(_){showToast('Marker teksten og kopier manuelt.');}
+      s.removeAllRanges();
+    }
+  });
+</script>
+</body>
+</html>

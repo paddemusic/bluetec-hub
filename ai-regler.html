@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueTec — AI-instruksjoner</title>
+<script src="ai-regler/brand-data.js"></script>
+<script src="assets/jszip.min.js"></script>
+<style>
+  @font-face{font-family:'BlueTec Geometric';font-weight:300;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Light.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Light.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:400;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Regular.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Regular.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:500;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Medium.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Medium.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:600;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-SemiBold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-SemiBold.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:700;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Bold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Bold.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:800;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-ExtraBold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-ExtraBold.ttf') format('truetype')}
+
+  :root{
+    --blue:#0077C8;--navy:#0A1628;--white:#FFFFFF;
+    --ink:#15151A;--muted:#86867F;--hairline:#E6E6E1;--paper:#F4F4F2;
+    --ltblue:#EAF4FB;--blue-08:rgba(0,119,200,.08);--blue-16:rgba(0,119,200,.16);
+    --motion-fast:120ms;--motion-base:200ms;--motion-slow:320ms;
+    --ease-standard:cubic-bezier(.4,0,.2,1);--ease-entrance:cubic-bezier(0,0,.2,1);
+    --maxw:840px;--sb:264px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--white);color:var(--ink);font-family:'BlueTec Geometric',system-ui,sans-serif;font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:var(--sb) 1fr}
+
+  .progress{position:fixed;top:0;left:var(--sb);right:0;height:2px;z-index:50}
+  .progress__bar{height:100%;width:0;background:var(--blue);transition:width 80ms linear}
+
+  /* ── Sidebar ── */
+  .sidebar{position:sticky;top:0;align-self:start;height:100vh;border-right:1px solid var(--hairline);padding:34px 26px;display:flex;flex-direction:column;gap:20px;background:var(--white)}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand img{height:26px}
+  .sb-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+  nav{display:flex;flex-direction:column;gap:1px}
+  nav a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;padding:8px 12px;border-radius:8px;transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+  nav a:hover{color:var(--navy);background:var(--paper)}
+  nav a.active{color:var(--blue);background:var(--blue-08);font-weight:600}
+  nav a:focus-visible,button:focus-visible,.back-hub:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+  .nav-div{height:1px;background:var(--hairline);margin:8px 4px}
+  .back-hub{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+  .back-hub:hover{color:var(--blue);background:var(--blue-08)}
+  .sb-foot{margin-top:auto;font-size:11.5px;color:var(--muted);line-height:1.7}
+
+  /* ── Main ── */
+  main{padding:0 64px 160px;max-width:calc(var(--maxw) + 128px)}
+  section{padding-top:88px;scroll-margin-top:24px}
+  section:first-of-type{padding-top:64px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:14px}
+  h1{font-size:50px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin:0 0 18px;color:var(--navy)}
+  h2{font-size:28px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px;color:var(--navy)}
+  h3{font-size:16px;font-weight:600;margin:0 0 6px;color:var(--navy)}
+  .lead{font-size:19px;line-height:1.55;color:var(--ink);max-width:var(--maxw)}
+  p{max-width:var(--maxw);text-wrap:pretty}
+  .sec-intro{color:#3a3a40;margin:8px 0 26px;max-width:var(--maxw)}
+  .rule{height:1px;background:var(--hairline);border:0;margin:0}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity var(--motion-slow) var(--ease-entrance),transform var(--motion-slow) var(--ease-entrance)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* ── Quick picker ── */
+  .picker{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px}
+  .pick{display:flex;flex-direction:column;gap:4px;text-decoration:none;border:1.5px solid var(--hairline);border-radius:14px;padding:18px 16px 16px;transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),transform var(--motion-fast) var(--ease-standard);background:var(--white)}
+  .pick:hover{border-color:var(--blue);background:var(--blue-08);transform:translateY(-2px)}
+  .pick__tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+  .pick__title{font-size:15px;font-weight:700;color:var(--navy);line-height:1.25}
+  .pick__file{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:6px}
+  .pick.pick--zip{border-color:var(--navy);background:var(--navy)}
+  .pick.pick--zip:hover{background:#0d1e38;border-color:#0d1e38}
+  .pick.pick--zip .pick__tag{color:#7cc0ee}
+  .pick.pick--zip .pick__title{color:#fff}
+  .pick.pick--zip .pick__file{color:rgba(255,255,255,.5)}
+
+  /* ── File card ── */
+  .file-card{border:1px solid var(--hairline);border-radius:18px;overflow:hidden;margin-top:20px;background:var(--white)}
+  .file-card__top{padding:26px 28px 22px}
+  .file-card__meta{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff;border-radius:99px;padding:4px 10px}
+  .badge--all{background:var(--blue)}
+  .badge--dev{background:var(--navy)}
+  .badge--cursor{background:#2d7a47}
+  .file-card__top h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px;color:var(--navy)}
+  .file-card__top .sub{font-size:13.5px;color:#52525a;margin:0 0 18px}
+  .contains{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+  .contains-item{font-size:13px;color:var(--ink);padding:10px 14px;background:var(--paper);border-radius:10px;line-height:1.4}
+  .contains-item strong{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);margin-bottom:3px}
+
+  /* ── How to use steps ── */
+  .howto{border-top:1px solid var(--hairline);padding:20px 28px;background:var(--white)}
+  .howto-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .howto-steps{display:flex;gap:0;counter-reset:step}
+  .howto-step{flex:1;position:relative;padding:0 16px 0 0}
+  .howto-step:not(:last-child)::after{content:'→';position:absolute;right:0;top:10px;color:var(--hairline);font-size:14px}
+  .howto-step .sn{font-size:11px;font-weight:700;color:var(--blue);margin-bottom:3px}
+  .howto-step p{font-size:12.5px;color:#46464e;margin:0;line-height:1.5}
+
+  /* ── Code preview ── */
+  .preview-wrap{border-top:1px solid var(--hairline)}
+  .preview-toggle{display:flex;justify-content:space-between;align-items:center;padding:13px 20px;background:var(--navy);cursor:pointer;border:0;width:100%;font-family:inherit}
+  .preview-toggle .t{display:flex;align-items:center;gap:10px;color:#fff;font-size:13px;font-weight:600}
+  .preview-toggle .fn{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#7cc0ee}
+  .preview-toggle .dim{font-size:11px;color:rgba(255,255,255,.45);font-weight:400}
+  .preview-toggle .arr{font-size:11px;color:rgba(255,255,255,.5);transition:transform var(--motion-fast) var(--ease-standard)}
+  .preview-toggle[aria-expanded="true"] .arr{transform:rotate(180deg)}
+  .copy-btn{display:inline-flex;align-items:center;gap:7px;font-family:inherit;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#fff;border-radius:99px;padding:6px 14px;cursor:pointer;transition:background var(--motion-fast) var(--ease-standard)}
+  .copy-btn:hover{background:rgba(255,255,255,.16)}
+  .preview-controls{display:flex;align-items:center;gap:8px}
+  .preview-body{display:none}
+  .preview-body.open{display:block}
+  pre.code{margin:0;padding:20px 26px;background:#0d1b30;color:#d4dee9;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto}
+  pre.code.loading{color:#4a6070;font-style:italic}
+
+  /* ── Footer row ── */
+  .file-card__foot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;padding:16px 28px;background:var(--paper);border-top:1px solid var(--hairline)}
+  .usage{font-size:12px;color:var(--muted);max-width:460px;line-height:1.5}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:13px;font-weight:600;border-radius:99px;padding:9px 20px;cursor:pointer;text-decoration:none;border:1px solid var(--hairline);background:var(--white);color:var(--navy);transition:border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard),transform var(--motion-fast) var(--ease-standard)}
+  .btn:hover{border-color:var(--blue);color:var(--blue)}
+  .btn:active{transform:scale(.98)}
+  .btn--primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .btn--primary:hover{background:#0069b0;color:#fff;border-color:#0069b0}
+
+  /* ── ZIP card ── */
+  .zip-card{border:1px solid var(--hairline);border-radius:18px;overflow:hidden;margin-top:20px}
+  .zip-card__top{padding:26px 28px 22px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;background:var(--navy)}
+  .zip-card__top h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px;color:#fff}
+  .zip-card__top .sub{font-size:13.5px;color:rgba(255,255,255,.7);margin:0}
+  .zip-files{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .zip-file{font-family:ui-monospace,Menlo,monospace;font-size:11px;background:rgba(255,255,255,.1);color:#7cc0ee;border-radius:6px;padding:4px 10px}
+  .zip-card__foot{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:16px 28px;background:var(--paper);border-top:1px solid var(--hairline)}
+  .zip-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:20px 28px;background:var(--white);border-top:1px solid var(--hairline)}
+  .zip-categories{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+  .zip-cat__label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+  .zip-cat .zip-files{margin-top:4px}
+  .zip-step .zsl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+  .zip-step p{font-size:12.5px;color:#46464e;margin:0;line-height:1.55}
+
+  /* ── Update box ── */
+  .update-box{border:1px solid var(--hairline);border-radius:16px;padding:26px 28px;margin-top:20px}
+  .update-box h3{margin:0 0 10px}
+  .update-box ol{padding-left:20px;margin:10px 0 0;color:#3a3a40;font-size:14px;line-height:1.9}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:var(--paper);border:1px solid var(--hairline);border-radius:5px;padding:1px 6px}
+
+  /* ── Toast ── */
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;font-size:13.5px;font-weight:600;padding:12px 22px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity var(--motion-base),transform var(--motion-base);z-index:99}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:1100px){.picker{grid-template-columns:1fr 1fr}.contains{grid-template-columns:1fr}}
+  @media (max-width:1080px){body{grid-template-columns:1fr}.sidebar{display:none}main{padding:0 28px 120px}.progress{left:0}}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress__bar" id="bar"></div></div>
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar">
+  <a class="brand" href="index.html"><img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="BlueTec"></a>
+  <div>
+    <div class="sb-label">Velg hva du skal gjøre</div>
+    <nav id="nav">
+      <a href="#intro" class="active">Oversikt</a>
+      <div class="nav-div"></div>
+      <a href="#prompt">Jeg skriver tekst</a>
+      <a href="#claudemd">Jeg bygger nettside</a>
+      <a href="#cursor">Jeg bruker Cursor</a>
+      <div class="nav-div"></div>
+      <a href="#startpakke">Gi meg alt (ZIP)</a>
+      <a href="#oppdater">Oppdatere innholdet</a>
+    </nav>
+  </div>
+  <div class="sb-foot">
+    <a class="back-hub" href="index.html">&#8249; Tilbake til Merkevarehub</a>
+    <div style="margin-top:12px">BlueTec AS · AI-instruksjoner</div>
+  </div>
+</aside>
+
+<!-- ── Main ── -->
+<main>
+
+  <!-- ──────────── HERO ──────────── -->
+  <section id="intro">
+    <div class="eyebrow">Merkevarehub · AI-instruksjoner</div>
+    <h1>Hva skal du lage?</h1>
+    <p class="lead">Velg hva du skal gjøre nedenfor, og du får riktig fil. Filen forklarer seg selv — åpne den og følg instruksjonene inni.</p>
+
+    <div class="picker">
+
+      <a class="pick" href="#prompt">
+        <div class="pick__tag">Alle ansatte</div>
+        <div class="pick__title">Jeg skriver tekst, tilbud eller e-post</div>
+        <div class="pick__file">brand-prompt.txt</div>
+      </a>
+
+      <a class="pick" href="#claudemd">
+        <div class="pick__tag">Utviklere</div>
+        <div class="pick__title">Jeg bygger nettside, app eller kode</div>
+        <div class="pick__file">CLAUDE.md</div>
+      </a>
+
+      <a class="pick" href="#cursor">
+        <div class="pick__tag">Cursor IDE</div>
+        <div class="pick__title">Jeg designer og koder i Cursor</div>
+        <div class="pick__file">.cursorrules</div>
+      </a>
+
+      <a class="pick pick--zip" href="#startpakke">
+        <div class="pick__tag">Alle filer</div>
+        <div class="pick__title">Gi meg alle instruksjonene</div>
+        <div class="pick__file">BlueTec-AI-startpakke.zip</div>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- ──────────── BRAND PROMPT ──────────── -->
+  <section id="prompt">
+    <div class="eyebrow">For alle ansatte</div>
+    <h2>Jeg skriver tekst</h2>
+    <p class="sec-intro">For deg som bruker Claude.ai eller ChatGPT til å skrive tilbud, e-poster, presentasjonstekster eller annet innhold. Ingen teknisk kunnskap nødvendig.</p>
+
+    <div class="file-card reveal">
+      <div class="file-card__top">
+        <div class="file-card__meta">
+          <span class="badge badge--all">Alle ansatte</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">brand-prompt.txt</span>
+        </div>
+        <h2>Merkevare-instruksjon for AI-chat</h2>
+        <p class="sub">Lim inn i Claude.ai eller ChatGPT. AI-assistenten kjenner da til BlueTec sine regler og håndhever dem i alt den produserer.</p>
+
+        <div class="contains">
+          <div class="contains-item">
+            <strong>Skriveregler</strong>
+            Ingen emojier, ingen tankestrek, norsk bokmål, ingen upåviste %-påstander
+          </div>
+          <div class="contains-item">
+            <strong>Tonefall</strong>
+            Profesjonell, tillitsvekkende, skandinavisk ro — aldri hyperbolsk
+          </div>
+          <div class="contains-item">
+            <strong>Farger forklart</strong>
+            Alle farger med navn og hex-kode — AI vet hvilke farger som er riktige
+          </div>
+          <div class="contains-item">
+            <strong>Segmentspesifikke CTAer</strong>
+            Borettslag, næringsliv og privatpersoner — AI velger riktig vinkling
+          </div>
+        </div>
+      </div>
+
+      <div class="howto">
+        <div class="howto-label">Slik bruker du den</div>
+        <div class="howto-steps">
+          <div class="howto-step">
+            <div class="sn">01</div>
+            <p>Last ned <strong>brand-prompt.txt</strong> og åpne den i et tekstredigeringsprogram. Les bruksanvisningen øverst i filen.</p>
+          </div>
+          <div class="howto-step">
+            <div class="sn">02</div>
+            <p>Kopier ALT innholdet. Gå til Claude.ai → Innstillinger → Personlig → Egendefinert instruksjon. Lim inn.</p>
+          </div>
+          <div class="howto-step">
+            <div class="sn">03</div>
+            <p>Ferdig. Start en ny chat og be Claude om hjelp — den kjenner nå BlueTec sine regler.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-wrap">
+        <button class="preview-toggle" id="toggle-prompt" aria-expanded="false">
+          <div class="t">
+            <span class="fn">brand-prompt.txt</span>
+            <span class="dim">klikk for å se innholdet</span>
+          </div>
+          <div class="preview-controls">
+            <button class="copy-btn" id="copy-prompt" onclick="event.stopPropagation()">Kopier</button>
+            <span class="arr">&#9660;</span>
+          </div>
+        </button>
+        <div class="preview-body" id="body-prompt">
+          <pre class="code loading" id="pre-prompt">Genererer innhold…</pre>
+        </div>
+      </div>
+
+      <div class="file-card__foot">
+        <span class="usage">Filen inneholder en bruksanvisning øverst som forklarer nøyaktig hva du skal gjøre med den.</span>
+        <button class="btn btn--primary" id="dl-prompt">Last ned brand-prompt.txt</button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- ──────────── CLAUDE.MD ──────────── -->
+  <section id="claudemd">
+    <div class="eyebrow">For utviklere</div>
+    <h2>Jeg bygger nettside, app eller kode</h2>
+    <p class="sec-intro">For deg som bruker Claude Code til å skrive kode. Filen legg i prosjektmappen og Claude Code bruker den automatisk gjennom hele bygge-prosessen.</p>
+
+    <div class="file-card reveal">
+      <div class="file-card__top">
+        <div class="file-card__meta">
+          <span class="badge badge--dev">Utviklere · Claude Code</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">CLAUDE.md</span>
+        </div>
+        <h2>Fullstendig merkevareregel-fil for kode</h2>
+        <p class="sub">Plasser i prosjektmappen (/CLAUDE.md). Claude Code leser den ved oppstart og håndhever alle regler gjennom hele sesjonen.</p>
+
+        <div class="contains">
+          <div class="contains-item">
+            <strong>Farger og CSS-variabler</strong>
+            --bt-blue, --bt-navy, --bt-ink, --bt-muted + alle tokens med hex-verdier
+          </div>
+          <div class="contains-item">
+            <strong>Animasjonstokens</strong>
+            --motion-fast: 120ms · --motion-base: 200ms · --motion-slow: 320ms · ease-standard
+          </div>
+          <div class="contains-item">
+            <strong>Komponentregler</strong>
+            Knapper (pill / 99px), kort (14–18px radius), nav (hvit), fokustilstander
+          </div>
+          <div class="contains-item">
+            <strong>Skriveregler og tone</strong>
+            Norsk bokmål, ingen emojier, segmentspesifikke CTAer, aldri upåviste %
+          </div>
+          <div class="contains-item">
+            <strong>Typografi</strong>
+            BlueTec Geometric + Outfit fallback, vekter per nivå, font-family CSS
+          </div>
+          <div class="contains-item">
+            <strong>Logo og dokumentstandard</strong>
+            Logoregler, kontrastpar, Office-bunntekst, konfidensiell-merking
+          </div>
+        </div>
+      </div>
+
+      <div class="howto">
+        <div class="howto-label">Slik bruker du den</div>
+        <div class="howto-steps">
+          <div class="howto-step">
+            <div class="sn">01</div>
+            <p>Last ned <strong>CLAUDE.md</strong>. Åpne filen og les bruksanvisningen øverst.</p>
+          </div>
+          <div class="howto-step">
+            <div class="sn">02</div>
+            <p>Kopier filen til roten av prosjektmappen (<code>/CLAUDE.md</code>).</p>
+          </div>
+          <div class="howto-step">
+            <div class="sn">03</div>
+            <p>Start Claude Code i den mappen. Reglene er aktive fra første linje.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-wrap">
+        <button class="preview-toggle" id="toggle-claudemd" aria-expanded="false">
+          <div class="t">
+            <span class="fn">CLAUDE.md</span>
+            <span class="dim">klikk for å se innholdet</span>
+          </div>
+          <div class="preview-controls">
+            <button class="copy-btn" id="copy-claudemd" onclick="event.stopPropagation()">Kopier</button>
+            <span class="arr">&#9660;</span>
+          </div>
+        </button>
+        <div class="preview-body" id="body-claudemd">
+          <pre class="code loading" id="pre-claudemd">Genererer innhold…</pre>
+        </div>
+      </div>
+
+      <div class="file-card__foot">
+        <span class="usage">Filen inneholder bruksanvisning øverst. Én handling: legg den i prosjektmappen.</span>
+        <button class="btn btn--primary" id="dl-claudemd">Last ned CLAUDE.md</button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- ──────────── CURSOR ──────────── -->
+  <section id="cursor">
+    <div class="eyebrow">For Cursor-brukere</div>
+    <h2>Jeg bruker Cursor IDE</h2>
+    <p class="sec-intro">Samme innhold som CLAUDE.md, formatert for Cursor IDE. Gi filen nytt navn til .cursorrules og legg den i prosjektmappen.</p>
+
+    <div class="file-card reveal">
+      <div class="file-card__top">
+        <div class="file-card__meta">
+          <span class="badge badge--cursor">Cursor IDE</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">cursorrules.txt → .cursorrules</span>
+        </div>
+        <h2>Merkevareregler for Cursor IDE</h2>
+        <p class="sub">Samme innhold som CLAUDE.md — CSS-variabler, animasjonstokens, komponentregler og skriveregler — formatert for Cursor IDE sine instruksjonsfiler.</p>
+
+        <div class="contains">
+          <div class="contains-item">
+            <strong>Farger og CSS-variabler</strong>
+            Alle tokens med hex-verdier og bruksbeskrivelse
+          </div>
+          <div class="contains-item">
+            <strong>Animasjonstokens</strong>
+            120ms / 200ms / 320ms + ease-kurver
+          </div>
+          <div class="contains-item">
+            <strong>Komponentregler</strong>
+            Knapper, kort, nav, fokustilstander
+          </div>
+          <div class="contains-item">
+            <strong>Skriveregler</strong>
+            Tone, CTAer, hva som aldri skal gjøres
+          </div>
+        </div>
+      </div>
+
+      <div class="howto">
+        <div class="howto-label">Slik bruker du den</div>
+        <div class="howto-steps">
+          <div class="howto-step">
+            <div class="sn">01</div>
+            <p>Last ned <strong>cursorrules.txt</strong>. Åpne filen og les bruksanvisningen øverst.</p>
+          </div>
+          <div class="howto-step">
+            <div class="sn">02</div>
+            <p>Gi filen nytt navn til <code>.cursorrules</code> (med punktum foran).</p>
+          </div>
+          <div class="howto-step">
+            <div class="sn">03</div>
+            <p>Legg den i roten av prosjektmappen. Cursor aktiverer den automatisk.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="preview-wrap">
+        <button class="preview-toggle" id="toggle-cursor" aria-expanded="false">
+          <div class="t">
+            <span class="fn">cursorrules.txt</span>
+            <span class="dim">klikk for å se innholdet</span>
+          </div>
+          <div class="preview-controls">
+            <button class="copy-btn" id="copy-cursor" onclick="event.stopPropagation()">Kopier</button>
+            <span class="arr">&#9660;</span>
+          </div>
+        </button>
+        <div class="preview-body" id="body-cursor">
+          <pre class="code loading" id="pre-cursor">Genererer innhold…</pre>
+        </div>
+      </div>
+
+      <div class="file-card__foot">
+        <span class="usage">Husk å gi filen nytt navn til .cursorrules etter nedlasting. Filen forklarer dette øverst.</span>
+        <button class="btn btn--primary" id="dl-cursor">Last ned cursorrules.txt</button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- ──────────── STARTPAKKE ──────────── -->
+  <section id="startpakke">
+    <div class="eyebrow">Kom i gang</div>
+    <h2>Gi meg alt i én pakke</h2>
+    <p class="sec-intro">Én ZIP med alt du trenger — AI-instruksjoner, installerbare fonter, logoer i alle formater og en layoutguide for Word og PowerPoint.</p>
+
+    <div class="zip-card reveal">
+      <div class="zip-card__top">
+        <div>
+          <h2>BlueTec-startpakke.zip</h2>
+          <p class="sub">Alltid generert fra siste merkevaredata. Åpne LEESMEG.md etter nedlasting — den forklarer hvert steg.</p>
+          <div class="zip-categories">
+            <div class="zip-cat">
+              <div class="zip-cat__label">AI-instruksjoner</div>
+              <div class="zip-files">
+                <span class="zip-file">LEESMEG.md</span>
+                <span class="zip-file">brand-prompt.txt</span>
+                <span class="zip-file">CLAUDE.md</span>
+                <span class="zip-file">cursorrules.txt</span>
+                <span class="zip-file">DOKUMENTSTIL.md</span>
+              </div>
+            </div>
+            <div class="zip-cat">
+              <div class="zip-cat__label">Fonter (installeres)</div>
+              <div class="zip-files">
+                <span class="zip-file">BlueTec Geometric 5 vekter</span>
+                <span class="zip-file">Outfit 3 vekter</span>
+              </div>
+            </div>
+            <div class="zip-cat">
+              <div class="zip-cat__label">Logoer</div>
+              <div class="zip-files">
+                <span class="zip-file">Horisontal PNG + SVG</span>
+                <span class="zip-file">Stående PNG + SVG</span>
+                <span class="zip-file">Emblem PNG + SVG</span>
+                <span class="zip-file">JPG for Word-bakgrunn</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn--primary" id="dl-zip" style="white-space:nowrap;flex:none;align-self:flex-start">Last ned startpakke</button>
+      </div>
+
+      <div class="zip-steps" style="grid-template-columns:repeat(4,1fr)">
+        <div class="zip-step">
+          <div class="zsl">Fonter</div>
+          <p>Åpne mappen <strong>fonter/</strong>. Merk alle TTF-filer → dobbeltklikk → Installer. Restart Word.</p>
+        </div>
+        <div class="zip-step">
+          <div class="zsl">Claude.ai / ChatGPT</div>
+          <p>Lim inn brand-prompt.txt som systeminstruksjon. Se LEESMEG.md for steg.</p>
+        </div>
+        <div class="zip-step">
+          <div class="zsl">Claude Code</div>
+          <p>Kopier CLAUDE.md til roten av prosjektmappen. Reglene er aktive ved neste oppstart.</p>
+        </div>
+        <div class="zip-step">
+          <div class="zsl">Cursor IDE</div>
+          <p>Gi cursorrules.txt nytt navn til .cursorrules og legg den i prosjektmappen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule" style="margin-top:64px">
+
+  <!-- ──────────── OPPDATER ──────────── -->
+  <section id="oppdater">
+    <div class="eyebrow">Vedlikehold</div>
+    <h2>Oppdatere reglene</h2>
+    <p class="sec-intro">Alle filer genereres fra én datakilde. Endrer du én ting, oppdaterer alt seg.</p>
+
+    <div class="update-box reveal">
+      <h3>Enkelt datakilde: <code>ai-regler/brand-data.js</code></h3>
+      <ol>
+        <li>Åpne <code>marketing-hub/ai-regler/brand-data.js</code> i et tekstredigeringsprogram.</li>
+        <li>Gjør endringen — f.eks. bytt en hex-fargeverdi, legg til en skriveregel, eller oppdater firmainfo.</li>
+        <li>Lagre og last inn denne siden på nytt. Alle forhåndsvisninger oppdateres umiddelbart.</li>
+        <li>Nedlastningsknappene genererer alltid ferskt innhold. Informer teamet om å laste ned på nytt.</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Preamble builders ──────────────────────────────────────────────────────────
+
+function preambleCLAUDEMD(b) {
+  return '<!--\n'
+    +'  BLUETEC BRAND RULES — CLAUDE.md\n'
+    +'  ────────────────────────────────\n'
+    +'  HVA ER DETTE?\n'
+    +'  Instruksjonsfil for Claude Code. Legg filen i roten av prosjektmappen.\n'
+    +'  Claude Code leser den automatisk ved oppstart og hjandhever alle regler.\n\n'
+    +'  HVA GJOER DEN?\n'
+    +'  Claude kjenner da til BlueTecs farger, CSS-variabler, animasjonstokens,\n'
+    +'  komponentkonvensjoner, skriveregler, tonefall og logoregler.\n\n'
+    +'  SLIK BRUKER DU DEN:\n'
+    +'  1. Kopier denne filen til /CLAUDE.md i prosjektmappen\n'
+    +'  2. Start Claude Code — reglene er aktive\n\n'
+    +'  VIKTIG: '+b.protection+'\n\n'
+    +'  Siste versjon: Merkevarehub → AI-instruksjoner\n'
+    +'-->\n\n';
+}
+
+function preambleBrandPrompt(b) {
+  return '╔════════════════════════════════════════════════════════════════╗\n'
+    +'  BLUETEC — MERKEVARE-INSTRUKSJON FOR AI-CHAT\n'
+    +'  brand-prompt.txt\n'
+    +'  ─────────────────────────────────────────────\n'
+    +'  HVA ER DETTE?\n'
+    +'  En systeminstruksjon for Claude.ai og ChatGPT.\n\n'
+    +'  SLIK BRUKER DU DEN:\n'
+    +'  Claude.ai → Innstillinger → Personlig → Egendefinert instruksjon\n'
+    +'             → kopier alt under skillelinjen og lim inn\n'
+    +'  ChatGPT   → Klikk profil → Tilpass ChatGPT → Instruksjoner\n'
+    +'             → kopier alt under skillelinjen og lim inn\n\n'
+    +'  INNEHOLDER:\n'
+    +'  Skriveregler · Tone · Farger · Segmentspesifikke CTAer\n\n'
+    +'  VIKTIG: '+b.protection+'\n\n'
+    +'  Siste versjon: Merkevarehub → AI-instruksjoner\n'
+    +'╚════════════════════════════════════════════════════════════════╝\n\n'
+    +'━━━━━━━━━━━━━━ INSTRUKSJONENE BEGYNNER HER ━━━━━━━━━━━━━━\n\n';
+}
+
+function preambleCursorRules(b) {
+  return '# ════════════════════════════════════════════════════════════\n'
+    +'# BLUETEC BRAND RULES — .cursorrules\n'
+    +'# ────────────────────────────────────────────────────────────\n'
+    +'# HVA ER DETTE?\n'
+    +'# Instruksjonsfil for Cursor IDE.\n\n'
+    +'# SLIK BRUKER DU DEN:\n'
+    +'# 1. Gi filen nytt navn til .cursorrules (med punktum foran)\n'
+    +'# 2. Legg den i roten av prosjektmappen\n'
+    +'# 3. Cursor aktiverer den automatisk\n\n'
+    +'# INNEHOLDER:\n'
+    +'# CSS-variabler · Animasjonstokens · Komponentregler · Skriveregler\n\n'
+    +'# VIKTIG: '+b.protection+'\n\n'
+    +'# Siste versjon: Merkevarehub → AI-instruksjoner\n'
+    +'# ════════════════════════════════════════════════════════════\n\n';
+}
+
+// ── Brand templates ────────────────────────────────────────────────────────────
+
+function buildCLAUDEMD(b) {
+  var F = '```';
+  var blue = b.colors.find(function(c){return c.name==='Blue'});
+  var navy = b.colors.find(function(c){return c.name==='Navy'});
+  var colorHeader = '| Name | Hex | Use |\n|------|-----|-----|';
+  var colorRows = b.colors.map(function(c){ return '| '+c.name+' | `'+c.hex+'` | '+c.use+' |'; }).join('\n');
+  var cssVars = b.colors.map(function(c){ return '  '+c.cssVar+': '+c.hex+';'; }).join('\n');
+  var contrastList = b.contrastRules.map(function(r){ return '- '+r.bg+' → `'+r.text+'`'; }).join('\n');
+  var writingList = b.writingRules.map(function(r){ return '- '+r; }).join('\n');
+  var ctaHeader = '| Segment | Focus |\n|---------|-------|';
+  var ctaRows = b.ctaSegments.map(function(s){ return '| '+s.segment+' | '+s.focus+' |'; }).join('\n');
+  var neverList = b.neverDo.map(function(r){ return '- '+r; }).join('\n');
+  return preambleCLAUDEMD(b)
+    +'# BlueTec — Brand Rules for Claude Code\n\n'
+    +'These instructions apply to all BlueTec AS projects.\n\n'
+    +'---\n\n'
+    +'## Company\n\n'
+    +'BlueTec AS delivers solar energy solutions to housing cooperatives (borettslag), commercial buildings, and private homes in Norway.\n\n'
+    +'**Tone:** Professional, trustworthy, Scandinavian calm. Never hyperbolic.\n'
+    +'**Language:** Norwegian bokmål for all customer-facing copy.\n'
+    +'**Website:** '+b.company.website+'\n'
+    +'**Address:** '+b.company.address+'\n'
+    +'**Org.nr.:** '+b.company.orgNr+'\n'
+    +'**Contact:** '+b.company.email+' · '+b.company.phone+'\n\n'
+    +'---\n\n'
+    +'## Colors\n\n'
+    +'Use exact hex values. Never approximate. Never use colors outside this palette.\n\n'
+    +colorHeader+'\n'+colorRows+'\n\n'
+    +'Never use: red, orange, yellow, neon, or green. Retired: `'+b.colorRetired+'` — do not use.\n\n'
+    +'### CSS custom properties\n\n'
+    +F+'css\n:root {\n'+cssVars+'\n}\n'+F+'\n\n'
+    +'### Contrast rules (non-negotiable)\n\n'
+    +contrastList+'\n\n'
+    +'---\n\n'
+    +'## Typography\n\n'
+    +'**Primary:** '+b.fonts.primary+' ('+b.fonts.headingWeights+' headings, '+b.fonts.bodyWeight+' body)\n'
+    +'**Fallback:** '+b.fonts.fallbackHeading+' for headings, '+b.fonts.fallbackBody+' for body\n\n'
+    +F+'css\nfont-family: \''+b.fonts.primary+'\', \''+b.fonts.fallbackBody+'\', system-ui, sans-serif;\n'+F+'\n\n'
+    +'Never: Thin/ExtraLight/Light for headings. Never Times New Roman, Calibri, Arial, or Comic Sans as primary.\n\n'
+    +'---\n\n'
+    +'## Motion and animation\n\n'
+    +F+'css\n:root {\n'
+    +'  --motion-fast:    '+b.motion.fast+';\n'
+    +'  --motion-base:    '+b.motion.base+';\n'
+    +'  --motion-slow:    '+b.motion.slow+';\n'
+    +'  --ease-standard:  '+b.motion.easeStandard+';\n'
+    +'  --ease-entrance:  '+b.motion.easeEntrance+';\n'
+    +'}\n'+F+'\n\n'
+    +'- Always include `@media (prefers-reduced-motion: reduce)` overrides\n'
+    +'- No bounce easing\n'
+    +'- Focus states on every interactive element: `outline: 2px solid var(--bt-blue); outline-offset: 2px`\n\n'
+    +'---\n\n'
+    +'## UI and component conventions\n\n'
+    +'- **Buttons:** `border-radius: 99px` (pill)\n'
+    +'- **Cards:** `border-radius: 14px–18px`, `border: 1px solid var(--bt-hairline)`\n'
+    +'- **Navigation:** white background, never dark nav unless specifically requested\n'
+    +'- **Sections:** alternate `var(--bt-paper)` / white; dark accent sections use `var(--bt-navy)`\n\n'
+    +'---\n\n'
+    +'## Writing rules\n\n'
+    +writingList+'\n\n'
+    +'### Segment-specific CTAs\n\n'
+    +ctaHeader+'\n'+ctaRows+'\n\n'
+    +'Never generic CTAs ("Klikk her", "Les mer") — always be specific.\n\n'
+    +'---\n\n'
+    +'## Logo rules\n\n'
+    +'- Transparent PNG or SVG only — never gray-box placeholder\n'
+    +'- Emblem white areas are negative space, not filled white\n'
+    +'- Wordmark: navy on light, white on dark or blue\n'
+    +'- Never stretch, rotate, tint, or add effects\n'
+    +'- Clear zone = emblem height on all four sides\n\n'
+    +'---\n\n'
+    +'## Office and document standards\n\n'
+    +(b.documentStyle ? (function(ds){
+      var htable = '| Style | Font | Weight | Size | Color |\n|-------|------|--------|------|-------|\n'
+        +ds.headings.map(function(h){ return '| '+h.level+' | '+h.font+' | '+h.weight+' | '+h.sizePt+'pt | `'+h.color+'` |'; }).join('\n');
+      return '### Typography in documents\n\n'+htable+'\n\n'
+        +'Line height: '+ds.lineHeight+'\n\n'
+        +'### Page layout (Word)\n\n'
+        +'Margins: '+ds.margins.top+' top · '+ds.margins.bottom+' bottom · '+ds.margins.left+' left · '+ds.margins.right+' right\n\n'
+        +'Logo placement: '+ds.logoPlacement.documents+'\n\n'
+        +'### Presentation layout (PowerPoint / Keynote)\n\n'
+        +'Title slide: '+ds.presentation.titleSlide+'\n'
+        +'Content slides: '+ds.presentation.contentSlide+'\n'
+        +'Font sizes: H1 '+ds.presentation.sizes.h1+' · H2 '+ds.presentation.sizes.h2+' · Body '+ds.presentation.sizes.body+'\n'
+        +'Accents: '+ds.presentation.accentUse+'\n'
+        +'Logo: '+ds.logoPlacement.presentation+'\n\n';
+    })(b.documentStyle) : '')
+    +'### Footer (all Word documents)\n\n'
+    +F+'\n'+b.docFooter+'\n'+F+'\n\n'
+    +'Confidential markers: navy (`'+(navy?navy.hex:'#0A1628')+'`) or blue (`'+(blue?blue.hex:'#0077C8')+'`) — never red.\n\n'
+    +'---\n\n'
+    +'## Never do\n\n'
+    +neverList+'\n';
+}
+
+function buildBrandPrompt(b) {
+  var colorLines = b.colors.map(function(c){ return c.name+': '+c.hex+'  —  '+c.use; }).join('\n');
+  var contrastLines = b.contrastRules.map(function(r){ return '- '+r.bg+' → '+r.text; }).join('\n');
+  var writingLines = b.writingRules.map(function(r, i){ return (i+1)+'. '+r; }).join('\n');
+  var ctaLines = b.ctaSegments.map(function(s){ return '   - '+s.segment+': '+s.focus; }).join('\n');
+  var neverLine = b.neverDo.join(' · ');
+  return preambleBrandPrompt(b)
+    +'Du assisterer BlueTec AS — et norsk solenergiselskap. Følg disse merkevare- og skrivereglene i alle svar og alt innhold du produserer.\n\n'
+    +'---\n\n'
+    +'SELSKAP\n'
+    +b.company.name+' leverer solenergilosninger til borettslag, næringsbygg og privatpersoner i Norge.\n'
+    +'Tone: profesjonell, tillitsvekkende, skandinavisk ro. Aldri hyperbolsk.\n'
+    +'Norsk bokmål for all kundevendt tekst. Nettsted: '+b.company.website+'\n\n'
+    +'---\n\n'
+    +'FARGER (eksakte hex-verdier — aldri tilnærmet)\n'
+    +colorLines+'\n\n'
+    +'Aldri bruk: rød, oransje, gul, neon eller grønn. Utgått: '+b.colorRetired+' — ikke bruk.\n\n'
+    +'Kontrastpar (ikke omsettelig):\n'+contrastLines+'\n\n'
+    +'---\n\n'
+    +'TYPOGRAFI\n'
+    +'Primær: '+b.fonts.primary+' ('+b.fonts.headingWeights+' for overskrifter, '+b.fonts.bodyWeight+' for brødtekst)\n'
+    +'Fallback: '+b.fonts.fallbackHeading+' for overskrifter, '+b.fonts.fallbackBody+' for brødtekst\n'
+    +'Aldri Times New Roman, Calibri, Arial eller Comic Sans som primærskrift.\n\n'
+    +'---\n\n'
+    +'SKRIVEREGLER\n'
+    +writingLines+'\n\n'
+    +'CTAer skal alltid være segmentspesifikke — aldri generiske ("Klikk her", "Les mer"):\n'
+    +ctaLines+'\n\n'
+    +'---\n\n'
+    +'DESIGNPRINSIPPER\n'
+    +'- Hvit navigasjonslinje — aldri mørk nav med mindre spesifikt forespørt\n'
+    +'- Ren, rolig skandinavisk estetikk — ingen visuell støy\n'
+    +'- Respekter alltid prefers-reduced-motion\n\n'
+    +'---\n\n'
+    +(b.documentStyle ? (function(ds){
+      return 'DOKUMENTER OG PRESENTASJONER\n'
+        +'Hjelper du med Word, PowerPoint eller annet dokument, følg disse hierarki-reglene:\n\n'
+        +ds.headings.map(function(h){ return h.level+': '+h.font+' ('+h.weight+'), '+h.color+', '+h.sizePt+'pt'; }).join('\n')+'\n\n'
+        +'Tittelside/forsideslide: navy ('+ds.presentation.titleSlide+')\n'
+        +'Konfidensielt: '+ds.confidential+'\n'
+        +'Bunntekst i Word: '+b.docFooter+'\n\n'
+        +'---\n\n';
+    })(b.documentStyle) : '')
+    +'ALDRI\n'
+    +neverLine+'\n';
+}
+
+function buildCursorRules(b) {
+  var blue = b.colors.find(function(c){return c.name==='Blue'});
+  var blueHex = blue ? blue.hex : '#0077C8';
+  var colorDefs = b.colors.map(function(c){ return '  '+c.cssVar+': '+c.hex+'   -- '+c.use; }).join('\n');
+  var cssBlock = b.colors.map(function(c){ return '  '+c.cssVar+': '+c.hex+';'; }).join('\n')
+    +'\n\n  --motion-fast:    '+b.motion.fast+';\n'
+    +'  --motion-base:    '+b.motion.base+';\n'
+    +'  --motion-slow:    '+b.motion.slow+';\n'
+    +'  --ease-standard:  '+b.motion.easeStandard+';\n'
+    +'  --ease-entrance:  '+b.motion.easeEntrance+';';
+  var contrastLines = b.contrastRules.map(function(r){ return r.bg+'  →  text color '+r.text; }).join('\n');
+  var ctaLines = b.ctaSegments.map(function(s){ return '  '+s.segment+': '+s.focus; }).join('\n');
+  var neverList = b.neverDo.map(function(r){ return '- '+r; }).join('\n');
+  return preambleCursorRules(b)
+    +'# BlueTec Brand Rules for Cursor\n\n'
+    +'## Colors\n'
+    +'Use exact hex values — never approximate, never outside this palette:\n\n'
+    +colorDefs+'\n\n'
+    +'Never: red, orange, yellow, neon, green. Retired: '+b.colorRetired+'.\n\n'
+    +'## CSS custom properties\n\n'
+    +':root {\n'+cssBlock+'\n}\n\n'
+    +'## Typography\n\n'
+    +'font-family: \''+b.fonts.primary+'\', \''+b.fonts.fallbackBody+'\', system-ui, sans-serif;\n\n'
+    +'Headings: font-weight '+b.fonts.headingWeights+'\n'
+    +'Body:     font-weight '+b.fonts.bodyWeight+'\n\n'
+    +'Never Thin/ExtraLight/Light for headings. Never Times New Roman, Calibri, Arial, or Comic Sans.\n\n'
+    +'## Motion\n\n'
+    +'Always use motion tokens. Always add reduced-motion override:\n\n'
+    +'@media (prefers-reduced-motion: reduce) {\n'
+    +'  * { transition-duration: .01ms !important; animation-duration: .01ms !important; }\n'
+    +'}\n\n'
+    +'No bounce easing.\n\n'
+    +'## Component conventions\n\n'
+    +'Buttons:  border-radius: 99px\n'
+    +'Cards:    border-radius: 14px–18px; border: 1px solid var(--bt-hairline)\n'
+    +'Nav:      background: #ffffff — never dark nav\n'
+    +'Focus:    outline: 2px solid '+blueHex+'; outline-offset: 2px (every interactive element)\n'
+    +'Sections: alternate var(--bt-paper)/white; dark accents use var(--bt-navy)\n\n'
+    +'## Contrast (non-negotiable)\n\n'
+    +contrastLines+'\n\n'
+    +'## Logo\n\n'
+    +'Transparent SVG or PNG only. Emblem white = negative space. Wordmark: navy on light, white on dark.\n'
+    +'Never stretch, rotate, or recolor. Clear zone = emblem height on all four sides.\n\n'
+    +'## Writing\n\n'
+    +'- No emojis anywhere\n'
+    +'- No em-dash mid-sentence — use comma or colon\n'
+    +'- Norwegian bokmål for customer-facing text\n'
+    +'- CTAs must be segment-specific:\n'+ctaLines+'\n'
+    +'- No unverified percentage claims without a source\n\n'
+    +'## Never do\n\n'
+    +neverList+'\n';
+}
+
+function buildReadme(b) {
+  return '# BlueTec — Startpakke (LEESMEG.md)\n\n'
+    +'Pakken inneholder:\n\n'
+    +'  instruksjoner/\n'
+    +'    brand-prompt.txt   — for Claude.ai og ChatGPT (alle ansatte)\n'
+    +'    CLAUDE.md          — for Claude Code (utviklere)\n'
+    +'    cursorrules.txt    — for Cursor IDE (gi nytt navn til .cursorrules)\n'
+    +'    DOKUMENTSTIL.md    — layout- og designregler for Word, PowerPoint og e-post\n\n'
+    +'  fonter/\n'
+    +'    BlueTec-Geometric/ — 5 vekter av BlueTec Geometric (TTF, installerbar)\n'
+    +'    Outfit-fallback/   — 3 vekter av Outfit (reserveskrift, TTF)\n\n'
+    +'  logoer/\n'
+    +'    BRUK-DISSE.txt     — guide: hvilken logo til hva\n'
+    +'    [horisontal, stående, emblem — PNG, SVG og JPG]\n\n'
+    +'---\n\n'
+    +'## STEG 1 — Installer fonter (gjør dette først)\n\n'
+    +'Mac:  Åpne mappen fonter/ → merk alle .ttf-filer → dobbeltklikk → "Installer font"\n'
+    +'PC:   Åpne mappen fonter/ → merk alle .ttf-filer → høyreklikk → "Installer"\n\n'
+    +'Installer BlueTec-Geometric/ først. Outfit-fallback/ er bare nødvendig som reserveskrift.\n'
+    +'Restart Word og PowerPoint etter installasjon.\n\n'
+    +'---\n\n'
+    +'## STEG 2 — Velg din AI-assistent\n\n'
+    +'### Jeg bruker Claude.ai eller ChatGPT (anbefalt for de fleste)\n\n'
+    +'1. Gå til claude.ai og logg inn.\n'
+    +'2. Klikk "Prosjekter" → "Nytt prosjekt" → gi det navn "BlueTec".\n'
+    +'3. Klikk "Prosjektinstruksjoner" → kopier ALT innholdet fra brand-prompt.txt og lim inn.\n'
+    +'4. Klar. Alt du lager i dette prosjektet følger BlueTec-merkevaren.\n\n'
+    +'ChatGPT: Klikk profilbilde → Tilpass ChatGPT → Instruksjoner → lim inn brand-prompt.txt\n\n'
+    +'### Jeg er utvikler og bruker Claude Code\n\n'
+    +'1. Kopier instruksjoner/CLAUDE.md til rotkatalogen i prosjektet ditt (/CLAUDE.md).\n'
+    +'2. Start Claude Code. Reglene er aktive fra første sesjon.\n\n'
+    +'### Jeg bruker Cursor IDE\n\n'
+    +'1. Kopier instruksjoner/cursorrules.txt til prosjektmappen.\n'
+    +'2. Gi filen nytt navn til .cursorrules (med punktum foran).\n'
+    +'3. Cursor aktiverer den automatisk.\n\n'
+    +'---\n\n'
+    +'## STEG 3 — Logoer\n\n'
+    +'Se logoer/BRUK-DISSE.txt for guide til hvilken logo som passer til hva.\n'
+    +'Kort oppsummert:\n'
+    +'- Word, e-post, PDF på lys bakgrunn: horisontal-pa-lys-bakgrunn.png\n'
+    +'- Mørk bakgrunn: horisontal-pa-mork-bakgrunn.png\n'
+    +'- Nettside og kode: SVG-versjonene\n'
+    +'- App-ikon, sosiale medier: emblem-bla-512px.png\n\n'
+    +'---\n\n'
+    +'## STEG 4 — Dokumentlayout\n\n'
+    +'Les instruksjoner/DOKUMENTSTIL.md for fullstendige regler for marger, overskrifter,\n'
+    +'fargebruk og logo-plassering i Word og PowerPoint.\n\n'
+    +'---\n\n'
+    +'## Viktig: Reglene er låste\n\n'
+    +b.protection+'\n\n'
+    +'---\n\n'
+    +'Nyeste versjon av pakken: Merkevarehub → AI-instruksjoner → Startpakke\n'
+    +b.company.website+'\n';
+}
+
+function buildDocumentStyle(b) {
+  var ds = b.documentStyle;
+  var headingTable = '| Stil | Font | Vekt | Størrelse | Farge |\n|------|------|------|-----------|-------|\n'
+    + ds.headings.map(function(h){
+        return '| '+h.level+' | '+h.font+' | '+h.weight+' | '+h.sizePt+'pt | `'+h.color+'` |';
+      }).join('\n');
+  var neverList = ds.neverInDocs.map(function(r){ return '- '+r; }).join('\n');
+  return '# BlueTec — Dokumentstil og presentasjonsregler\n\n'
+    +'DOKUMENTSTIL.md — layoutguide for Word, PowerPoint, Keynote og e-post\n'
+    +'Siste versjon: Merkevarehub → AI-instruksjoner\n\n'
+    +'---\n\n'
+    +'## Fonter\n\n'
+    +'Installer ALLE fontene i mappen fonter/ på maskinen din (merk alle → dobbeltklikk → Installer).\n\n'
+    +headingTable+'\n\n'
+    +'Fallback (hvis BlueTec Geometric ikke er installert): Outfit ExtraBold (overskrifter) / Outfit Regular (brødtekst).\n'
+    +'Aldri Thin (100) eller ExtraLight (200) for overskrifter.\n\n'
+    +'---\n\n'
+    +'## Farger i dokumenter\n\n'
+    +'| Bruk | Farge | Hex |\n|------|-------|-----|\n'
+    + b.colors.map(function(c){ return '| '+c.use+' | '+c.name+' | `'+c.hex+'` |'; }).join('\n')+'\n\n'
+    +'Aldri: rød, oransje, gul, neon. Utgått blå: `'+b.colorRetired+'`.\n\n'
+    +'---\n\n'
+    +'## Word-dokumenter — layout\n\n'
+    +'**Marger:** '+ds.margins.top+' topp · '+ds.margins.bottom+' bunn · '+ds.margins.left+' venstre · '+ds.margins.right+' høyre\n'
+    +'**Linjehøyde:** '+ds.lineHeight+'\n\n'
+    +'**Logo-plassering:** '+ds.logoPlacement.documents+'\n\n'
+    +'**Tittelside:** '+ds.presentation.titleSlide+'\n\n'
+    +'**Bunntekst (alle dokumenter):**\n'
+    +'> '+b.docFooter+'\n\n'
+    +'**Konfidensielt:** '+ds.confidential+'\n\n'
+    +'---\n\n'
+    +'## PowerPoint og Keynote — layout\n\n'
+    +'**Tittelslide:** '+ds.presentation.titleSlide+'\n\n'
+    +'**Innholdsslides:** '+ds.presentation.contentSlide+'\n\n'
+    +'**Skriftstørrelser:** H1 '+ds.presentation.sizes.h1+' · H2 '+ds.presentation.sizes.h2+' · Brødtekst '+ds.presentation.sizes.body+'\n\n'
+    +'**Aksenter:** '+ds.presentation.accentUse+'\n\n'
+    +'**Logo-plassering:** '+ds.logoPlacement.presentation+'\n\n'
+    +'---\n\n'
+    +'## Logoer — hvilken versjon bruker du?\n\n'
+    +'Se logoer/BRUK-DISSE.txt i denne pakken for komplett guide. Kort oppsummert:\n\n'
+    +'- **Word, e-post, PDF (lys bakgrunn):** horisontal-pa-lys-bakgrunn.png\n'
+    +'- **Word, e-post, PDF (mørk bakgrunn):** horisontal-pa-mork-bakgrunn.png\n'
+    +'- **Word-forside med bildet som bakgrunn (Office krever JPG):** horisontal-pa-lys-bakgrunn.jpg\n'
+    +'- **Nettside og kode:** SVG-versjonene (best kvalitet)\n'
+    +'- **App-ikon, favicon, sosiale medier (lys bakgrunn):** emblem-bla-512px.png\n'
+    +'- **App-ikon, favicon, sosiale medier (mørk bakgrunn):** emblem-hvit-512px.png\n\n'
+    +'---\n\n'
+    +'## E-postsignatur\n\n'
+    +'Bruk signaturbyggeren i Merkevarehub → E-postsignatur.\n'
+    +'Kopier og lim direkte inn i Outlook via kopier-knappen — ikke legg logoen inn manuelt.\n\n'
+    +'---\n\n'
+    +'## Aldri\n\n'
+    +neverList+'\n';
+}
+
+function buildFontGuide() {
+  return 'FONTER — INSTALLER DISSE\n\n'
+    +'Marker alle .ttf-filer i denne mappen → dobbeltklikk → Installer font\n'
+    +'(Mac: Installer font · PC: Høyreklikk → Installer)\n\n'
+    +'BLUETEC GEOMETRIC (primærskrift)\n'
+    +'  BlueTecGeometric-Regular.ttf    — brødtekst, løpende tekst\n'
+    +'  BlueTecGeometric-SemiBold.ttf   — etiketter, navigasjon, metadata\n'
+    +'  BlueTecGeometric-Bold.ttf       — H2-overskrifter, underoverskrifter\n'
+    +'  BlueTecGeometric-ExtraBold.ttf  — H1-overskrifter, titteler\n'
+    +'  BlueTecGeometric-Black.ttf      — display, hero-overskrifter (bruk sparsomt)\n\n'
+    +'OUTFIT (reserveskrift)\n'
+    +'  Outfit-Regular.ttf              — brødtekst-fallback\n'
+    +'  Outfit-Bold.ttf                 — overskrift-fallback\n'
+    +'  Outfit-ExtraBold.ttf            — display-fallback\n\n'
+    +'Etter installasjon: restart Word og PowerPoint.\n\n'
+    +'Siste versjon: Merkevarehub → Typografi\n';
+}
+
+function buildLogoGuide() {
+  return 'LOGOER — HVILKEN BRUKER DU?\n\n'
+    +'HORISONTAL (liggende logo med BlueTec-navn) — bruk i 95% av tilfellene:\n\n'
+    +'  horisontal-pa-lys-bakgrunn.png    → Word, e-post, PDF, lys bakgrunn\n'
+    +'  horisontal-pa-mork-bakgrunn.png   → Word, e-post, PDF, mørk/navy bakgrunn\n'
+    +'  horisontal-pa-lys-bakgrunn.svg    → Nettside, kode, Figma (skalerbar)\n'
+    +'  horisontal-pa-mork-bakgrunn.svg   → Nettside, kode, Figma, mørk bakgrunn\n'
+    +'  horisontal-pa-lys-bakgrunn.jpg    → Word-forside med bildet som bakgrunn\n'
+    +'                                       (Office krever JPG for bakgrunnsbilder)\n\n'
+    +'STÅENDE (logo med tekst under) — kun når plassen er kvadratisk:\n\n'
+    +'  staaende-pa-lys-bakgrunn.png      → Kvadratisk plass, lys bakgrunn\n'
+    +'  staaende-pa-mork-bakgrunn.png     → Kvadratisk plass, mørk bakgrunn\n'
+    +'  staaende-pa-lys-bakgrunn.svg      → Skalerbar SVG, lys bakgrunn\n'
+    +'  staaende-pa-mork-bakgrunn.svg     → Skalerbar SVG, mørk bakgrunn\n\n'
+    +'EMBLEM (bare symbolet, uten BlueTec-navn):\n\n'
+    +'  emblem-bla-512px.png              → App-ikon, favicon, sosiale medier (lys bakgrunn)\n'
+    +'  emblem-hvit-512px.png             → App-ikon, favicon, sosiale medier (mørk bakgrunn)\n'
+    +'  emblem-navy-512px.png             → Enfarget navy, spesiell bruk\n'
+    +'  emblem-bla.svg                    → Nettside, kode (skalerbar, lys bakgrunn)\n'
+    +'  emblem-hvit.svg                   → Nettside, kode (skalerbar, mørk bakgrunn)\n'
+    +'  emblem-navy.svg                   → Nettside, kode (skalerbar, navy)\n\n'
+    +'ALDRI:\n'
+    +'  - Strekk, roter, endre farge eller legg til skygger\n'
+    +'  - Hvit logo på hvit bakgrunn\n'
+    +'  - Navy logo på navy bakgrunn\n'
+    +'  - Lav-oppløselig PNG der SVG er tilgjengelig (nettside/kode)\n'
+    +'  - Logo smalere enn 120px\n\n'
+    +'Siste versjon: Merkevarehub → Logoer og lockups\n';
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────────
+
+function downloadText(content, filename) {
+  var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+function fetchBinary(url) {
+  return fetch(url).then(function(r) {
+    if (!r.ok) throw new Error(r.status + ' ' + url);
+    return r.arrayBuffer();
+  });
+}
+
+function downloadZIP(b, files) {
+  if (typeof JSZip === 'undefined') { showToast('ZIP ikke tilgjengelig — start huben med: python3 -m http.server 3437'); return; }
+  var zipBtn = document.getElementById('dl-zip');
+  if (zipBtn) { zipBtn.textContent = 'Pakker…'; zipBtn.disabled = true; }
+
+  var zip = new JSZip();
+  var root = zip.folder('BlueTec-startpakke');
+
+  // Text files
+  root.file('LEESMEG.md', buildReadme(b));
+  var instr = root.folder('instruksjoner');
+  instr.file('brand-prompt.txt', files['brand-prompt.txt']);
+  instr.file('CLAUDE.md',        files['CLAUDE.md']);
+  instr.file('cursorrules.txt',  files['cursorrules.txt']);
+  instr.file('DOKUMENTSTIL.md',  buildDocumentStyle(b));
+
+  // Font folders
+  var fonterBT     = root.folder('fonter/BlueTec-Geometric');
+  var fonterOutfit = root.folder('fonter/Outfit-fallback');
+  root.folder('fonter').file('INSTALLER-DISSE.txt', buildFontGuide());
+
+  var base = 'branding-hub-assets/fonts/';
+  var btWeights   = ['Regular','SemiBold','Bold','ExtraBold','Black'];
+  var oWeights    = ['Regular','Bold','ExtraBold'];
+
+  var fontFetches = btWeights.map(function(w) {
+    return fetchBinary(base + 'BlueTecGeometric-' + w + '.ttf').then(function(data) {
+      fonterBT.file('BlueTecGeometric-' + w + '.ttf', data);
+    });
+  }).concat(oWeights.map(function(w) {
+    return fetchBinary(base + 'outfit/Outfit-' + w + '.ttf').then(function(data) {
+      fonterOutfit.file('Outfit-' + w + '.ttf', data);
+    });
+  }));
+
+  // Logo folder
+  var logoer = root.folder('logoer');
+  logoer.file('BRUK-DISSE.txt', buildLogoGuide());
+
+  var lb = 'branding-hub-assets/logo/';
+  var logoFetches = [
+    // Horisontal PNG + SVG + JPG
+    { src: lb+'lockup/png/bluetec-lockup-horizontal-on-light.png',          dest: 'horisontal-pa-lys-bakgrunn.png' },
+    { src: lb+'lockup/png/bluetec-lockup-horizontal-on-dark.png',           dest: 'horisontal-pa-mork-bakgrunn.png' },
+    { src: lb+'lockup/svg/bluetec-lockup-horizontal-on-light.svg',          dest: 'horisontal-pa-lys-bakgrunn.svg' },
+    { src: lb+'lockup/svg/bluetec-lockup-horizontal-on-dark.svg',           dest: 'horisontal-pa-mork-bakgrunn.svg' },
+    { src: lb+'lockup/jpg/bluetec-lockup-horizontal-on-white.jpg',          dest: 'horisontal-pa-lys-bakgrunn.jpg' },
+    // Stående PNG + SVG
+    { src: lb+'lockup/png/bluetec-lockup-stacked-on-light.png',             dest: 'staaende-pa-lys-bakgrunn.png' },
+    { src: lb+'lockup/png/bluetec-lockup-stacked-on-dark.png',              dest: 'staaende-pa-mork-bakgrunn.png' },
+    { src: lb+'lockup/svg/bluetec-lockup-stacked-on-light.svg',             dest: 'staaende-pa-lys-bakgrunn.svg' },
+    { src: lb+'lockup/svg/bluetec-lockup-stacked-on-dark.svg',              dest: 'staaende-pa-mork-bakgrunn.svg' },
+    // Emblem PNG 512px
+    { src: lb+'emblem/png/bluetec-emblem-blue-512.png',                     dest: 'emblem-bla-512px.png' },
+    { src: lb+'emblem/png/bluetec-emblem-white-512.png',                    dest: 'emblem-hvit-512px.png' },
+    { src: lb+'emblem/png/bluetec-emblem-navy-512.png',                     dest: 'emblem-navy-512px.png' },
+    // Emblem SVG
+    { src: lb+'emblem/svg/bluetec-emblem-blue.svg',                         dest: 'emblem-bla.svg' },
+    { src: lb+'emblem/svg/bluetec-emblem-white.svg',                        dest: 'emblem-hvit.svg' },
+    { src: lb+'emblem/svg/bluetec-emblem-navy.svg',                         dest: 'emblem-navy.svg' },
+  ].map(function(entry) {
+    return fetchBinary(entry.src).then(function(data) {
+      logoer.file(entry.dest, data);
+    }).catch(function() {
+      // skip missing files silently
+    });
+  });
+
+  Promise.all(fontFetches.concat(logoFetches))
+    .then(function() {
+      return zip.generateAsync({ type:'blob', compression:'DEFLATE', compressionOptions:{level:6} });
+    })
+    .then(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'BlueTec-startpakke.zip';
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+      if (zipBtn) { zipBtn.textContent = 'Last ned startpakke'; zipBtn.disabled = false; }
+      showToast('Startpakke lastet ned');
+    })
+    .catch(function(err) {
+      if (zipBtn) { zipBtn.textContent = 'Last ned startpakke'; zipBtn.disabled = false; }
+      showToast('Noe gikk galt: ' + err.message);
+    });
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2400);
+}
+
+function togglePreview(toggleId, bodyId) {
+  var btn = document.getElementById(toggleId);
+  var body = document.getElementById(bodyId);
+  var open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  btn.setAttribute('aria-expanded', String(!open));
+}
+
+// ── Init ───────────────────────────────────────────────────────────────────────
+
+window.addEventListener('DOMContentLoaded', function() {
+  if (typeof BRAND === 'undefined') {
+    ['pre-claudemd','pre-prompt','pre-cursor'].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.textContent='Feil: brand-data.js ikke funnet. Start huben med: python3 -m http.server 3437';
+    }); return;
+  }
+
+  var files = {
+    'CLAUDE.md':        buildCLAUDEMD(BRAND),
+    'brand-prompt.txt': buildBrandPrompt(BRAND),
+    'cursorrules.txt':  buildCursorRules(BRAND),
+  };
+
+  // Populate previews
+  document.getElementById('pre-claudemd').textContent = files['CLAUDE.md'];
+  document.getElementById('pre-prompt').textContent   = files['brand-prompt.txt'];
+  document.getElementById('pre-cursor').textContent   = files['cursorrules.txt'];
+  document.querySelectorAll('pre.code.loading').forEach(function(p){ p.classList.remove('loading'); });
+
+  // Toggle previews
+  document.getElementById('toggle-prompt').addEventListener('click', function(){ togglePreview('toggle-prompt','body-prompt'); });
+  document.getElementById('toggle-claudemd').addEventListener('click', function(){ togglePreview('toggle-claudemd','body-claudemd'); });
+  document.getElementById('toggle-cursor').addEventListener('click', function(){ togglePreview('toggle-cursor','body-cursor'); });
+
+  // Copy buttons
+  document.getElementById('copy-prompt').addEventListener('click', function(){
+    navigator.clipboard.writeText(files['brand-prompt.txt']).then(function(){ showToast('Kopiert til utklippstavle'); });
+  });
+  document.getElementById('copy-claudemd').addEventListener('click', function(){
+    navigator.clipboard.writeText(files['CLAUDE.md']).then(function(){ showToast('Kopiert til utklippstavle'); });
+  });
+  document.getElementById('copy-cursor').addEventListener('click', function(){
+    navigator.clipboard.writeText(files['cursorrules.txt']).then(function(){ showToast('Kopiert til utklippstavle'); });
+  });
+
+  // Download buttons
+  document.getElementById('dl-prompt').addEventListener('click',   function(){ downloadText(files['brand-prompt.txt'], 'BlueTec-brand-prompt.txt'); });
+  document.getElementById('dl-claudemd').addEventListener('click', function(){ downloadText(files['CLAUDE.md'], 'CLAUDE.md'); });
+  document.getElementById('dl-cursor').addEventListener('click',   function(){ downloadText(files['cursorrules.txt'], 'cursorrules.txt'); });
+  document.getElementById('dl-zip').addEventListener('click',      function(){ downloadZIP(BRAND, files); });
+
+  // Scroll spy
+  var links = [].slice.call(document.querySelectorAll('nav a[href^="#"]'));
+  var spyObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        links.forEach(function(l){ l.classList.remove('active'); });
+        var a = document.querySelector('nav a[href="#'+e.target.id+'"]');
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin:'-30% 0px -60% 0px' });
+  document.querySelectorAll('section[id]').forEach(function(s){ spyObs.observe(s); });
+
+  // Progress bar
+  var bar = document.getElementById('bar');
+  window.addEventListener('scroll', function(){
+    var p = (window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;
+    bar.style.width = Math.min(p,100)+'%';
+  }, { passive:true });
+
+  // Reveal
+  var ro = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);} });
+  }, { threshold:0.06 });
+  document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
+});
+</script>
+</body>
+</html>

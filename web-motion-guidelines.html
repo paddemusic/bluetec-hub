@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web &amp; Motion — BlueTec Brand Hub</title>
+<link rel="icon" type="image/png" sizes="32x32" href="branding-hub-assets/favicon/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="branding-hub-assets/favicon/favicon-16.png">
+<link rel="apple-touch-icon" href="branding-hub-assets/favicon/favicon-180.png">
+<link rel="stylesheet" href="branding-hub-assets/fonts/fonts.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bt-blue:#0077C8;
+  --bt-navy:#0A1628;
+  --bt-white:#FFFFFF;
+  --bt-ink:#15151A;
+  --bt-muted:#86867F;
+  --bt-hairline:#E6E6E1;
+  --bt-paper:#F4F4F2;
+  --motion-fast:120ms;
+  --motion-base:200ms;
+  --motion-slow:320ms;
+  --motion-slower:500ms;
+  --ease-standard:cubic-bezier(.4,0,.2,1);
+  --ease-entrance:cubic-bezier(0,0,.2,1);
+  --ease-exit:cubic-bezier(.4,0,1,1);
+  --ease-emphasis:cubic-bezier(.2,0,0,1);
+  --radius:14px;
+  --nav-w:260px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'BlueTec Geometric',Arial,sans-serif;font-size:16px;line-height:1.6;color:var(--bt-ink);background:var(--bt-white)}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1!important;transform:none!important}
+}
+
+/* ── Layout ──────────────────────────────────── */
+.hub{display:grid;grid-template-columns:var(--nav-w) 1fr;min-height:100vh}
+
+/* ── Left nav ────────────────────────────────── */
+.sidenav{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bt-navy);padding:40px 0;display:flex;flex-direction:column}
+.sidenav__logo{padding:0 28px 24px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:16px}
+.sidenav__logo svg{display:block}
+.sidenav__wordmark{font-size:18px;font-weight:800;color:var(--bt-white);letter-spacing:-.03em;margin-top:10px}
+.sidenav__wordmark span{color:var(--bt-blue)}
+.back-link{display:flex;align-items:center;gap:8px;padding:10px 28px 20px;font-size:13px;font-weight:500;color:rgba(255,255,255,.45);text-decoration:none;transition:color var(--motion-fast) var(--ease-standard)}
+.back-link:hover{color:var(--bt-white)}
+.back-link:focus-visible{outline:2px solid var(--bt-blue);outline-offset:-2px}
+.sidenav__label{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:0 28px;margin-bottom:8px}
+.sidenav__link{display:block;padding:9px 28px;font-size:14px;font-weight:500;color:rgba(255,255,255,.6);text-decoration:none;border-left:3px solid transparent;transition:color var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+.sidenav__link:hover{color:var(--bt-white);background:rgba(255,255,255,.05)}
+.sidenav__link.active{color:var(--bt-white);border-left-color:var(--bt-blue);font-weight:600;background:rgba(0,119,200,.12)}
+.sidenav__link:focus-visible{outline:2px solid var(--bt-blue);outline-offset:-2px}
+.sidenav__footer{margin-top:auto;padding:20px 28px 0;font-size:11px;color:rgba(255,255,255,.25);border-top:1px solid rgba(255,255,255,.08)}
+
+/* ── Main ────────────────────────────────────── */
+.main{background:var(--bt-paper)}
+.section{padding:80px 64px;border-bottom:1px solid var(--bt-hairline)}
+.section:last-child{border-bottom:none}
+.section--hero{background:var(--bt-navy);padding:80px 64px 100px}
+
+/* ── Typography ──────────────────────────────── */
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--bt-blue);margin-bottom:12px}
+.eyebrow--light{color:rgba(255,255,255,.5)}
+h1{font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--bt-white)}
+h2{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.2;color:var(--bt-ink);margin-bottom:8px}
+h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);margin-bottom:6px}
+.lead{font-size:20px;font-weight:400;color:rgba(255,255,255,.7);line-height:1.5;margin-top:16px;max-width:560px}
+.section-desc{font-size:17px;color:var(--bt-muted);margin-bottom:40px;max-width:600px}
+
+/* ── Scroll reveal ───────────────────────────── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity var(--motion-slow) var(--ease-entrance),transform var(--motion-slow) var(--ease-entrance)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+
+/* ── Principles ──────────────────────────────── */
+.principles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.principle-card{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:28px}
+.principle-num{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--bt-blue);margin-bottom:12px}
+.principle-card p{font-size:14px;color:var(--bt-muted);line-height:1.6;margin-top:8px}
+.principles-grid .reveal:nth-child(1){transition-delay:0ms}
+.principles-grid .reveal:nth-child(2){transition-delay:60ms}
+.principles-grid .reveal:nth-child(3){transition-delay:120ms}
+.principles-grid .reveal:nth-child(4){transition-delay:180ms}
+
+/* ── Timing scale ────────────────────────────── */
+.timing-scale{display:flex;flex-direction:column;gap:20px;max-width:580px}
+.timing-row{display:grid;grid-template-columns:130px 1fr 70px;align-items:center;gap:16px}
+.timing-token{font-size:12px;font-family:'Courier New',Courier,monospace;color:var(--bt-muted)}
+.timing-bar-track{height:8px;background:var(--bt-hairline);border-radius:4px;overflow:hidden}
+.timing-bar{height:100%;background:var(--bt-blue);border-radius:4px}
+.timing-duration{font-size:13px;font-weight:700;color:var(--bt-ink);text-align:right;font-variant-numeric:tabular-nums}
+.timing-use{font-size:12px;color:var(--bt-muted);padding-left:146px;margin-top:-8px;margin-bottom:4px}
+
+/* ── Easing demos ────────────────────────────── */
+.easing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.easing-card{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:24px}
+.easing-card h3{margin-bottom:4px}
+.easing-code{font-size:11px;color:var(--bt-muted);font-family:'Courier New',Courier,monospace;margin-bottom:16px;line-height:1.5}
+.easing-track{position:relative;height:44px;background:var(--bt-paper);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.easing-dot{position:absolute;left:10px;top:50%;width:24px;height:24px;border-radius:50%;background:var(--bt-blue);transform:translateY(-50%)}
+.easing-dot.playing{animation:easing-move 900ms forwards}
+@keyframes easing-move{to{left:calc(100% - 34px)}}
+.easing-card p{font-size:12px;color:var(--bt-muted);line-height:1.5;margin-bottom:12px}
+.btn-play{padding:7px 18px;font-size:13px;font-weight:600;font-family:inherit;border-radius:8px;border:1.5px solid var(--bt-hairline);background:transparent;color:var(--bt-ink);cursor:pointer;transition:all var(--motion-fast) var(--ease-standard)}
+.btn-play:hover{border-color:var(--bt-blue);color:var(--bt-blue)}
+.btn-play:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+
+/* ── Scroll rules box ────────────────────────── */
+.scroll-box{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:28px;max-width:600px}
+.scroll-box h3{margin-bottom:16px}
+.rule-dot-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.rule-dot-list li{display:flex;gap:12px;font-size:14px;line-height:1.5;color:var(--bt-ink)}
+.rule-dot-list li::before{content:'';flex-shrink:0;width:7px;height:7px;border-radius:50%;background:var(--bt-blue);margin-top:7px}
+.scroll-box__note{font-size:13px;color:var(--bt-blue);font-weight:600;margin-top:20px;padding-top:16px;border-top:1px solid var(--bt-hairline)}
+
+/* ── Interaction demos ───────────────────────── */
+.interaction-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.interaction-demo{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:32px}
+.demo-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:20px}
+.demo-area{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.demo-btn--primary{display:inline-flex;align-items:center;padding:12px 24px;font-size:14px;font-weight:700;font-family:inherit;border-radius:10px;border:none;background:var(--bt-blue);color:var(--bt-white);cursor:pointer;transition:background var(--motion-base) var(--ease-standard),transform var(--motion-base) var(--ease-standard),box-shadow var(--motion-base) var(--ease-standard)}
+.demo-btn--primary:hover{background:#0068b0;box-shadow:0 4px 12px rgba(0,119,200,.3)}
+.demo-btn--primary:active{transform:scale(.98)}
+.demo-btn--primary:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+.demo-btn--secondary{display:inline-flex;align-items:center;padding:11px 22px;font-size:14px;font-weight:600;font-family:inherit;border-radius:10px;border:1.5px solid var(--bt-hairline);background:transparent;color:var(--bt-ink);cursor:pointer;transition:border-color var(--motion-base) var(--ease-standard),color var(--motion-base) var(--ease-standard)}
+.demo-btn--secondary:hover{border-color:var(--bt-blue);color:var(--bt-blue)}
+.demo-btn--secondary:active{transform:scale(.98)}
+.demo-btn--secondary:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+.demo-link{font-size:14px;font-weight:600;color:var(--bt-blue);text-decoration:underline;text-underline-offset:3px;cursor:pointer;border:none;background:transparent;font-family:inherit;transition:opacity var(--motion-fast) var(--ease-standard)}
+.demo-link:hover{opacity:.65}
+.demo-link:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px;border-radius:2px}
+.demo-card{background:var(--bt-paper);border-radius:12px;padding:20px;border:1px solid var(--bt-hairline);font-size:13px;color:var(--bt-ink);transition:transform var(--motion-base) var(--ease-standard),box-shadow var(--motion-base) var(--ease-standard)}
+.demo-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.demo-card__title{font-weight:600;margin-bottom:4px}
+.demo-card__body{color:var(--bt-muted);font-size:12px;line-height:1.5}
+.interaction-note{font-size:13px;color:var(--bt-muted);margin-top:20px}
+
+/* ── Emblem in motion ────────────────────────── */
+.emblem-stage{display:flex;flex-direction:column;align-items:center;gap:28px;padding:48px 0}
+.emblem-wrapper{width:128px;height:128px;display:flex;align-items:center;justify-content:center}
+@keyframes emblem-entrance{
+  from{transform:scale(.92);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+.emblem-svg{animation:emblem-entrance var(--motion-slower) var(--ease-emphasis) both}
+.emblem-svg.paused{animation:none;opacity:1;transform:scale(1)}
+.emblem-rules{font-size:14px;color:var(--bt-muted);max-width:440px;line-height:1.7;text-align:center}
+.emblem-rules strong{color:var(--bt-ink)}
+.emblem-rules code{font-size:12px;background:var(--bt-paper);padding:1px 6px;border-radius:4px;font-family:'Courier New',Courier,monospace}
+
+/* ── Do & Don't ──────────────────────────────── */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.rules-col__title{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.do-badge{background:#1a7f37;color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700}
+.dont-badge{background:#D93025;color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700}
+.rule-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.rule-list li{font-size:14px;color:var(--bt-ink);display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.rule-list li::before{content:'';flex-shrink:0;width:18px;height:18px;border-radius:50%;margin-top:2px}
+.rules-col--do .rule-list li::before{background:#1a7f37 url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23fff' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/10px no-repeat}
+.rules-col--dont .rule-list li::before{background:#D93025 url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l6 6M7 1L1 7' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center/8px no-repeat}
+.rule-list li code{font-size:12px;background:var(--bt-paper);padding:1px 5px;border-radius:3px;font-family:'Courier New',Courier,monospace}
+
+/* ── Code block ──────────────────────────────── */
+.code-block{background:var(--bt-navy);border-radius:var(--radius);padding:32px;position:relative;overflow:hidden}
+.code-block pre{color:rgba(255,255,255,.8);font-family:'Courier New',Courier,monospace;font-size:13px;line-height:1.9;overflow-x:auto;white-space:pre}
+.c{color:rgba(255,255,255,.3)}
+.p{color:#7dd3fc}
+.v{color:#a5f3c6}
+.btn-copy-code{position:absolute;top:16px;right:16px;padding:6px 14px;font-size:12px;font-weight:600;font-family:inherit;border-radius:7px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.6);cursor:pointer;transition:all var(--motion-fast) var(--ease-standard)}
+.btn-copy-code:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-copy-code:focus-visible{outline:2px solid var(--bt-blue);outline-offset:2px}
+
+/* ── Toast ───────────────────────────────────── */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bt-ink);color:var(--bt-white);font-size:13px;font-weight:600;padding:10px 20px;border-radius:8px;opacity:0;transition:opacity var(--motion-base) var(--ease-standard),transform var(--motion-base) var(--ease-standard);z-index:999;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:900px){
+  .hub{grid-template-columns:1fr}
+  .sidenav{display:none}
+  .section{padding:48px 24px}
+  .interaction-grid,.rules-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="toast" class="toast" aria-live="polite"></div>
+
+<div class="hub">
+
+<!-- ── Left nav ──────────────────────────────── -->
+<nav class="sidenav" aria-label="Web og Motion navigasjon">
+  <div class="sidenav__logo">
+    <svg width="44" height="44" viewBox="108.2 331.1 188.2 188.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="#0077C8" fill-rule="nonzero" d="M 202.34375 474.585938 C 176.980469 474.585938 156.097656 455.449219 153.3125 430.835938 L 174.6875 430.835938 C 177.289062 443.730469 188.679688 453.441406 202.34375 453.441406 C 216.003906 453.441406 227.398438 443.730469 230 430.835938 L 251.371094 430.835938 C 248.585938 455.449219 227.703125 474.585938 202.34375 474.585938 M 202.34375 331.132812 C 192.511719 331.132812 183.035156 332.648438 174.125 335.445312 L 174.125 384.742188 C 182.125 379.15625 191.847656 375.871094 202.34375 375.871094 C 227.707031 375.871094 248.589844 395.003906 251.371094 419.625 L 230 419.625 C 227.398438 406.722656 216.003906 397.011719 202.34375 397.011719 C 188.679688 397.011719 177.285156 406.722656 174.6875 419.625 L 152.988281 419.625 L 152.988281 345.117188 C 126.144531 361.691406 108.25 391.363281 108.25 425.226562 C 108.25 477.191406 150.375 519.320312 202.34375 519.320312 C 254.308594 519.320312 296.433594 477.191406 296.433594 425.226562 C 296.433594 373.261719 254.308594 331.132812 202.34375 331.132812"/>
+    </svg>
+    <div class="sidenav__wordmark">Blue<span>Tec</span></div>
+  </div>
+  <a class="back-link" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Tilbake til Brand Hub
+  </a>
+  <div class="sidenav__label">Web &amp; Motion</div>
+  <a class="sidenav__link active" href="#principles">Prinsipper</a>
+  <a class="sidenav__link" href="#timing">Timing</a>
+  <a class="sidenav__link" href="#easing">Easing</a>
+  <a class="sidenav__link" href="#scroll">Scroll</a>
+  <a class="sidenav__link" href="#interaction">Interaksjon</a>
+  <a class="sidenav__link" href="#emblem">Emblem i bevegelse</a>
+  <a class="sidenav__link" href="#dodont">Gjør &amp; ikke gjør</a>
+  <a class="sidenav__link" href="#implementation">Implementering</a>
+  <div class="sidenav__footer">BlueTec AS &copy; 2026<br>Intern bruksressurs</div>
+</nav>
+
+<!-- ── Main ──────────────────────────────────── -->
+<main class="main">
+
+  <!-- Hero -->
+  <section class="section section--hero" id="hero">
+    <div class="eyebrow eyebrow--light">Web &amp; Motion</div>
+    <h1>How BlueTec<br>moves.</h1>
+    <p class="lead">Bevegelse, scrolling og interaksjon på tvers av BlueTecs digitale flater. Ren geometri i tid. Presis, rolig, selvsikker.</p>
+  </section>
+
+  <!-- 01 Principles -->
+  <section class="section" id="principles">
+    <div class="eyebrow">01</div>
+    <h2>Prinsipper</h2>
+    <p class="section-desc">Fire regler for all animasjon. Bestå alle fire — ellers skipes den ikke.</p>
+    <div class="principles-grid">
+      <div class="principle-card reveal">
+        <div class="principle-num">01</div>
+        <h3>Geometrisk, ikke organisk</h3>
+        <p>Bevegelse følger rette linjer og sirkulære buer — som emblemetik. Ingen fjærer, ingen sprett, ingen elastisk overshoot.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-num">02</div>
+        <h3>Formålsdrevet, aldri dekorativ</h3>
+        <p>Hver animasjon forklarer noe: en tilstandsendring, hvor et element kom fra, hva som nå har fokus. Kommuniserer den ikke? Fjern den.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-num">03</div>
+        <h3>Rask og rolig</h3>
+        <p>Grensesnittbevegelse er kort — 120 til 320ms. Merkevaren er autoritativ, ikke oppsiktsvekkende. Hastighet leser som kompetanse.</p>
+      </div>
+      <div class="principle-card reveal">
+        <div class="principle-num">04</div>
+        <h3>Tilbakeholdenhet</h3>
+        <p>En fokal bevegelse om gangen. Innhold leder — bevegelse støtter og konkurrerer aldri om oppmerksomheten.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Timing -->
+  <section class="section" id="timing">
+    <div class="eyebrow">02</div>
+    <h2>Timing</h2>
+    <p class="section-desc">Fire varigheter dekker alt. Kortere avstander og enklere endringer bruker kortere tid. Alt over 500ms føles tregt i et grensesnitt.</p>
+    <div class="timing-scale">
+      <div class="reveal">
+        <div class="timing-row">
+          <div class="timing-token">--motion-fast</div>
+          <div class="timing-bar-track"><div class="timing-bar" style="width:24%"></div></div>
+          <div class="timing-duration">120ms</div>
+        </div>
+        <div class="timing-use">Hover, fokus</div>
+      </div>
+      <div class="reveal" style="transition-delay:40ms">
+        <div class="timing-row">
+          <div class="timing-token">--motion-base</div>
+          <div class="timing-bar-track"><div class="timing-bar" style="width:40%"></div></div>
+          <div class="timing-duration">200ms</div>
+        </div>
+        <div class="timing-use">Knapper, toggles</div>
+      </div>
+      <div class="reveal" style="transition-delay:80ms">
+        <div class="timing-row">
+          <div class="timing-token">--motion-slow</div>
+          <div class="timing-bar-track"><div class="timing-bar" style="width:64%"></div></div>
+          <div class="timing-duration">320ms</div>
+        </div>
+        <div class="timing-use">Entrances, reveals</div>
+      </div>
+      <div class="reveal" style="transition-delay:120ms">
+        <div class="timing-row">
+          <div class="timing-token">--motion-slower</div>
+          <div class="timing-bar-track"><div class="timing-bar" style="width:100%"></div></div>
+          <div class="timing-duration">500ms</div>
+        </div>
+        <div class="timing-use">Store overganger, embleminngang</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Easing -->
+  <section class="section" id="easing">
+    <div class="eyebrow">03</div>
+    <h2>Easing</h2>
+    <p class="section-desc">Fire kurver. Ingen sprett. Geometrisk bevegelse deselererer inn og akselererer ut. Trykk Play for å kjenne hver kurve.</p>
+    <div class="easing-grid">
+      <div class="easing-card reveal">
+        <h3>Standard</h3>
+        <div class="easing-code">cubic-bezier(.4, 0, .2, 1)</div>
+        <div class="easing-track">
+          <div class="easing-dot" id="dot-standard" style="animation-timing-function:cubic-bezier(.4,0,.2,1)"></div>
+        </div>
+        <p>Elementer som bytter tilstand på stedet — toggles, fargebytte, tab-endringer.</p>
+        <button class="btn-play" onclick="playEasing('standard')">Play</button>
+      </div>
+      <div class="easing-card reveal">
+        <h3>Entrance</h3>
+        <div class="easing-code">cubic-bezier(0, 0, .2, 1)</div>
+        <div class="easing-track">
+          <div class="easing-dot" id="dot-entrance" style="animation-timing-function:cubic-bezier(0,0,.2,1)"></div>
+        </div>
+        <p>Elementer som kommer inn i view — modaler, drawere, scroll-reveals.</p>
+        <button class="btn-play" onclick="playEasing('entrance')">Play</button>
+      </div>
+      <div class="easing-card reveal">
+        <h3>Exit</h3>
+        <div class="easing-code">cubic-bezier(.4, 0, 1, 1)</div>
+        <div class="easing-track">
+          <div class="easing-dot" id="dot-exit" style="animation-timing-function:cubic-bezier(.4,0,1,1)"></div>
+        </div>
+        <p>Elementer som forlater view — lukkede modaler, tilbakemeldinger som forsvinner.</p>
+        <button class="btn-play" onclick="playEasing('exit')">Play</button>
+      </div>
+      <div class="easing-card reveal">
+        <h3>Emphasis</h3>
+        <div class="easing-code">cubic-bezier(.2, 0, 0, 1)</div>
+        <div class="easing-track">
+          <div class="easing-dot" id="dot-emphasis" style="animation-timing-function:cubic-bezier(.2,0,0,1)"></div>
+        </div>
+        <p>Store, viktige overganger — embleminngang, heroer, splash-screens.</p>
+        <button class="btn-play" onclick="playEasing('emphasis')">Play</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Scroll -->
+  <section class="section" id="scroll">
+    <div class="eyebrow">04</div>
+    <h2>Scroll</h2>
+    <p class="section-desc">Avslør én gang, forsiktig. Innhold fader 16px oppover etter hvert som det entrer — aldri på nytt ved scroll tilbake.</p>
+    <div class="scroll-box reveal">
+      <h3>Reglene</h3>
+      <ul class="rule-dot-list">
+        <li>Fade 16px oppover ved inngang. Aldri re-animer ved scroll ned igjen.</li>
+        <li>Ingen tung parallax — maksimalt en lett differensiell effekt.</li>
+        <li>Stagger er valgfritt og lite — maks 60ms mellom elementer.</li>
+        <li>Alltid respekter <code>prefers-reduced-motion</code> — vis sluttilstand umiddelbart.</li>
+      </ul>
+      <div class="scroll-box__note">Hvert avsnitt på denne siden demonstrerer regelen allerede.</div>
+    </div>
+  </section>
+
+  <!-- 05 Interaction -->
+  <section class="section" id="interaction">
+    <div class="eyebrow">05</div>
+    <h2>Interaksjonstilstander</h2>
+    <p class="section-desc">Interaktive elementer responderer innen 200ms. Hover løfter eller skifter farge — trykket skyver forsiktig ned 2%.</p>
+    <div class="interaction-grid">
+      <div class="interaction-demo reveal">
+        <div class="demo-label">Knapper &amp; lenker</div>
+        <div class="demo-area">
+          <button class="demo-btn--primary">Primær handling</button>
+          <button class="demo-btn--secondary">Sekundær</button>
+          <button class="demo-link">En understreket lenke</button>
+        </div>
+      </div>
+      <div class="interaction-demo reveal">
+        <div class="demo-label">Korthovering</div>
+        <div class="demo-area" style="display:block">
+          <div class="demo-card">
+            <div class="demo-card__title">Løfter 4px med skygge</div>
+            <div class="demo-card__body">transform + opacity animeres — aldri width, height eller posisjon.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="interaction-note">Fokustilstand skal alltid være synlig. Tab gjennom elementene over for å bekrefte.</p>
+  </section>
+
+  <!-- 06 Emblem in motion -->
+  <section class="section" id="emblem">
+    <div class="eyebrow">06</div>
+    <h2>Emblem i bevegelse</h2>
+    <p class="section-desc">Én godkjent inngang. Embleme animerer inn én gang: scale fra 92% med fade, settling på emphasis-kurven.</p>
+    <div class="emblem-stage">
+      <div class="emblem-wrapper">
+        <svg id="emblem-svg" class="emblem-svg" width="96" height="96" viewBox="108.2 331.1 188.2 188.2" xmlns="http://www.w3.org/2000/svg" aria-label="BlueTec emblem">
+          <path fill="#0077C8" fill-rule="nonzero" d="M 202.34375 474.585938 C 176.980469 474.585938 156.097656 455.449219 153.3125 430.835938 L 174.6875 430.835938 C 177.289062 443.730469 188.679688 453.441406 202.34375 453.441406 C 216.003906 453.441406 227.398438 443.730469 230 430.835938 L 251.371094 430.835938 C 248.585938 455.449219 227.703125 474.585938 202.34375 474.585938 M 202.34375 331.132812 C 192.511719 331.132812 183.035156 332.648438 174.125 335.445312 L 174.125 384.742188 C 182.125 379.15625 191.847656 375.871094 202.34375 375.871094 C 227.707031 375.871094 248.589844 395.003906 251.371094 419.625 L 230 419.625 C 227.398438 406.722656 216.003906 397.011719 202.34375 397.011719 C 188.679688 397.011719 177.285156 406.722656 174.6875 419.625 L 152.988281 419.625 L 152.988281 345.117188 C 126.144531 361.691406 108.25 391.363281 108.25 425.226562 C 108.25 477.191406 150.375 519.320312 202.34375 519.320312 C 254.308594 519.320312 296.433594 477.191406 296.433594 425.226562 C 296.433594 373.261719 254.308594 331.132812 202.34375 331.132812"/>
+        </svg>
+      </div>
+      <button class="btn-play" onclick="replayEmblem()">Spill av inngang</button>
+      <div class="emblem-rules">
+        <strong>scale 0.92 &rarr; 1</strong> med <strong>opacity 0 &rarr; 1</strong>.<br>
+        500ms, <code>ease-emphasis</code>. Kun på første paint av hero eller splash — aldri på scroll-loops.<br><br>
+        Embleme spinner aldri, looper aldri, forvrenges aldri.<br>Gapet forblir gapet.
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Do & Don't -->
+  <section class="section" id="dodont">
+    <div class="eyebrow">07</div>
+    <h2>Gjør &amp; ikke gjør</h2>
+    <p class="section-desc">Den korte listen. Bruk den som sjekkliste før animasjon i produksjon.</p>
+    <div class="rules-grid">
+      <div class="rules-col rules-col--do reveal">
+        <div class="rules-col__title">Gjør <span class="do-badge">DO</span></div>
+        <ul class="rule-list">
+          <li>Animer <code>transform</code> og <code>opacity</code> — GPU-billige, aldri reflow.</li>
+          <li>Deselerer entrances, akselerer exits.</li>
+          <li>Hold grensesnittbevegelse under 320ms.</li>
+          <li>Alltid respekter <code>prefers-reduced-motion</code>.</li>
+          <li>Gi hvert interaktivt element en synlig fokustilstand.</li>
+        </ul>
+      </div>
+      <div class="rules-col rules-col--dont reveal">
+        <div class="rules-col__title">Ikke gjør <span class="dont-badge">DON'T</span></div>
+        <ul class="rule-list">
+          <li>Ingen sprett, elastisk eller spring overshoot.</li>
+          <li>Ingen loopende eller autospillende dekorativ bevegelse.</li>
+          <li>Ikke animer <code>width</code>, <code>height</code>, <code>top</code> eller <code>left</code> — de janker.</li>
+          <li>Overskrid ikke 500ms for grensesnittoverganger.</li>
+          <li>Ikke flytt mer enn én fokal ting om gangen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 Implementation -->
+  <section class="section" id="implementation">
+    <div class="eyebrow">08</div>
+    <h2>Implementering</h2>
+    <p class="section-desc">Legg disse custom properties i det globale stilarket. Denne siden bruker nøyaktig disse verdiene.</p>
+    <div class="code-block reveal">
+      <button class="btn-copy-code" onclick="copyTokens()">Kopier tokens</button>
+      <pre><span class="c">/* BlueTec motion tokens */</span>
+:root {
+  <span class="p">--motion-fast</span>:   <span class="v">120ms</span>;  <span class="c">/* hover, focus */</span>
+  <span class="p">--motion-base</span>:   <span class="v">200ms</span>;  <span class="c">/* buttons, toggles */</span>
+  <span class="p">--motion-slow</span>:   <span class="v">320ms</span>;  <span class="c">/* entrances, reveals */</span>
+  <span class="p">--motion-slower</span>: <span class="v">500ms</span>;  <span class="c">/* large transitions */</span>
+
+  <span class="p">--ease-standard</span>: <span class="v">cubic-bezier(.4, 0, .2, 1)</span>;
+  <span class="p">--ease-entrance</span>: <span class="v">cubic-bezier(0,  0, .2, 1)</span>;
+  <span class="p">--ease-exit</span>:     <span class="v">cubic-bezier(.4, 0,  1, 1)</span>;
+  <span class="p">--ease-emphasis</span>: <span class="v">cubic-bezier(.2, 0,  0, 1)</span>;
+}
+
+<span class="c">/* Respect the user's preference — always. */</span>
+@media (prefers-reduced-motion: reduce) {
+  * {
+    <span class="p">transition-duration</span>: <span class="v">1ms</span> !important;
+    <span class="p">animation-duration</span>:  <span class="v">1ms</span> !important;
+  }
+}</pre>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+// ── Scroll spy ───────────────────────────────
+const SPY_IDS = ['principles','timing','easing','scroll','interaction','emblem','dodont','implementation'];
+const navLinks = {};
+SPY_IDS.forEach(id => {
+  const el = document.querySelector(`.sidenav__link[href="#${id}"]`);
+  if (el) navLinks[id] = el;
+});
+const spyIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      Object.values(navLinks).forEach(l => l.classList.remove('active'));
+      if (navLinks[e.target.id]) navLinks[e.target.id].classList.add('active');
+    }
+  });
+}, {threshold: 0.3, rootMargin: '-80px 0px -40% 0px'});
+SPY_IDS.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) spyIO.observe(el);
+});
+
+// ── Scroll reveal ────────────────────────────
+const revealIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-visible');
+      revealIO.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+
+// ── Easing demos ─────────────────────────────
+function playEasing(name) {
+  const dot = document.getElementById('dot-' + name);
+  dot.classList.remove('playing');
+  void dot.offsetWidth;
+  dot.classList.add('playing');
+  dot.addEventListener('animationend', function handler() {
+    dot.classList.remove('playing');
+    dot.removeEventListener('animationend', handler);
+  });
+}
+
+// ── Emblem replay ─────────────────────────────
+function replayEmblem() {
+  const svg = document.getElementById('emblem-svg');
+  svg.classList.add('paused');
+  void svg.offsetWidth;
+  svg.classList.remove('paused');
+}
+
+// ── Copy tokens ───────────────────────────────
+const TOKEN_CSS = `:root {
+  --motion-fast:   120ms;
+  --motion-base:   200ms;
+  --motion-slow:   320ms;
+  --motion-slower: 500ms;
+
+  --ease-standard: cubic-bezier(.4, 0, .2, 1);
+  --ease-entrance: cubic-bezier(0,  0, .2, 1);
+  --ease-exit:     cubic-bezier(.4, 0,  1, 1);
+  --ease-emphasis: cubic-bezier(.2, 0,  0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 1ms !important;
+    animation-duration:  1ms !important;
+  }
+}`;
+function copyTokens() {
+  navigator.clipboard.writeText(TOKEN_CSS).then(() => showToast('Tokens kopiert'));
+}
+
+// ── Toast ─────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+</script>
+</body>
+</html>

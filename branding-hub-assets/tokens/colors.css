@@ -1,0 +1,18 @@
+/* BlueTec brand color tokens — drop into the hub's global stylesheet. */
+:root{
+  /* Brand */
+  --bt-blue:#0077C8;      /* Pantone 3005 C — primary */
+  --bt-navy:#0A1628;      /* dark ground / footer */
+  --bt-white:#FFFFFF;     /* light ground / reverse */
+
+  /* Neutrals (documents) */
+  --bt-ink:#15151A;       /* body text */
+  --bt-muted:#86867F;     /* captions */
+  --bt-hairline:#E6E6E1;  /* rules / fills */
+  --bt-paper:#F4F4F2;     /* soft background */
+
+  /* Contrast pairings — surface => on-color */
+  --bt-on-white:#15151A;
+  --bt-on-navy:#FFFFFF;
+  --bt-on-blue:#FFFFFF;
+}

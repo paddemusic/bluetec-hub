@@ -1,0 +1,16 @@
+/* BlueTec Geometric — self-hosted web fonts.
+   Serves WOFF (≈56% of the TTF size) with a TTF fallback. Keep all font files
+   in the same folder as this stylesheet.
+   Want WOFF2 (another ~30% smaller, Brotli)? Generate locally, e.g.:
+     npx ttf2woff2 BlueTecGeometric-Regular.ttf > BlueTecGeometric-Regular.woff2
+   then add a `url('….woff2') format('woff2')` first in each src list below. */
+
+@font-face{font-family:'BlueTec Geometric';font-weight:100;font-style:normal;font-display:swap;src:url('BlueTecGeometric-Thin.woff') format('woff'),url('BlueTecGeometric-Thin.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:200;font-style:normal;font-display:swap;src:url('BlueTecGeometric-ExtraLight.woff') format('woff'),url('BlueTecGeometric-ExtraLight.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:300;font-style:normal;font-display:swap;src:url('BlueTecGeometric-Light.woff') format('woff'),url('BlueTecGeometric-Light.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:400;font-style:normal;font-display:swap;src:url('BlueTecGeometric-Regular.woff') format('woff'),url('BlueTecGeometric-Regular.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:500;font-style:normal;font-display:swap;src:url('BlueTecGeometric-Medium.woff') format('woff'),url('BlueTecGeometric-Medium.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:600;font-style:normal;font-display:swap;src:url('BlueTecGeometric-SemiBold.woff') format('woff'),url('BlueTecGeometric-SemiBold.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:700;font-style:normal;font-display:swap;src:url('BlueTecGeometric-Bold.woff') format('woff'),url('BlueTecGeometric-Bold.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:800;font-style:normal;font-display:swap;src:url('BlueTecGeometric-ExtraBold.woff') format('woff'),url('BlueTecGeometric-ExtraBold.ttf') format('truetype')}
+@font-face{font-family:'BlueTec Geometric';font-weight:900;font-style:normal;font-display:swap;src:url('BlueTecGeometric-Black.woff') format('woff'),url('BlueTecGeometric-Black.ttf') format('truetype')}

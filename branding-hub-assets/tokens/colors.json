@@ -1,0 +1,22 @@
+{
+  "$comment": "BlueTec brand color tokens. Source of truth: Pantone 3005 C. Single brand blue = #0077C8.",
+  "brand": {
+    "blue":  { "hex": "#0077C8", "rgb": [0, 119, 200], "cmyk": [100, 31, 0, 0], "pantone": "3005 C", "role": "Primary brand color" },
+    "navy":  { "hex": "#0A1628", "rgb": [10, 22, 40],  "role": "Dark ground / footer" },
+    "white": { "hex": "#FFFFFF", "rgb": [255, 255, 255], "role": "Light ground / reverse" }
+  },
+  "neutral": {
+    "ink":      { "hex": "#15151A", "rgb": [21, 21, 26],   "role": "Body text (documents)" },
+    "muted":    { "hex": "#86867F", "rgb": [134, 134, 127], "role": "Captions / secondary text" },
+    "hairline": { "hex": "#E6E6E1", "rgb": [230, 230, 225], "role": "Rules / light fills" },
+    "paper":    { "hex": "#F4F4F2", "rgb": [244, 244, 242], "role": "Soft off-white background" }
+  },
+  "production": {
+    "foil": { "ref": "XE6080", "role": "Signage / vehicle wrap", "note": "Match to a physical sample. Do not approximate on screen." }
+  },
+  "pairings": [
+    { "surface": "#FFFFFF", "text": "#15151A", "rule": "White background -> near-black type" },
+    { "surface": "#0A1628", "text": "#FFFFFF", "rule": "Navy background -> white type" },
+    { "surface": "#0077C8", "text": "#FFFFFF", "rule": "Blue background -> white type" }
+  ]
+}
