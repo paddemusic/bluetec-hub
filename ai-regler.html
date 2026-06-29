@@ -73,6 +73,12 @@
   .pick.pick--zip .pick__tag{color:#7cc0ee}
   .pick.pick--zip .pick__title{color:#fff}
   .pick.pick--zip .pick__file{color:rgba(255,255,255,.5)}
+  .pick__sub{font-size:12px;color:var(--muted);line-height:1.45;margin-top:5px}
+  .pick--dev2 .pick__sub{color:#b05f00}
+  .callout{border:1.5px solid var(--blue);background:var(--ltblue);border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:13.5px;color:var(--navy);line-height:1.55}
+  .callout strong{font-weight:700}
+  .tool-explain{background:var(--paper);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#3a3a40;line-height:1.6}
+  .tool-explain .te-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
 
   /* ── File card ── */
   .file-card{border:1px solid var(--hairline);border-radius:18px;overflow:hidden;margin-top:20px;background:var(--white)}
@@ -164,8 +170,8 @@
       <a href="#intro" class="active">Oversikt</a>
       <div class="nav-div"></div>
       <a href="#prompt">Jeg skriver tekst</a>
-      <a href="#claudemd">Jeg bygger nettside</a>
-      <a href="#cursor">Jeg bruker Cursor</a>
+      <a href="#claudemd">Jeg koder (Claude i terminal)</a>
+      <a href="#cursor">Jeg koder (Cursor-editor)</a>
       <div class="nav-div"></div>
       <a href="#startpakke">Gi meg alt (ZIP)</a>
       <a href="#oppdater">Oppdatere innholdet</a>
@@ -195,14 +201,16 @@
       </a>
 
       <a class="pick" href="#claudemd">
-        <div class="pick__tag">Utviklere</div>
-        <div class="pick__title">Jeg bygger nettside, app eller kode</div>
+        <div class="pick__tag">Utviklere · Claude Code</div>
+        <div class="pick__title">Jeg koder og bruker terminalen</div>
+        <div class="pick__sub">Du starter Claude ved å skrive "claude" i Terminal</div>
         <div class="pick__file">CLAUDE.md</div>
       </a>
 
-      <a class="pick" href="#cursor">
-        <div class="pick__tag">Cursor IDE</div>
-        <div class="pick__title">Jeg designer og koder i Cursor</div>
+      <a class="pick pick--dev2" href="#cursor">
+        <div class="pick__tag">Kun for Cursor-brukere</div>
+        <div class="pick__title">Jeg bruker Cursor-editoren</div>
+        <div class="pick__sub">Vet du ikke hva Cursor er? Da er ikke dette filen for deg — bruk ZIP.</div>
         <div class="pick__file">.cursorrules</div>
       </a>
 
@@ -297,18 +305,21 @@
 
   <!-- ──────────── CLAUDE.MD ──────────── -->
   <section id="claudemd">
-    <div class="eyebrow">For utviklere</div>
-    <h2>Jeg bygger nettside, app eller kode</h2>
-    <p class="sec-intro">For deg som bruker Claude Code til å skrive kode. Filen legg i prosjektmappen og Claude Code bruker den automatisk gjennom hele bygge-prosessen.</p>
+    <div class="eyebrow">For deg som koder med Claude Code</div>
+    <h2>Du starter Claude ved å skrive "claude" i Terminal</h2>
+    <div class="tool-explain">
+      <div class="te-label">Hva er Claude Code?</div>
+      Claude Code er Anthropics eget AI-verktøy for utvikling. Det er ikke en app du klikker på — det er et kommandolinjeverktøy du starter ved å skrive <code>claude</code> i Terminal eller kommandovinduet. <strong>Har du ikke gjort det? Da er ikke dette filen for deg — bruk heller ZIP-pakken.</strong>
+    </div>
 
     <div class="file-card reveal">
       <div class="file-card__top">
         <div class="file-card__meta">
-          <span class="badge badge--dev">Utviklere · Claude Code</span>
+          <span class="badge badge--dev">Claude Code · Kommandolinje</span>
           <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">CLAUDE.md</span>
         </div>
-        <h2>Fullstendig merkevareregel-fil for kode</h2>
-        <p class="sub">Plasser i prosjektmappen (/CLAUDE.md). Claude Code leser den ved oppstart og håndhever alle regler gjennom hele sesjonen.</p>
+        <h2>BlueTec-regler for Claude Code</h2>
+        <p class="sub">Legg filen i prosjektmappen. Neste gang du starter <code>claude</code> der, laster den filen automatisk — og kjenner da til alle BlueTec sine farger, animasjonsregler og designkonvensjoner.</p>
 
         <div class="contains">
           <div class="contains-item">
@@ -383,18 +394,24 @@
 
   <!-- ──────────── CURSOR ──────────── -->
   <section id="cursor">
-    <div class="eyebrow">For Cursor-brukere</div>
-    <h2>Jeg bruker Cursor IDE</h2>
-    <p class="sec-intro">Samme innhold som CLAUDE.md, formatert for Cursor IDE. Gi filen nytt navn til .cursorrules og legg den i prosjektmappen.</p>
+    <div class="eyebrow">Kun for deg som allerede bruker Cursor</div>
+    <h2>Du jobber i Cursor-editoren</h2>
+    <div class="callout">
+      <strong>Vet du ikke hva Cursor er?</strong> Da er dette ikke filen for deg, og det er ingen grunn til å laste den ned. Cursor er en kodeeditor du laster ned og installerer — den ligner VS Code, men har innebygd AI. Bruker du ikke Cursor allerede, <a href="#startpakke" style="color:var(--blue);font-weight:600">last ned startpakken</a> i stedet — den inneholder begge filene.
+    </div>
+    <div class="tool-explain">
+      <div class="te-label">Hva er Cursor?</div>
+      Cursor (cursor.com) er en kodeeditor — tenk VS Code, men med innebygd AI som kjenner hele prosjektet ditt. Den leses av en fil kalt <code>.cursorrules</code> som du legger i prosjektmappen. Denne filen er den filen.
+    </div>
 
     <div class="file-card reveal">
       <div class="file-card__top">
         <div class="file-card__meta">
-          <span class="badge badge--cursor">Cursor IDE</span>
-          <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">cursorrules.txt → .cursorrules</span>
+          <span class="badge badge--cursor">Cursor · Kodeeditor</span>
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted)">cursorrules.txt → gi nytt navn til .cursorrules</span>
         </div>
-        <h2>Merkevareregler for Cursor IDE</h2>
-        <p class="sub">Samme innhold som CLAUDE.md — CSS-variabler, animasjonstokens, komponentregler og skriveregler — formatert for Cursor IDE sine instruksjonsfiler.</p>
+        <h2>BlueTec-regler for Cursor-editoren</h2>
+        <p class="sub">Gi filen nytt navn til <code>.cursorrules</code> og legg den i prosjektmappen. Cursor plukker den opp automatisk — og kjenner da til alle BlueTec sine farger, animasjonsregler og designkonvensjoner.</p>
 
         <div class="contains">
           <div class="contains-item">
@@ -451,7 +468,7 @@
       </div>
 
       <div class="file-card__foot">
-        <span class="usage">Husk å gi filen nytt navn til .cursorrules etter nedlasting. Filen forklarer dette øverst.</span>
+        <span class="usage">Gi filen nytt navn til <code>.cursorrules</code> (merk: punktum foran). Filen forklarer dette øverst.</span>
         <button class="btn btn--primary" id="dl-cursor">Last ned cursorrules.txt</button>
       </div>
     </div>
