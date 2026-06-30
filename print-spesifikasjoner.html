@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueTec — Print-spesifikasjoner</title>
+<style>
+  @font-face{font-family:'BlueTec Geometric';font-weight:400;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Regular.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Regular.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:600;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-SemiBold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-SemiBold.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:700;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-Bold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-Bold.ttf') format('truetype')}
+  @font-face{font-family:'BlueTec Geometric';font-weight:800;font-style:normal;font-display:swap;src:url('branding-hub-assets/fonts/BlueTecGeometric-ExtraBold.woff') format('woff'),url('branding-hub-assets/fonts/BlueTecGeometric-ExtraBold.ttf') format('truetype')}
+
+  :root{
+    --blue:#0077C8;--navy:#0A1628;--white:#FFFFFF;
+    --ink:#15151A;--muted:#86867F;--hairline:#E6E6E1;--paper:#F4F4F2;
+    --ltblue:#EAF4FB;--blue-08:rgba(0,119,200,.08);
+    --motion-fast:120ms;--motion-base:200ms;--motion-slow:320ms;
+    --ease-standard:cubic-bezier(.4,0,.2,1);--ease-entrance:cubic-bezier(0,0,.2,1);
+    --sb:264px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'BlueTec Geometric',system-ui,sans-serif;font-weight:400;line-height:1.6;color:var(--ink);background:var(--white);display:grid;grid-template-columns:var(--sb) 1fr;-webkit-font-smoothing:antialiased}
+
+  /* Sidebar */
+  .sidebar{position:sticky;top:0;align-self:start;height:100vh;border-right:1px solid var(--hairline);padding:34px 26px;display:flex;flex-direction:column;gap:20px;background:var(--white)}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .brand img{height:26px}
+  .sb-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px}
+  nav{display:flex;flex-direction:column;gap:1px}
+  nav a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;padding:8px 12px;border-radius:8px;transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+  nav a:hover{color:var(--navy);background:var(--paper)}
+  nav a.active{color:var(--blue);background:var(--blue-08);font-weight:600}
+  .nav-div{height:1px;background:var(--hairline);margin:8px 4px}
+  .back-hub{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;transition:color var(--motion-fast) var(--ease-standard),background var(--motion-fast) var(--ease-standard)}
+  .back-hub:hover{color:var(--blue);background:var(--blue-08)}
+  .sb-foot{margin-top:auto;font-size:11.5px;color:var(--muted);line-height:1.7}
+
+  /* Main */
+  main{padding:0 64px 160px;max-width:900px}
+  section{padding-top:88px;scroll-margin-top:24px}
+  section:first-of-type{padding-top:64px}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:14px}
+  h1{font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1.05;margin:0 0 18px;color:var(--navy)}
+  h2{font-size:26px;font-weight:700;letter-spacing:-.02em;margin:0 0 6px;color:var(--navy)}
+  h3{font-size:16px;font-weight:600;margin:0 0 8px;color:var(--navy)}
+  .lead{font-size:18px;line-height:1.55;color:var(--ink);max-width:620px;margin-bottom:8px}
+  p{max-width:640px;text-wrap:pretty}
+  .sec-intro{color:#3a3a40;margin:8px 0 28px;max-width:620px}
+  hr{height:1px;background:var(--hairline);border:0;margin:0}
+
+  /* Audience banner */
+  .audience{background:var(--navy);border-radius:14px;padding:20px 24px;margin-top:28px;display:flex;gap:16px;align-items:flex-start}
+  .audience-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+  .audience-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+  .audience-body{font-size:13px;color:rgba(255,255,255,.7);line-height:1.55}
+
+  /* Color cards */
+  .color-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+  .color-card{border:1px solid var(--hairline);border-radius:16px;overflow:hidden}
+  .color-card__swatch{height:88px;position:relative}
+  .color-card__body{padding:18px 20px 20px}
+  .color-card__name{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:2px}
+  .color-card__use{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.4}
+  .color-card__values{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .cv{background:var(--paper);border-radius:8px;padding:10px 12px}
+  .cv__label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+  .cv__val{font-size:13px;font-weight:600;color:var(--navy);font-family:ui-monospace,Menlo,monospace;line-height:1.3}
+  .cv--wide{grid-column:1/-1}
+  .pantone-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.4}
+  .pantone-note strong{color:var(--ink)}
+
+  /* Spec grid */
+  .spec-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px}
+  .spec-card{border:1px solid var(--hairline);border-radius:14px;padding:20px;background:var(--white)}
+  .spec-card__num{font-size:30px;font-weight:800;color:var(--blue);letter-spacing:-.03em;line-height:1;margin-bottom:6px}
+  .spec-card__label{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px}
+  .spec-card__desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+
+  /* Info boxes */
+  .infobox{border:1.5px solid var(--blue);background:var(--ltblue);border-radius:12px;padding:16px 20px;margin-top:20px;font-size:13.5px;color:var(--navy);line-height:1.55}
+  .infobox strong{font-weight:700}
+  .warnbox{border:1.5px solid #d48b00;background:#fff8e6;border-radius:12px;padding:16px 20px;margin-top:16px;font-size:13.5px;color:#7a5000;line-height:1.55}
+  .warnbox strong{font-weight:700}
+
+  /* Format list */
+  .format-list{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+  .format-row{display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:start;padding:14px 16px;background:var(--paper);border-radius:10px}
+  .format-row__ext{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;color:var(--blue)}
+  .format-row__desc{font-size:13px;color:var(--ink);line-height:1.5}
+
+  /* Download */
+  .dl-row{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:13px;font-weight:600;border-radius:99px;padding:9px 20px;cursor:pointer;text-decoration:none;border:1px solid var(--hairline);background:var(--white);color:var(--navy);transition:border-color var(--motion-fast) var(--ease-standard),color var(--motion-fast) var(--ease-standard)}
+  .btn:hover{border-color:var(--blue);color:var(--blue)}
+  .btn--primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .btn--primary:hover{background:#0069b0;color:#fff;border-color:#0069b0}
+
+  /* Logo file guide */
+  .logo-guide{margin-top:20px;border:1px solid var(--hairline);border-radius:14px;overflow:hidden}
+  .logo-guide__head{background:var(--navy);padding:14px 20px}
+  .logo-guide__head-title{font-size:13px;font-weight:700;color:#fff}
+  .logo-guide__row{display:grid;grid-template-columns:220px 1fr;gap:16px;padding:14px 20px;border-top:1px solid var(--hairline);align-items:start}
+  .logo-guide__row:first-of-type{border-top:0}
+  .logo-guide__file{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--blue);font-weight:600}
+  .logo-guide__use{font-size:13px;color:var(--ink);line-height:1.5}
+
+  @media(max-width:1080px){body{grid-template-columns:1fr}.sidebar{display:none}main{padding:0 28px 120px}}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <a class="brand" href="index.html">
+    <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg" alt="BlueTec">
+  </a>
+  <div>
+    <div class="sb-label">Print-spesifikasjoner</div>
+    <nav id="nav">
+      <a href="#intro" class="active">Oversikt</a>
+      <a href="#farger">Farger — CMYK &amp; Pantone</a>
+      <a href="#logo-print">Logo for trykk</a>
+      <a href="#teknisk">Tekniske krav</a>
+      <a href="#levering">Leveringsformat</a>
+    </nav>
+  </div>
+  <div class="sb-foot">
+    <a class="back-hub" href="index.html">&#8249; Tilbake til Brand Hub</a>
+    <div style="margin-top:12px">BlueTec AS · Print-guide</div>
+  </div>
+</aside>
+
+<main>
+
+  <!-- ── INTRO ── -->
+  <section id="intro">
+    <div class="eyebrow">Brand Hub · Print &amp; Trykk</div>
+    <h1>Print-spesifikasjoner</h1>
+    <p class="lead">CMYK-verdier, Pantone-referanser og tekniske krav for ekstern trykk.</p>
+
+    <div class="audience">
+      <div class="audience-icon">&#128203;</div>
+      <div>
+        <div class="audience-title">Denne siden er for deg som bestiller trykksaker fra ekstern leverandør</div>
+        <div class="audience-body">For vanlig kontorbruk, e-post og presentasjoner — bruk farger, logoer og maler fra Brand Hub. Denne siden trenger du bare ved produksjon av brosjyrer, bannere, skilter, visittkort og lignende trykt materiell.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="margin-top:64px">
+
+  <!-- ── FARGER ── -->
+  <section id="farger">
+    <div class="eyebrow">Fargepaletten for trykk</div>
+    <h2>CMYK &amp; Pantone</h2>
+    <p class="sec-intro">Bruk disse verdiene når du leverer filer til trykkeri. Send alltid CMYK-verdier — ikke RGB eller hex — til ekstern leverandør.</p>
+
+    <div class="color-grid">
+
+      <!-- Blue -->
+      <div class="color-card">
+        <div class="color-card__swatch" style="background:#0077C8"></div>
+        <div class="color-card__body">
+          <div class="color-card__name">Blue — primær merkevareblå</div>
+          <div class="color-card__use">Lenker, CTA-er, aksenter, fremhevinger</div>
+          <div class="color-card__values">
+            <div class="cv">
+              <div class="cv__label">HEX</div>
+              <div class="cv__val">#0077C8</div>
+            </div>
+            <div class="cv">
+              <div class="cv__label">RGB</div>
+              <div class="cv__val">0 · 119 · 200</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">CMYK</div>
+              <div class="cv__val">C:100 &nbsp; M:40 &nbsp; Y:0 &nbsp; K:22</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">Pantone</div>
+              <div class="cv__val">3005 C &nbsp;/&nbsp; 3005 U</div>
+            </div>
+          </div>
+          <div class="pantone-note"><strong>Bekreftet:</strong> Pantone 3005 C er primærreferansen. Be trykkeriet bekrefte mot fysisk Pantone-swatch hvis kritisk fargepresisjon kreves.</div>
+        </div>
+      </div>
+
+      <!-- Navy -->
+      <div class="color-card">
+        <div class="color-card__swatch" style="background:#0A1628"></div>
+        <div class="color-card__body">
+          <div class="color-card__name">Navy — mørk primærfarge</div>
+          <div class="color-card__use">Overskrifter, mørke flater, tittelside-bakgrunn</div>
+          <div class="color-card__values">
+            <div class="cv">
+              <div class="cv__label">HEX</div>
+              <div class="cv__val">#0A1628</div>
+            </div>
+            <div class="cv">
+              <div class="cv__label">RGB</div>
+              <div class="cv__val">10 · 22 · 40</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">CMYK</div>
+              <div class="cv__val">C:75 &nbsp; M:45 &nbsp; Y:0 &nbsp; K:84</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">Pantone</div>
+              <div class="cv__val">2767 C (tilnærmet)</div>
+            </div>
+          </div>
+          <div class="pantone-note"><strong>Tilnærmet:</strong> En mørk navy som dette produseres best med CMYK-verdiene over. Be trykkeri om digitalprøve.</div>
+        </div>
+      </div>
+
+      <!-- Ink -->
+      <div class="color-card">
+        <div class="color-card__swatch" style="background:#15151A"></div>
+        <div class="color-card__body">
+          <div class="color-card__name">Ink — brødtekst</div>
+          <div class="color-card__use">All løpende tekst på lys bakgrunn</div>
+          <div class="color-card__values">
+            <div class="cv">
+              <div class="cv__label">HEX</div>
+              <div class="cv__val">#15151A</div>
+            </div>
+            <div class="cv">
+              <div class="cv__label">RGB</div>
+              <div class="cv__val">21 · 21 · 26</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">CMYK</div>
+              <div class="cv__val">C:20 &nbsp; M:20 &nbsp; Y:0 &nbsp; K:90</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">Pantone</div>
+              <div class="cv__val">Process Black</div>
+            </div>
+          </div>
+          <div class="pantone-note">For brødtekst brukes 4-fargers CMYK-svart. Ikke spesifiser Pantone-svart for løpende tekst.</div>
+        </div>
+      </div>
+
+      <!-- Muted -->
+      <div class="color-card">
+        <div class="color-card__swatch" style="background:#86867F;"></div>
+        <div class="color-card__body">
+          <div class="color-card__name">Muted — sekundærtekst</div>
+          <div class="color-card__use">Bildetekster, metadata, sekundær informasjon</div>
+          <div class="color-card__values">
+            <div class="cv">
+              <div class="cv__label">HEX</div>
+              <div class="cv__val">#86867F</div>
+            </div>
+            <div class="cv">
+              <div class="cv__label">RGB</div>
+              <div class="cv__val">134 · 134 · 127</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">CMYK</div>
+              <div class="cv__val">C:0 &nbsp; M:0 &nbsp; Y:5 &nbsp; K:47</div>
+            </div>
+            <div class="cv cv--wide">
+              <div class="cv__label">Pantone</div>
+              <div class="cv__val">7527 C (tilnærmet)</div>
+            </div>
+          </div>
+          <div class="pantone-note">Brukes sjelden i trykt materiell. CMYK-verdiene er tilstrekkelig for de fleste brukstilfeller.</div>
+        </div>
+      </div>
+
+    </div><!-- /color-grid -->
+
+    <div class="warnbox">
+      <strong>Viktig:</strong> CMYK-verdier beregnet fra hex vil aldri gi 100% identisk visuelt resultat som skjerm. Be alltid om en digital prøve (soft proof) eller fysisk prøvetrykk fra leverandøren før opplag over 50 stk. Spesielt viktig for Pantone 3005 C (primærblå).
+    </div>
+
+    <div class="infobox" style="margin-top:16px">
+      <strong>Aldri bruk:</strong> rød, oransje, gul, neon eller grønn i BlueTec-materiell — heller ikke i trykt form. Utgått blå-farge: <code style="background:rgba(0,119,200,.1);padding:1px 5px;border-radius:4px;font-family:monospace">#0075C9</code> — skal ikke forekomme.
+    </div>
+  </section>
+
+  <hr style="margin-top:64px">
+
+  <!-- ── LOGO FOR PRINT ── -->
+  <section id="logo-print">
+    <div class="eyebrow">Logo</div>
+    <h2>Logo for trykk</h2>
+    <p class="sec-intro">Bruk alltid vektorfiler (SVG eller EPS/PDF) til ekstern trykk. PNG-filer er kun for digitalt bruk og lav-oppløselig forhåndsvisning.</p>
+
+    <div class="logo-guide">
+      <div class="logo-guide__head">
+        <div class="logo-guide__head-title">Hvilken logofil bruker du?</div>
+      </div>
+      <div class="logo-guide__row">
+        <div class="logo-guide__file">bluetec-lockup-horizontal-on-light.svg</div>
+        <div class="logo-guide__use">Brosjyrer, flyers, banner og alt trykt materiell med lys bakgrunn. Primærvalg for 95% av all trykt produksjon.</div>
+      </div>
+      <div class="logo-guide__row">
+        <div class="logo-guide__file">bluetec-lockup-horizontal-on-dark.svg</div>
+        <div class="logo-guide__use">Trykt materiell med navy eller mørk bakgrunn (messevegg, mørk folie, nattlig banner). Hvit logo.</div>
+      </div>
+      <div class="logo-guide__row">
+        <div class="logo-guide__file">bluetec-lockup-horizontal-on-light.jpg</div>
+        <div class="logo-guide__use">Kun når SVG ikke aksepteres (f.eks. Word-maler med bakgrunnsbilde). Bruk SVG der det er mulig.</div>
+      </div>
+      <div class="logo-guide__row">
+        <div class="logo-guide__file">emblem-bla.svg</div>
+        <div class="logo-guide__use">Ikon-bruk, knappemerker, runde flater, app-ikon. Bare symbolet uten BlueTec-tekst.</div>
+      </div>
+    </div>
+
+    <div class="infobox" style="margin-top:20px">
+      <strong>Minimumsbredde logo:</strong> 25 mm på trykt materiell. Under dette mister logoen lesbarhet. For visittkort: minimum 35 mm bredde.
+    </div>
+
+    <div class="warnbox">
+      <strong>Aldri:</strong> Strekk, roter, endre farge på logoen, legg til skygge eller skinner, eller plasser logo mot en bakgrunnsfarge som ikke gir tilstrekkelig kontrast. Hvit logo på blå bakgrunn er akseptert. Navy logo på papirgrå bakgrunn er akseptert. Alt annet — spør.
+    </div>
+  </section>
+
+  <hr style="margin-top:64px">
+
+  <!-- ── TEKNISK ── -->
+  <section id="teknisk">
+    <div class="eyebrow">Tekniske krav</div>
+    <h2>Spesifikasjoner til leverandør</h2>
+    <p class="sec-intro">Send disse kravene til trykkeriet ved hver bestilling.</p>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="spec-card__num">300</div>
+        <div class="spec-card__label">DPI minimum</div>
+        <div class="spec-card__desc">Alle plasserte bilder og rastergrafikk. Under 300 DPI gir synlig pikselering i trykk.</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card__num">3 mm</div>
+        <div class="spec-card__label">Bleed (fall)</div>
+        <div class="spec-card__desc">Standard fallmål på alle sider. Bakgrunnsfarger og bilder som strekker seg til kant.</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card__num">5 mm</div>
+        <div class="spec-card__label">Sikkerhetssone</div>
+        <div class="spec-card__desc">Viktig innhold (tekst, logo) holdes minst 5 mm fra endelig skjærekant.</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card__num">CMYK</div>
+        <div class="spec-card__label">Fargemodus</div>
+        <div class="spec-card__desc">Alle filer til trykk leveres i CMYK. Ikke RGB. Konverter fra RGB før du sender.</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card__num">ISO</div>
+        <div class="spec-card__label">Fargeprofil</div>
+        <div class="spec-card__desc">Bruk ISO Coated v2 (ECI) for coated papir, ISO Uncoated v2 for ubestrøket papir.</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card__num">2× prøve</div>
+        <div class="spec-card__label">Bevis (proof)</div>
+        <div class="spec-card__desc">Krev alltid digital prøve (soft proof). For kritisk materiell: fysisk prøvetrykk.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr style="margin-top:64px">
+
+  <!-- ── LEVERING ── -->
+  <section id="levering">
+    <div class="eyebrow">Leveringsformat</div>
+    <h2>Hva du sender til trykkeriet</h2>
+    <p class="sec-intro">Velg format basert på hva trykkeriet kan håndtere. PDF/X er alltid foretrukket.</p>
+
+    <div class="format-list">
+      <div class="format-row">
+        <div class="format-row__ext">PDF/X-1a eller PDF/X-4</div>
+        <div class="format-row__desc"><strong>Anbefalt til alt.</strong> Fonter er innbygd, farger er CMYK, bleed er inkludert. De fleste profesjonelle trykkerier foretrekker dette formatet.</div>
+      </div>
+      <div class="format-row">
+        <div class="format-row__ext">InDesign .indd + pakket</div>
+        <div class="format-row__desc">For leveranse av originale kildefiler. Pakk alltid med "Pakk" / "Package" i InDesign — inkluderer fonter og lenker. Konverter farger til CMYK først.</div>
+      </div>
+      <div class="format-row">
+        <div class="format-row__ext">SVG (logo)</div>
+        <div class="format-row__desc">For logo-leveranse til trykk. Vektorformat — ingen kvalitetstap ved skalering. Alltid foretrukket fremfor PNG for profesjonell trykk.</div>
+      </div>
+      <div class="format-row">
+        <div class="format-row__ext">EPS (logo alternativ)</div>
+        <div class="format-row__desc">Hvis leverandøren ikke aksepterer SVG. Eksporter fra Illustrator eller be om EPS-versjon fra BlueTec markedsavdeling.</div>
+      </div>
+    </div>
+
+    <div class="infobox" style="margin-top:24px">
+      <strong>Fonter i print-filer:</strong> BlueTec Geometric må alltid være innbygd i PDF-filen, eller konvertert til kurver (outlines) før leveranse til trykkeri. Trykkeriet har ikke lisens til fonten.
+    </div>
+
+    <div class="dl-row">
+      <a class="btn" href="branding-hub-assets/swatches/bluetec-colors.ase" download>
+        Last ned fargeswatch (.ase)
+      </a>
+      <a class="btn" href="branding-hub-assets/swatches/bluetec-colors.gpl" download>
+        Last ned fargeswatch (.gpl)
+      </a>
+      <a class="btn btn--primary" href="index.html#swatches">
+        Alle fargeprofilnedlastinger
+      </a>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var links = document.querySelectorAll('nav a');
+  var sections = [];
+  links.forEach(function(l){
+    var id = l.getAttribute('href').replace('#','');
+    var el = document.getElementById(id);
+    if(el) sections.push({el:el, link:l});
+  });
+  function onScroll(){
+    var y = window.scrollY + 120;
+    var active = sections[0];
+    sections.forEach(function(s){ if(s.el.offsetTop <= y) active = s; });
+    links.forEach(function(l){ l.classList.remove('active'); });
+    if(active) active.link.classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>
