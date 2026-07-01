@@ -93,6 +93,14 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
 
 .logo-group{margin-bottom:48px}
 .logo-group__title{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--bt-hairline)}
+.tagline-tab-bar{display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--bt-hairline)}
+.tagline-tab-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px 10px;font-size:12px;font-weight:600;font-family:inherit;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;color:var(--bt-muted);transition:color var(--motion-fast) var(--ease-standard),border-color var(--motion-fast) var(--ease-standard)}
+.tagline-tab-btn:hover{color:var(--bt-ink)}
+.tagline-tab-btn.active{color:var(--bt-blue);border-bottom-color:var(--bt-blue)}
+.tagline-tab-badge{display:inline-block;padding:2px 7px;font-size:10px;font-weight:700;background:#FFF3CD;color:#856404;border-radius:4px;letter-spacing:.04em}
+.tagline-panel{display:none}
+.tagline-panel.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.tagline-concept-notice{grid-column:1/-1;background:rgba(0,119,200,.06);border:1.5px solid rgba(0,119,200,.2);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--bt-ink);line-height:1.55}
 .logo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
 .logo-card{border-radius:var(--radius);border:1px solid var(--bt-hairline);overflow:hidden;transition:box-shadow var(--motion-base) var(--ease-standard)}
 .logo-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1)}
@@ -178,6 +186,26 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
 .sig-preview-box{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:32px;min-height:120px}
 .sig-actions{display:flex;gap:10px;margin-top:16px}
 
+/* ── Visittkort ──────────────────────────────── */
+.card-builder{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.card-preview-panel{position:sticky;top:24px}
+.card-preview-label{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:10px}
+.card-side-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bt-muted);margin-bottom:8px}
+.card-stack{display:flex;flex-direction:column;gap:24px}
+.biz-card{width:340px;height:220px;border-radius:6px;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.18);flex-shrink:0;user-select:none}
+.biz-card--front{background:#FFFFFF;border:1px solid var(--bt-hairline)}
+.biz-card--back{background:#0A1628}
+.biz-card__logo-front{position:absolute;top:22px;left:22px;height:20px;display:block}
+.biz-card__site{position:absolute;top:24px;right:22px;font-size:8px;font-weight:600;letter-spacing:.04em;color:#86867F;font-family:'BlueTec Geometric',Arial,sans-serif}
+.biz-card__name{position:absolute;bottom:64px;left:22px;right:22px;font-size:15px;font-weight:800;color:#0A1628;letter-spacing:-.02em;line-height:1.2;font-family:'BlueTec Geometric',Arial,sans-serif}
+.biz-card__role{position:absolute;bottom:50px;left:22px;font-size:9px;font-weight:500;color:#86867F;letter-spacing:.02em;font-family:'BlueTec Geometric',Arial,sans-serif}
+.biz-card__divider{position:absolute;bottom:38px;left:22px;right:22px;height:1px;background:#E6E6E1}
+.biz-card__contact{position:absolute;bottom:14px;left:22px;right:22px;display:flex;justify-content:space-between;font-size:8.5px;font-weight:500;color:#0A1628;font-family:'BlueTec Geometric',Arial,sans-serif;line-height:1}
+.biz-card__logo-back{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);height:28px;display:block}
+.card-specs{margin-top:14px;background:var(--bt-paper);border-radius:var(--radius);padding:14px 16px;font-size:12px;color:var(--bt-muted);line-height:1.75}
+.card-specs strong{color:var(--bt-ink);font-weight:600}
+.card-actions{display:flex;gap:10px;margin-top:16px}
+
 /* ── Swatches section ────────────────────────── */
 .swatch-dl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .swatch-dl-card{background:var(--bt-white);border-radius:var(--radius);border:1px solid var(--bt-hairline);padding:24px}
@@ -256,6 +284,7 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
   <a class="sidenav__link" href="#colours">Colours</a>
   <a class="sidenav__link" href="#typography">Typography</a>
   <a class="sidenav__link" href="#signature">Email signature</a>
+  <a class="sidenav__link" href="#visittkort">Visittkort</a>
   <a class="sidenav__link" href="#swatches">Swatches &amp; downloads</a>
   <a class="sidenav__link" href="#rules">Brand rules</a>
   <hr class="sidenav__divider">
@@ -287,6 +316,7 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
       <a class="quick-link" href="#colours">Farger</a>
       <a class="quick-link" href="#typography">Typografi</a>
       <a class="quick-link" href="#signature">E-postsignatur</a>
+      <a class="quick-link" href="#visittkort">Visittkort</a>
       <a class="quick-link" href="#swatches">Fargeprofiler</a>
       <a class="quick-link" href="#rules">Regler</a>
     </div>
@@ -469,30 +499,6 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
         </div>
         <div class="logo-card">
           <div class="logo-preview logo-surface" style="background:#F4F4F2">
-            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-light.png" alt="Horizontal lockup med tagline lys" loading="lazy">
-          </div>
-          <div class="logo-card__meta">
-            <div class="logo-card__name">Horizontal + tagline — Lys</div>
-            <div class="logo-card__actions">
-              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-on-light.svg" download>SVG</a>
-              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-light.png" download>PNG</a>
-            </div>
-          </div>
-        </div>
-        <div class="logo-card">
-          <div class="logo-preview logo-surface" style="background:#0A1628">
-            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-dark.png" alt="Horizontal lockup med tagline mork" loading="lazy">
-          </div>
-          <div class="logo-card__meta">
-            <div class="logo-card__name">Horizontal + tagline — Mørk</div>
-            <div class="logo-card__actions">
-              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-on-dark.svg" download>SVG</a>
-              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-dark.png" download>PNG</a>
-            </div>
-          </div>
-        </div>
-        <div class="logo-card">
-          <div class="logo-preview logo-surface" style="background:#F4F4F2">
             <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-mono-navy.png" alt="Horizontal lockup mono navy" loading="lazy">
           </div>
           <div class="logo-card__meta">
@@ -513,6 +519,118 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
               <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-mono-white.svg" download>SVG</a>
               <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-mono-white.png" download>PNG</a>
               <a class="btn-sm" href="branding-hub-assets/logo/lockup/jpg/bluetec-lockup-horizontal-on-blue.jpg" download>JPG blå</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lockup med tagline — tabbed -->
+    <div class="logo-group">
+      <div class="logo-group__title">Lockup med tagline</div>
+      <div class="tagline-tab-bar" role="tablist">
+        <button class="tagline-tab-btn active" role="tab" aria-selected="true" onclick="switchTaglineTab(0)">Original</button>
+        <button class="tagline-tab-btn" role="tab" aria-selected="false" onclick="switchTaglineTab(1)">Alternativt forslag <span class="tagline-tab-badge">Konseptforslag</span></button>
+      </div>
+
+      <!-- Tab 0: Original tagline logos -->
+      <div class="tagline-panel active" id="tagline-panel-0">
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-light.png" alt="Horizontal lockup med tagline lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal + tagline — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-on-light.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-light.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-dark.png" alt="Horizontal lockup med tagline mørk" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal + tagline — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-on-dark.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-horizontal-tagline-on-dark.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-light.png" alt="Stacked lockup med tagline lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked + tagline — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-on-light.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-light.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-dark.png" alt="Stacked lockup med tagline mørk" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked + tagline — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-on-dark.svg" download>SVG</a>
+              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-dark.png" download>PNG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 1: Alternativt forslag — TEKNOLOGI · ENERGI · MILJØ -->
+      <div class="tagline-panel" id="tagline-panel-1">
+        <div class="tagline-concept-notice">
+          Dette er et konseptforslag for ny tagline med prikker i stedet for &amp;: <strong>TEKNOLOGI · ENERGI · MILJØ</strong>. Disse SVG-filene er til intern vurdering og er ikke godkjent for ekstern bruk.
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-alt-on-light.svg" alt="Horizontal lockup med alternativ tagline lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal + tagline — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-alt-on-light.svg" download>SVG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-alt-on-dark.svg" alt="Horizontal lockup med alternativ tagline mørk" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Horizontal + tagline — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-tagline-alt-on-dark.svg" download>SVG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#F4F4F2">
+            <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-alt-on-light.svg" alt="Stacked lockup med alternativ tagline lys" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked + tagline — Lys</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-alt-on-light.svg" download>SVG</a>
+            </div>
+          </div>
+        </div>
+        <div class="logo-card">
+          <div class="logo-preview logo-surface" style="background:#0A1628">
+            <img src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-alt-on-dark.svg" alt="Stacked lockup med alternativ tagline mørk" loading="lazy">
+          </div>
+          <div class="logo-card__meta">
+            <div class="logo-card__name">Stacked + tagline — Mørk</div>
+            <div class="logo-card__actions">
+              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-alt-on-dark.svg" download>SVG</a>
             </div>
           </div>
         </div>
@@ -544,30 +662,6 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
             <div class="logo-card__actions">
               <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-on-dark.svg" download>SVG</a>
               <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-on-dark.png" download>PNG</a>
-            </div>
-          </div>
-        </div>
-        <div class="logo-card">
-          <div class="logo-preview logo-surface" style="background:#F4F4F2">
-            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-light.png" alt="Stacked lockup med tagline lys" loading="lazy">
-          </div>
-          <div class="logo-card__meta">
-            <div class="logo-card__name">Stacked + tagline — Lys</div>
-            <div class="logo-card__actions">
-              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-on-light.svg" download>SVG</a>
-              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-light.png" download>PNG</a>
-            </div>
-          </div>
-        </div>
-        <div class="logo-card">
-          <div class="logo-preview logo-surface" style="background:#0A1628">
-            <img src="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-dark.png" alt="Stacked lockup med tagline mork" loading="lazy">
-          </div>
-          <div class="logo-card__meta">
-            <div class="logo-card__name">Stacked + tagline — Mørk</div>
-            <div class="logo-card__actions">
-              <a class="btn-sm btn-sm--primary" href="branding-hub-assets/logo/lockup/svg/bluetec-lockup-stacked-tagline-on-dark.svg" download>SVG</a>
-              <a class="btn-sm" href="branding-hub-assets/logo/lockup/png/bluetec-lockup-stacked-tagline-on-dark.png" download>PNG</a>
             </div>
           </div>
         </div>
@@ -873,6 +967,98 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em;color:var(--bt-ink);marg
     </div>
   </section>
 
+  <!-- 5b. Visittkort -->
+  <section class="section" id="visittkort">
+    <div class="eyebrow">Kommunikasjon</div>
+    <h2>Visittkort</h2>
+    <p class="section-desc">Fyll inn feltene og se forhåndsvisning av kortet. Send spesifikasjoner til ditt trykkeri — se <a href="print-spesifikasjoner.html" style="color:var(--bt-blue);font-weight:600">Print &amp; Trykk</a> for tekniske krav.</p>
+
+    <div class="card-builder">
+      <div class="sig-form">
+        <div class="sig-form__section">
+          <div class="sig-form__section-title">Påkrevd</div>
+          <div class="field">
+            <label for="vc-name">Fullt navn</label>
+            <input type="text" id="vc-name" placeholder="Ola Nordmann" oninput="updateCard()">
+          </div>
+          <div class="field">
+            <label for="vc-role">Stilling / tittel</label>
+            <input type="text" id="vc-role" placeholder="Prosjektleder" oninput="updateCard()">
+          </div>
+          <div class="field">
+            <label for="vc-email">E-post</label>
+            <input type="email" id="vc-email" placeholder="ola@bluetec.no" oninput="updateCard()">
+          </div>
+          <div class="field">
+            <label for="vc-phone">Telefon / mobil</label>
+            <input type="tel" id="vc-phone" placeholder="+47 900 00 000" oninput="updateCard()">
+          </div>
+        </div>
+        <div class="sig-form__section">
+          <div class="sig-form__section-title">Valgfritt</div>
+          <div class="optional-checks">
+            <div class="check-row">
+              <input type="checkbox" id="vc-chk-dept" onchange="updateCard()">
+              <label for="vc-chk-dept">Avdeling / team</label>
+            </div>
+            <div id="vc-opt-dept" style="display:none;padding-left:26px">
+              <div class="field" style="margin-bottom:0">
+                <input type="text" id="vc-dept" placeholder="Salg og marked" oninput="updateCard()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sig-form__section" style="margin-bottom:0">
+          <div class="sig-form__section-title">Trykkerikrav</div>
+          <div class="card-specs">
+            <strong>Format:</strong> 85 × 55 mm &nbsp;·&nbsp; <strong>Bleed:</strong> 3 mm &nbsp;·&nbsp; <strong>Sikkerhetsmargin:</strong> 5 mm<br>
+            <strong>Opplosning:</strong> 300 DPI &nbsp;·&nbsp; <strong>Fargemodus:</strong> CMYK<br>
+            <strong>Leveringsformat:</strong> PDF/X-1a eller InDesign-pakke<br>
+            <strong>Primærblå CMYK:</strong> C100 M40 Y0 K22 &nbsp;·&nbsp; <strong>Pantone:</strong> 3005 C<br>
+            <a href="print-spesifikasjoner.html" style="color:var(--bt-blue);font-weight:600;font-size:11px">Full trykkspesifikasjon &#8599;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-preview-panel">
+        <div class="card-preview-label">Forhåndsvisning</div>
+        <div class="card-stack">
+
+          <div>
+            <div class="card-side-label">Forside</div>
+            <div class="biz-card biz-card--front">
+              <img class="biz-card__logo-front"
+                   src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-light.svg"
+                   alt="BlueTec AS">
+              <span class="biz-card__site">bluetec.no</span>
+              <div class="biz-card__name" id="vc-prev-name">Fullt navn</div>
+              <div class="biz-card__role" id="vc-prev-role">Stilling</div>
+              <div class="biz-card__divider"></div>
+              <div class="biz-card__contact">
+                <span id="vc-prev-email">navn@bluetec.no</span>
+                <span id="vc-prev-phone">+47 000 00 000</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="card-side-label">Bakside</div>
+            <div class="biz-card biz-card--back">
+              <img class="biz-card__logo-back"
+                   src="branding-hub-assets/logo/lockup/svg/bluetec-lockup-horizontal-on-dark.svg"
+                   alt="BlueTec AS">
+            </div>
+          </div>
+
+        </div>
+        <div class="card-actions">
+          <button class="btn btn--primary" onclick="copyCardInfo()">Kopier kontaktinfo</button>
+        </div>
+        <p style="font-size:12px;color:var(--bt-muted);margin-top:12px">Kopier teksten til bestillingsskjema hos trykkeriet, eller send til BlueTec-designansvarlig for ferdigstilling av trykkfil.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- 6. Swatches & downloads -->
   <section class="section" id="swatches">
     <div class="eyebrow">Verktoy</div>
@@ -984,6 +1170,17 @@ function showToast(msg){
   t.textContent=msg;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+// ── Tagline tabs ──────────────────────────────────
+function switchTaglineTab(index){
+  document.querySelectorAll('.tagline-tab-btn').forEach((btn,i)=>{
+    btn.classList.toggle('active',i===index);
+    btn.setAttribute('aria-selected',i===index);
+  });
+  document.querySelectorAll('.tagline-panel').forEach((panel,i)=>{
+    panel.classList.toggle('active',i===index);
+  });
 }
 
 // ── Copy color ────────────────────────────────────
@@ -1115,8 +1312,37 @@ function downloadSig(){
   a.click();
 }
 
+// ── Visittkort ────────────────────────────────────
+function updateCard(){
+  const name=getVal('vc-name')||'Fullt navn';
+  const role=getVal('vc-role')||'Stilling';
+  const email=getVal('vc-email')||'navn@bluetec.no';
+  const phone=getVal('vc-phone')||'+47 000 00 000';
+  const deptChk=document.getElementById('vc-chk-dept');
+  const dept=deptChk&&deptChk.checked?getVal('vc-dept'):'';
+  document.getElementById('vc-opt-dept').style.display=deptChk&&deptChk.checked?'block':'none';
+  document.getElementById('vc-prev-name').textContent=name;
+  document.getElementById('vc-prev-role').textContent=role+(dept?' · '+dept:'');
+  document.getElementById('vc-prev-email').textContent=email;
+  document.getElementById('vc-prev-phone').textContent=phone;
+}
+
+async function copyCardInfo(){
+  const name=getVal('vc-name')||'Fullt navn';
+  const role=getVal('vc-role')||'Stilling';
+  const email=getVal('vc-email')||'navn@bluetec.no';
+  const phone=getVal('vc-phone')||'+47 000 00 000';
+  const deptChk=document.getElementById('vc-chk-dept');
+  const dept=deptChk&&deptChk.checked?getVal('vc-dept'):'';
+  const lines=[name,role+(dept?' · '+dept:''),email,phone,'BlueTec AS · Stoltenbergs gate 48, 3112 Tønsberg','www.bluetec.no'];
+  try{
+    await navigator.clipboard.writeText(lines.join('\n'));
+    showToast('Kontaktinfo kopiert');
+  }catch(e){showToast('Kopier manuelt fra feltene');}
+}
+
 // ── Scroll-spy ────────────────────────────────────
-const sections=['overview','logos','colours','typography','signature','swatches','rules'];
+const sections=['overview','logos','colours','typography','signature','visittkort','swatches','rules'];
 const navLinks={};
 sections.forEach(id=>{navLinks[id]=document.querySelector(`.sidenav__link[href="#${id}"]`)});
 
@@ -1134,6 +1360,7 @@ sections.forEach(id=>{const el=document.getElementById(id);if(el)observer.observ
 
 // ── Init ──────────────────────────────────────────
 updateSig();
+updateCard();
 
 // ── Multi-select tray ─────────────────────────────
 const selectedFiles=new Map(); // path -> filename
